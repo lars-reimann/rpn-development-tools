@@ -9,6 +9,7 @@ import {
 import "./ExternalValueIO.css"
 
 export default function ExternalValueIO(props: {
+    disabled: boolean,
     value: ExternalValue,
     onChange: (newValue: ExternalValue) => void
 }) {
@@ -19,6 +20,7 @@ export default function ExternalValueIO(props: {
         input = <input
             id={value.name}
             type="checkbox"
+            disabled={props.disabled}
             checked={value.value}
             onChange={event => props.onChange(value.copy(event.target.checked))}
         />
@@ -26,6 +28,7 @@ export default function ExternalValueIO(props: {
         input = <input
             id={value.name}
             type="number"
+            disabled={props.disabled}
             value={value.value}
             onChange={event => props.onChange(value.copy(event.target.valueAsNumber))}
         />
@@ -33,6 +36,7 @@ export default function ExternalValueIO(props: {
         input = <input
             id={value.name}
             type="text"
+            disabled={props.disabled}
             value={value.value}
             onChange={event => props.onChange(value.copy(event.target.value))}
         />

@@ -26,22 +26,49 @@ export default function App() {
     const [registers, setRegisters] = useState([
         new ExternalBoolean("r1", true)
     ] as ExternalValue[])
+    const [initialSimVars, setInitialSimVars] = useState([] as ExternalValue[])
+    const [initialRegisters, setInitialRegisters] = useState([] as ExternalValue[])
+
+    function toggleExecution() {
+        if (!isExecuting) {
+            setInitialSimVars([...simVars])
+            setInitialRegisters([...registers])
+        }
+
+        setExecuting(!isExecuting)
+    }
 
     function nextStep() {
         console.log("Clicked next step")
+        setSimVars([...simVars, new ExternalNumber("added", 1)])
+        setRegisters([...registers, new ExternalNumber("added", 1)])
+    }
+
+    function restoreInitialExternalValues() {
+        setSimVars([...initialSimVars])
+        setRegisters([...initialRegisters])
     }
 
     return (
         <div className="App">
             <Editor readOnly={isExecuting} content={program} onChange={setProgram}/>
             <Stack values={stack}/>
-            <SimVars simVars={simVars} onChange={(newValue) => updateExternalValue(simVars, setSimVars,  newValue)}/>
-            <Registers registers={registers} onChange={(newValue) => updateExternalValue(registers, setRegisters,  newValue)}/>
+            <SimVars
+                simVars={simVars}
+                disabled={isExecuting}
+                onChange={(newValue) => updateExternalValue(simVars, setSimVars, newValue)}
+            />
+            <Registers
+                registers={registers}
+                disabled={isExecuting}
+                onChange={(newValue) => updateExternalValue(registers, setRegisters, newValue)}
+            />
             <Controls
                 isExecuting={isExecuting}
                 onClearStack={() => setStack([])}
                 onNextStep={nextStep}
-                onToggleExecuting={() => setExecuting(!isExecuting)}
+                onRestoreInitialExternalValues={restoreInitialExternalValues}
+                onToggleExecuting={toggleExecution}
             />
         </div>
     );
