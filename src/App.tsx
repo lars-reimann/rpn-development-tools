@@ -9,11 +9,12 @@ import Controls from "./components/Controls";
 
 function App() {
     const [program, setProgram] = useState("")
+    const [stack, setStack] = useState([1, 2, 3, 4, 5, 6])
 
     return (
         <div className="App">
             <Editor codeIsRunning={false} content={program} onChange={setProgram}/>
-            <Stack/>
+            <Stack values={stack}/>
             <Simvars/>
             <Replacements/>
             <Registers/>
