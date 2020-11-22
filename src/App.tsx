@@ -27,13 +27,22 @@ export default function App() {
         new ExternalBoolean("r1", true)
     ] as ExternalValue[])
 
+    function nextStep() {
+        console.log("Clicked next step")
+    }
+
     return (
         <div className="App">
             <Editor readOnly={isExecuting} content={program} onChange={setProgram}/>
             <Stack values={stack}/>
             <SimVars simVars={simVars} onChange={(newValue) => updateExternalValue(simVars, setSimVars,  newValue)}/>
             <Registers registers={registers} onChange={(newValue) => updateExternalValue(registers, setRegisters,  newValue)}/>
-            <Controls/>
+            <Controls
+                isExecuting={isExecuting}
+                onClearStack={() => setStack([])}
+                onNextStep={nextStep}
+                onToggleExecuting={() => setExecuting(!isExecuting)}
+            />
         </div>
     );
 }
