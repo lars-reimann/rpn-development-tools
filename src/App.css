@@ -1,11 +1,10 @@
 .App {
     display: grid;
     grid-template-areas: "Editor   Stack    Simvars"
-                         "Editor   Stack    Replacements"
                          "Editor   Stack    Registers"
                          "Controls Controls Controls";
     grid-template-columns: 50% 25% 25%;
-    grid-template-rows: 1fr 1fr 1fr 100px;
+    grid-template-rows: 1fr 1fr 75px;
     height: 100vh;
     width: 100vw;
 }
@@ -20,13 +19,8 @@
     grid-area: Stack;
 }
 
-.Simvars {
+.SimVars {
     grid-area: Simvars;
-}
-
-.Replacements {
-    border-top: 1px solid lightgray;
-    grid-area: Replacements;
 }
 
 .Registers {

@@ -4,6 +4,7 @@
     padding: 0 1em 1em 1em;
     overflow: hidden;
 }
+
 .StackItems {
     display: flex;
     flex-direction: column-reverse;

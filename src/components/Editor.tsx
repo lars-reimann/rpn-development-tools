@@ -6,9 +6,9 @@ import "ace-builds/src-noconflict/mode-text";
 import "ace-builds/src-noconflict/theme-github";
 
 export default function Editor(props: {
-    codeIsRunning: boolean,
     content: string,
     onChange: (newContent: string) => void
+    readOnly: boolean
 }) {
     return (
         <div className="Editor">
@@ -22,7 +22,7 @@ export default function Editor(props: {
                 width="100%"
 
                 editorProps={{$blockScrolling: true}}
-                readOnly={props.codeIsRunning}
+                readOnly={props.readOnly}
                 showPrintMargin={false}
 
                 onChange={props.onChange}

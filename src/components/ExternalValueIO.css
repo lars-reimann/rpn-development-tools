@@ -1,0 +1,19 @@
+.ExternalValueIO {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em;
+}
+
+.ExternalValueIO label {
+    margin-right: 1em;
+    width: 200px;
+    word-wrap: anywhere;
+}
+
+.ExternalValueIO input {
+    flex-grow: 1;
+}
+
+.ExternalValueIO input[type="checkbox"] {
+    flex-grow: unset;
+}
