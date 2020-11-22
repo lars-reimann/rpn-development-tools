@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Editor from "./components/Editor";
 import Stack from "./components/Stack";
@@ -8,9 +8,11 @@ import Registers from "./components/Registers";
 import Controls from "./components/Controls";
 
 function App() {
+    const [program, setProgram] = useState("")
+
     return (
         <div className="App">
-            <Editor/>
+            <Editor codeIsRunning={false} content={program} onChange={setProgram}/>
             <Stack/>
             <Simvars/>
             <Replacements/>
