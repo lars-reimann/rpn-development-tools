@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import Editor from "./components/Editor";
 import Stack from "./components/Stack";
-import SimVars from "./components/SimVars";
+import Variables from "./components/Variables";
 import Registers from "./components/Registers";
 import Controls from "./components/Controls";
 import {
@@ -17,7 +17,7 @@ export default function App() {
     const [isExecuting, setExecuting] = useState(false)
     const [program, setProgram] = useState("")
     const [stack, setStack] = useState([1, 2, 3, 4, 5, 6] as any[])
-    const [simVars, setSimVars] = useState([
+    const [variables, setVariables] = useState([
         new ExternalBoolean("mySimVar1", true),
         new ExternalNumber("mySimVar2", 1),
         new ExternalString("mySimVarWithASuperLongStringToTestTheLabelInThisCase", "hello"),
@@ -26,12 +26,12 @@ export default function App() {
     const [registers, setRegisters] = useState([
         new ExternalBoolean("r1", true)
     ] as ExternalValue[])
-    const [initialSimVars, setInitialSimVars] = useState([] as ExternalValue[])
-    const [initialRegisters, setInitialRegisters] = useState([] as ExternalValue[])
+    const [initialVariables, setInitialVariables] = useState([...variables])
+    const [initialRegisters, setInitialRegisters] = useState([...registers])
 
     function toggleExecution() {
         if (!isExecuting) {
-            setInitialSimVars([...simVars])
+            setInitialVariables([...variables])
             setInitialRegisters([...registers])
         }
 
@@ -40,12 +40,12 @@ export default function App() {
 
     function nextStep() {
         console.log("Clicked next step")
-        setSimVars([...simVars, new ExternalNumber("added", 1)])
+        setVariables([...variables, new ExternalNumber("added", 1)])
         setRegisters([...registers, new ExternalNumber("added", 1)])
     }
 
     function restoreInitialExternalValues() {
-        setSimVars([...initialSimVars])
+        setVariables([...initialVariables])
         setRegisters([...initialRegisters])
     }
 
@@ -53,10 +53,10 @@ export default function App() {
         <div className="App">
             <Editor readOnly={isExecuting} content={program} onChange={setProgram}/>
             <Stack values={stack}/>
-            <SimVars
-                simVars={simVars}
+            <Variables
+                variables={variables}
                 disabled={isExecuting}
-                onChange={(newValue) => updateExternalValue(simVars, setSimVars, newValue)}
+                onChange={(newValue) => updateExternalValue(variables, setVariables, newValue)}
             />
             <Registers
                 registers={registers}

@@ -11,6 +11,7 @@
     "@types/react": "^16.14.1",
     "@types/react-dom": "^16.9.10",
     "ace-builds": "^1.4.12",
+    "antlr4": "^4.8.0",
     "react": "^17.0.1",
     "react-ace": "^9.2.0",
     "react-dom": "^17.0.1",
@@ -22,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "grammar": "java -jar lib/antlr-4.8-complete.jar -Dlanguage=JavaScript -o src/parser src/parser/rpn.g4"
   },
   "eslintConfig": {
     "extends": [
