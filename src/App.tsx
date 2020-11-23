@@ -13,11 +13,12 @@ import {
     ExternalWriteOnlyValue
 } from "./model/externalValue";
 import parse from "./parser/ParserAccess";
+import {ProgramState, RpnValue, Stack as StackState} from "./model/programState";
 
 export default function App() {
     const [isExecuting, setExecuting] = useState(false)
     const [program, setProgram] = useState("")
-    const [stack, setStack] = useState([1, 2, 3, 4, 5, 6] as any[])
+    const [stack, setStack] = useState([] as RpnValue[])
     const [variables, setVariables] = useState([
         new ExternalBoolean("mySimVar1", true),
         new ExternalNumber("mySimVar2", 1),
@@ -35,8 +36,16 @@ export default function App() {
             setInitialVariables([...variables])
             setInitialRegisters([...registers])
 
-            const tree = parse(program)
-            console.log(tree);
+            const astNodes = parse(program)
+            console.log(astNodes);
+            const initialState = new ProgramState(new StackState(stack))
+
+            try {
+                const newState = astNodes.execute(initialState)
+                setStack(newState.stack.stack)
+            } catch (error) {
+                console.error(error)
+            }
         }
 
         setExecuting(!isExecuting)

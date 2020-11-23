@@ -36,7 +36,22 @@ export class Literal extends Action {
     }
 }
 
-export class Assignment {
-    constructor() {
+export class Operator extends Action {
+    private readonly operator: string
+
+    constructor(operator: string) {
+        super();
+        this.operator = operator
+    }
+
+    execute(initialState: ProgramState): ProgramState {
+        switch (this.operator) {
+            case "+":
+                const [b, nextState1] = initialState.popNumberOrThrow()
+                const [a, nextState2] = nextState1.popNumberOrThrow()
+                return nextState2.push(a + b)
+            default:
+                return initialState
+        }
     }
 }
