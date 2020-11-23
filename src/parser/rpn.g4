@@ -4,33 +4,163 @@ grammar rpn;
  * Parser Rules
  **********************************************************************************************************************/
 
-rpn
-    : token*
+program
+    : action*
     ;
 
-token
-    : literal
-    | LABEL
+action
+    : numberLiteral
+    | stringLiteral
     | variableAccess
     | assignment
-    | commonOperator
-    | comparisonOperator
-    | bitwiseOperator
-    | logicalOperator
-    | numericalOperator
-    | specialOperators
-    | stringOperator
-    | stackOperator
+    | operator
+    | ifAction
+    | elseAction
+    | label
+    | gotoAction
+    | store
+    | load
+    | storePop
     ;
 
-literal
+numberLiteral
     : NUMBER
-    | STRING
+    ;
+
+stringLiteral
+    : STRING
     ;
 
 variableAccess
     : '(' ID ',' type ')'
     ;
+
+assignment
+    : '(' ('>' | '&gt;') ID (',' type)? ')'
+    ;
+
+operator
+
+    // Common operators
+    : '+'
+    | '-'
+    | '/'
+    | '*'
+    | '%'
+    | '++'
+    | '--'
+    | '/-/' | 'neg'
+
+    // Comparison operators
+    | '=='
+    | '!='
+    | '>'
+    | '<'
+    | '>='
+    | '<='
+    | '?'
+
+    // Bitwise operators
+    | '&'
+    | '|'
+    | '^'
+    | '~'
+    | '>>'
+    | '<<'
+
+    // Logical operator
+    | '!'  | 'NOT'
+    | '&&' | 'AND'
+    | '||' | 'OR'
+
+    // Numerical operator
+    | 'abs'
+    | 'int'
+    | 'flr'
+    | 'rng'
+    | 'cos'
+    | 'lg'
+    | 'min'
+    | 'sin'
+    | 'acos'
+    | 'ctg'
+    | 'ln'
+    | 'sqr'
+    | 'asin'
+    | 'eps'
+    | 'log'
+    | 'pi'
+    | 'sqrt'
+    | 'atg2'
+    | 'exp'
+    | 'max'
+    | 'pow'
+    | 'tg'
+    | 'atg'
+    | 'div'
+    | 'ceil'
+    | 'near'
+
+    // Special operators
+    | 'dnor' | 'd360' | 'rdeg'
+    | 'rddg'
+    | 'dgrd'
+    | 'rnor'
+    | 'quit'
+    | 'case'
+
+    // String operators
+    | 'lc'
+    | 'uc'
+    | 'cap'
+    | 'chr'
+    | 'ord'
+    | 'scat'
+    | 'schr'
+    | 'scmp'
+    | 'scmi'
+    | 'sstr'
+    | 'ssub'
+    | 'symb'
+
+    // Stack operators
+    | 'b'
+    | 'c'
+    | 'd'
+    | 'p'
+    | 'r'
+    ;
+
+ifAction
+    : 'if{' action* '}'
+    ;
+
+elseAction
+    : 'els{' action* '}'
+    ;
+
+label
+    : LABEL
+    ;
+
+gotoAction
+    : GOTO
+    ;
+
+store
+    : STORE
+    ;
+
+load
+    : LOAD
+    ;
+
+storePop
+    : STORE_POP
+    ;
+
+
+// Types ---------------------------------------------------------------------------------------------------------------
 
 type
     : booleanType
@@ -260,129 +390,10 @@ stringType
     : 'string'
     ;
 
-assignment
-    : '(' ('>' | '&gt;') ID (',' type)? ')'
-    ;
-
-commonOperator
-    : '+'
-    | '-'
-    | '/'
-    | '*'
-    | '%'
-    | '++'
-    | '--'
-    | '/-/' | 'neg'
-    ;
-
-comparisonOperator
-    : '=='
-    | '!='
-    | '>'
-    | '<'
-    | '>='
-    | '<='
-    | '?'
-    ;
-
-bitwiseOperator
-    : '&'
-    | '|'
-    | '^'
-    | '~'
-    | '>>'
-    | '<<'
-    ;
-
-logicalOperator
-    : '!'  | 'NOT'
-    | '&&' | 'AND'
-    | '||' | 'OR'
-    ;
-
-numericalOperator
-    : 'abs'
-    | 'int'
-    | 'flr'
-    | 'rng'
-    | 'cos'
-    | 'lg'
-    | 'min'
-    | 'sin'
-    | 'acos'
-    | 'ctg'
-    | 'ln'
-    | 'sqr'
-    | 'asin'
-    | 'eps'
-    | 'log'
-    | 'pi'
-    | 'sqrt'
-    | 'atg2'
-    | 'exp'
-    | 'max'
-    | 'pow'
-    | 'tg'
-    | 'atg'
-    | 'div'
-    | 'ceil'
-    | 'near'
-    ;
-
-specialOperators
-    : 'dnor' | 'd360' | 'rdeg'
-    | 'rddg'
-    | 'dgrd'
-    | 'rnor'
-    | ifStatement
-    | elseStatement
-    | 'quit'
-    | GOTO
-    | 'case'
-    ;
-
-ifStatement
-    : 'if{' token* '}'
-    ;
-
-elseStatement
-    : 'els{' token* '}'
-    ;
-
-stringOperator
-    : 'lc'
-    | 'uc'
-    | 'cap'
-    | 'chr'
-    | 'ord'
-    | 'scat'
-    | 'schr'
-    | 'scmp'
-    | 'scmi'
-    | 'sstr'
-    | 'ssub'
-    | 'symb'
-    ;
-
-stackOperator
-    : 'b'
-    | 'c'
-    | 'd'
-    | 'p'
-    | 'r'
-    | STORE
-    | LOAD
-    | STORE_POP
-    ;
-
 
 /**********************************************************************************************************************
  * Lexer Rules
  **********************************************************************************************************************/
-
-ID
-    : [a-zA-Z] | [a-zA-Z] [a-zA-Z0-9:_ ]* [a-zA-Z0-9:_]
-    ;
 
 LABEL
     : ':' IntegerDigits
@@ -405,7 +416,11 @@ STORE_POP
     ;
 
 NUMBER
-    : IntegerDigits '.' [0-9] [0-9_]*
+    : IntegerDigits ('.' [0-9] [0-9_]*)?
+    ;
+
+ID
+    : [a-zA-Z] | [a-zA-Z] [a-zA-Z0-9:_ ]* [a-zA-Z0-9:_]
     ;
 
 STRING

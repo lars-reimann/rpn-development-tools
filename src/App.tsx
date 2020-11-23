@@ -12,6 +12,7 @@ import {
     ExternalValue,
     ExternalWriteOnlyValue
 } from "./model/externalValue";
+import parse from "./parser/ParserAccess";
 
 export default function App() {
     const [isExecuting, setExecuting] = useState(false)
@@ -33,6 +34,9 @@ export default function App() {
         if (!isExecuting) {
             setInitialVariables([...variables])
             setInitialRegisters([...registers])
+
+            const tree = parse(program)
+            console.log(tree);
         }
 
         setExecuting(!isExecuting)

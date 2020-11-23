@@ -2,11 +2,13 @@
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 var rpnListener = require('./rpnListener').rpnListener;
+var rpnVisitor = require('./rpnVisitor').rpnVisitor;
+
 var grammarFileName = "rpn.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u018a\u00ef\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\u0003\u018a\u00e5\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
     "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
     "\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f",
     "\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010",
@@ -18,147 +20,135 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "$\t$\u0004%\t%\u0004&\t&\u0004\'\t\'\u0004(\t(\u0004)\t)\u0003\u0002",
     "\u0007\u0002T\n\u0002\f\u0002\u000e\u0002W\u000b\u0002\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0005\u0003e",
-    "\n\u0003\u0003\u0004\u0003\u0004\u0003\u0005\u0003\u0005\u0003\u0005",
-    "\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0006\u0003\u0006\u0003\u0006",
-    "\u0005\u0006r\n\u0006\u0003\u0007\u0003\u0007\u0003\b\u0003\b\u0003",
-    "\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003",
-    "\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003",
-    "\b\u0005\b\u008b\n\b\u0003\t\u0003\t\u0003\n\u0003\n\u0003\u000b\u0003",
-    "\u000b\u0003\f\u0003\f\u0003\r\u0003\r\u0003\u000e\u0003\u000e\u0003",
-    "\u000f\u0003\u000f\u0003\u0010\u0003\u0010\u0003\u0011\u0003\u0011\u0003",
-    "\u0012\u0003\u0012\u0003\u0013\u0003\u0013\u0003\u0014\u0003\u0014\u0003",
-    "\u0015\u0003\u0015\u0003\u0016\u0003\u0016\u0003\u0017\u0003\u0017\u0003",
-    "\u0018\u0003\u0018\u0003\u0019\u0003\u0019\u0003\u001a\u0003\u001a\u0003",
-    "\u001b\u0003\u001b\u0003\u001c\u0003\u001c\u0003\u001d\u0003\u001d\u0003",
-    "\u001e\u0003\u001e\u0003\u001f\u0003\u001f\u0003\u001f\u0003\u001f\u0003",
-    "\u001f\u0005\u001f\u00be\n\u001f\u0003\u001f\u0003\u001f\u0003 \u0003",
-    " \u0003!\u0003!\u0003\"\u0003\"\u0003#\u0003#\u0003$\u0003$\u0003%\u0003",
-    "%\u0003%\u0003%\u0003%\u0003%\u0003%\u0003%\u0003%\u0003%\u0003%\u0005",
-    "%\u00d7\n%\u0003&\u0003&\u0007&\u00db\n&\f&\u000e&\u00de\u000b&\u0003",
-    "&\u0003&\u0003\'\u0003\'\u0007\'\u00e4\n\'\f\'\u000e\'\u00e7\u000b\'",
-    "\u0003\'\u0003\'\u0003(\u0003(\u0003)\u0003)\u0003)\u0002\u0002*\u0002",
-    "\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e",
-    " \"$&(*,.02468:<>@BDFHJLNP\u0002!\u0003\u0002\u0188\u0189\u0003\u0002",
-    "\u0006\u0007\u0003\u0002\b$\u0003\u0002%B\u0003\u0002Ch\u0003\u0002",
-    "io\u0003\u0002pt\u0003\u0002u|\u0003\u0002}\u0082\u0003\u0002\u0083",
-    "\u008e\u0003\u0002\u008f\u00a1\u0003\u0002\u00a2\u00a7\u0003\u0002\u00a8",
-    "\u00b3\u0003\u0002\u00b4\u00b6\u0003\u0002\u00b7\u00c0\u0003\u0002\u00c1",
-    "\u00c4\u0003\u0002\u00c5\u00c8\u0003\u0002\u00c9\u00ca\u0003\u0002\u00cb",
-    "\u00d3\u0003\u0002\u00d4\u00dd\u0003\u0002\u00de\u0107\u0004\u0002\t",
-    "\t\u0108\u0114\u0003\u0002\u0115\u012d\u0003\u0002\u012f\u0130\u0003",
-    "\u0002\u0131\u0139\u0004\u0002\u012f\u012f\u013a\u013f\u0003\u0002\u0140",
-    "\u0145\u0003\u0002\u0146\u014b\u0003\u0002\u014c\u0165\u0003\u0002\u0171",
-    "\u017c\u0004\u0002\u017d\u0181\u0185\u0187\u0002\u00f5\u0002U\u0003",
-    "\u0002\u0002\u0002\u0004d\u0003\u0002\u0002\u0002\u0006f\u0003\u0002",
-    "\u0002\u0002\bh\u0003\u0002\u0002\u0002\nq\u0003\u0002\u0002\u0002\f",
-    "s\u0003\u0002\u0002\u0002\u000e\u008a\u0003\u0002\u0002\u0002\u0010",
-    "\u008c\u0003\u0002\u0002\u0002\u0012\u008e\u0003\u0002\u0002\u0002\u0014",
-    "\u0090\u0003\u0002\u0002\u0002\u0016\u0092\u0003\u0002\u0002\u0002\u0018",
-    "\u0094\u0003\u0002\u0002\u0002\u001a\u0096\u0003\u0002\u0002\u0002\u001c",
-    "\u0098\u0003\u0002\u0002\u0002\u001e\u009a\u0003\u0002\u0002\u0002 ",
-    "\u009c\u0003\u0002\u0002\u0002\"\u009e\u0003\u0002\u0002\u0002$\u00a0",
-    "\u0003\u0002\u0002\u0002&\u00a2\u0003\u0002\u0002\u0002(\u00a4\u0003",
-    "\u0002\u0002\u0002*\u00a6\u0003\u0002\u0002\u0002,\u00a8\u0003\u0002",
-    "\u0002\u0002.\u00aa\u0003\u0002\u0002\u00020\u00ac\u0003\u0002\u0002",
-    "\u00022\u00ae\u0003\u0002\u0002\u00024\u00b0\u0003\u0002\u0002\u0002",
-    "6\u00b2\u0003\u0002\u0002\u00028\u00b4\u0003\u0002\u0002\u0002:\u00b6",
-    "\u0003\u0002\u0002\u0002<\u00b8\u0003\u0002\u0002\u0002>\u00c1\u0003",
-    "\u0002\u0002\u0002@\u00c3\u0003\u0002\u0002\u0002B\u00c5\u0003\u0002",
-    "\u0002\u0002D\u00c7\u0003\u0002\u0002\u0002F\u00c9\u0003\u0002\u0002",
-    "\u0002H\u00d6\u0003\u0002\u0002\u0002J\u00d8\u0003\u0002\u0002\u0002",
-    "L\u00e1\u0003\u0002\u0002\u0002N\u00ea\u0003\u0002\u0002\u0002P\u00ec",
-    "\u0003\u0002\u0002\u0002RT\u0005\u0004\u0003\u0002SR\u0003\u0002\u0002",
-    "\u0002TW\u0003\u0002\u0002\u0002US\u0003\u0002\u0002\u0002UV\u0003\u0002",
-    "\u0002\u0002V\u0003\u0003\u0002\u0002\u0002WU\u0003\u0002\u0002\u0002",
-    "Xe\u0005\u0006\u0004\u0002Ye\u0007\u0183\u0002\u0002Ze\u0005\b\u0005",
-    "\u0002[e\u0005<\u001f\u0002\\e\u0005> \u0002]e\u0005@!\u0002^e\u0005",
-    "B\"\u0002_e\u0005D#\u0002`e\u0005F$\u0002ae\u0005H%\u0002be\u0005N(",
-    "\u0002ce\u0005P)\u0002dX\u0003\u0002\u0002\u0002dY\u0003\u0002\u0002",
-    "\u0002dZ\u0003\u0002\u0002\u0002d[\u0003\u0002\u0002\u0002d\\\u0003",
-    "\u0002\u0002\u0002d]\u0003\u0002\u0002\u0002d^\u0003\u0002\u0002\u0002",
-    "d_\u0003\u0002\u0002\u0002d`\u0003\u0002\u0002\u0002da\u0003\u0002\u0002",
-    "\u0002db\u0003\u0002\u0002\u0002dc\u0003\u0002\u0002\u0002e\u0005\u0003",
-    "\u0002\u0002\u0002fg\t\u0002\u0002\u0002g\u0007\u0003\u0002\u0002\u0002",
-    "hi\u0007\u0003\u0002\u0002ij\u0007\u0182\u0002\u0002jk\u0007\u0004\u0002",
-    "\u0002kl\u0005\n\u0006\u0002lm\u0007\u0005\u0002\u0002m\t\u0003\u0002",
-    "\u0002\u0002nr\u0005\f\u0007\u0002or\u0005\u000e\b\u0002pr\u0005:\u001e",
-    "\u0002qn\u0003\u0002\u0002\u0002qo\u0003\u0002\u0002\u0002qp\u0003\u0002",
-    "\u0002\u0002r\u000b\u0003\u0002\u0002\u0002st\t\u0003\u0002\u0002t\r",
-    "\u0003\u0002\u0002\u0002u\u008b\u0005\u0010\t\u0002v\u008b\u0005\u0012",
-    "\n\u0002w\u008b\u0005\u0014\u000b\u0002x\u008b\u0005\u0016\f\u0002y",
-    "\u008b\u0005\u0018\r\u0002z\u008b\u0005\u001a\u000e\u0002{\u008b\u0005",
-    "\u001c\u000f\u0002|\u008b\u0005\u001e\u0010\u0002}\u008b\u0005 \u0011",
-    "\u0002~\u008b\u0005\"\u0012\u0002\u007f\u008b\u0005$\u0013\u0002\u0080",
-    "\u008b\u0005&\u0014\u0002\u0081\u008b\u0005(\u0015\u0002\u0082\u008b",
-    "\u0005*\u0016\u0002\u0083\u008b\u0005,\u0017\u0002\u0084\u008b\u0005",
-    ".\u0018\u0002\u0085\u008b\u00050\u0019\u0002\u0086\u008b\u00052\u001a",
-    "\u0002\u0087\u008b\u00054\u001b\u0002\u0088\u008b\u00056\u001c\u0002",
-    "\u0089\u008b\u00058\u001d\u0002\u008au\u0003\u0002\u0002\u0002\u008a",
-    "v\u0003\u0002\u0002\u0002\u008aw\u0003\u0002\u0002\u0002\u008ax\u0003",
-    "\u0002\u0002\u0002\u008ay\u0003\u0002\u0002\u0002\u008az\u0003\u0002",
-    "\u0002\u0002\u008a{\u0003\u0002\u0002\u0002\u008a|\u0003\u0002\u0002",
-    "\u0002\u008a}\u0003\u0002\u0002\u0002\u008a~\u0003\u0002\u0002\u0002",
-    "\u008a\u007f\u0003\u0002\u0002\u0002\u008a\u0080\u0003\u0002\u0002\u0002",
-    "\u008a\u0081\u0003\u0002\u0002\u0002\u008a\u0082\u0003\u0002\u0002\u0002",
-    "\u008a\u0083\u0003\u0002\u0002\u0002\u008a\u0084\u0003\u0002\u0002\u0002",
-    "\u008a\u0085\u0003\u0002\u0002\u0002\u008a\u0086\u0003\u0002\u0002\u0002",
-    "\u008a\u0087\u0003\u0002\u0002\u0002\u008a\u0088\u0003\u0002\u0002\u0002",
-    "\u008a\u0089\u0003\u0002\u0002\u0002\u008b\u000f\u0003\u0002\u0002\u0002",
-    "\u008c\u008d\t\u0004\u0002\u0002\u008d\u0011\u0003\u0002\u0002\u0002",
-    "\u008e\u008f\t\u0005\u0002\u0002\u008f\u0013\u0003\u0002\u0002\u0002",
-    "\u0090\u0091\t\u0006\u0002\u0002\u0091\u0015\u0003\u0002\u0002\u0002",
-    "\u0092\u0093\t\u0007\u0002\u0002\u0093\u0017\u0003\u0002\u0002\u0002",
-    "\u0094\u0095\t\b\u0002\u0002\u0095\u0019\u0003\u0002\u0002\u0002\u0096",
-    "\u0097\t\t\u0002\u0002\u0097\u001b\u0003\u0002\u0002\u0002\u0098\u0099",
-    "\t\n\u0002\u0002\u0099\u001d\u0003\u0002\u0002\u0002\u009a\u009b\t\u000b",
-    "\u0002\u0002\u009b\u001f\u0003\u0002\u0002\u0002\u009c\u009d\t\f\u0002",
-    "\u0002\u009d!\u0003\u0002\u0002\u0002\u009e\u009f\t\r\u0002\u0002\u009f",
-    "#\u0003\u0002\u0002\u0002\u00a0\u00a1\t\u000e\u0002\u0002\u00a1%\u0003",
-    "\u0002\u0002\u0002\u00a2\u00a3\t\u000f\u0002\u0002\u00a3\'\u0003\u0002",
-    "\u0002\u0002\u00a4\u00a5\t\u0010\u0002\u0002\u00a5)\u0003\u0002\u0002",
-    "\u0002\u00a6\u00a7\t\u0011\u0002\u0002\u00a7+\u0003\u0002\u0002\u0002",
-    "\u00a8\u00a9\t\u0012\u0002\u0002\u00a9-\u0003\u0002\u0002\u0002\u00aa",
-    "\u00ab\t\u0013\u0002\u0002\u00ab/\u0003\u0002\u0002\u0002\u00ac\u00ad",
-    "\t\u0014\u0002\u0002\u00ad1\u0003\u0002\u0002\u0002\u00ae\u00af\t\u0015",
-    "\u0002\u0002\u00af3\u0003\u0002\u0002\u0002\u00b0\u00b1\t\u0016\u0002",
-    "\u0002\u00b15\u0003\u0002\u0002\u0002\u00b2\u00b3\t\u0017\u0002\u0002",
-    "\u00b37\u0003\u0002\u0002\u0002\u00b4\u00b5\t\u0018\u0002\u0002\u00b5",
-    "9\u0003\u0002\u0002\u0002\u00b6\u00b7\u0007\u012e\u0002\u0002\u00b7",
-    ";\u0003\u0002\u0002\u0002\u00b8\u00b9\u0007\u0003\u0002\u0002\u00b9",
-    "\u00ba\t\u0019\u0002\u0002\u00ba\u00bd\u0007\u0182\u0002\u0002\u00bb",
-    "\u00bc\u0007\u0004\u0002\u0002\u00bc\u00be\u0005\n\u0006\u0002\u00bd",
-    "\u00bb\u0003\u0002\u0002\u0002\u00bd\u00be\u0003\u0002\u0002\u0002\u00be",
-    "\u00bf\u0003\u0002\u0002\u0002\u00bf\u00c0\u0007\u0005\u0002\u0002\u00c0",
-    "=\u0003\u0002\u0002\u0002\u00c1\u00c2\t\u001a\u0002\u0002\u00c2?\u0003",
-    "\u0002\u0002\u0002\u00c3\u00c4\t\u001b\u0002\u0002\u00c4A\u0003\u0002",
-    "\u0002\u0002\u00c5\u00c6\t\u001c\u0002\u0002\u00c6C\u0003\u0002\u0002",
-    "\u0002\u00c7\u00c8\t\u001d\u0002\u0002\u00c8E\u0003\u0002\u0002\u0002",
-    "\u00c9\u00ca\t\u001e\u0002\u0002\u00caG\u0003\u0002\u0002\u0002\u00cb",
-    "\u00d7\u0007\u0166\u0002\u0002\u00cc\u00d7\u0007\u0167\u0002\u0002\u00cd",
-    "\u00d7\u0007\u0168\u0002\u0002\u00ce\u00d7\u0007\u0169\u0002\u0002\u00cf",
-    "\u00d7\u0007\u016a\u0002\u0002\u00d0\u00d7\u0007\u016b\u0002\u0002\u00d1",
-    "\u00d7\u0005J&\u0002\u00d2\u00d7\u0005L\'\u0002\u00d3\u00d7\u0007\u016c",
-    "\u0002\u0002\u00d4\u00d7\u0007\u0184\u0002\u0002\u00d5\u00d7\u0007\u016d",
-    "\u0002\u0002\u00d6\u00cb\u0003\u0002\u0002\u0002\u00d6\u00cc\u0003\u0002",
-    "\u0002\u0002\u00d6\u00cd\u0003\u0002\u0002\u0002\u00d6\u00ce\u0003\u0002",
-    "\u0002\u0002\u00d6\u00cf\u0003\u0002\u0002\u0002\u00d6\u00d0\u0003\u0002",
-    "\u0002\u0002\u00d6\u00d1\u0003\u0002\u0002\u0002\u00d6\u00d2\u0003\u0002",
-    "\u0002\u0002\u00d6\u00d3\u0003\u0002\u0002\u0002\u00d6\u00d4\u0003\u0002",
-    "\u0002\u0002\u00d6\u00d5\u0003\u0002\u0002\u0002\u00d7I\u0003\u0002",
-    "\u0002\u0002\u00d8\u00dc\u0007\u016e\u0002\u0002\u00d9\u00db\u0005\u0004",
-    "\u0003\u0002\u00da\u00d9\u0003\u0002\u0002\u0002\u00db\u00de\u0003\u0002",
-    "\u0002\u0002\u00dc\u00da\u0003\u0002\u0002\u0002\u00dc\u00dd\u0003\u0002",
-    "\u0002\u0002\u00dd\u00df\u0003\u0002\u0002\u0002\u00de\u00dc\u0003\u0002",
-    "\u0002\u0002\u00df\u00e0\u0007\u016f\u0002\u0002\u00e0K\u0003\u0002",
-    "\u0002\u0002\u00e1\u00e5\u0007\u0170\u0002\u0002\u00e2\u00e4\u0005\u0004",
-    "\u0003\u0002\u00e3\u00e2\u0003\u0002\u0002\u0002\u00e4\u00e7\u0003\u0002",
-    "\u0002\u0002\u00e5\u00e3\u0003\u0002\u0002\u0002\u00e5\u00e6\u0003\u0002",
-    "\u0002\u0002\u00e6\u00e8\u0003\u0002\u0002\u0002\u00e7\u00e5\u0003\u0002",
-    "\u0002\u0002\u00e8\u00e9\u0007\u016f\u0002\u0002\u00e9M\u0003\u0002",
-    "\u0002\u0002\u00ea\u00eb\t\u001f\u0002\u0002\u00ebO\u0003\u0002\u0002",
-    "\u0002\u00ec\u00ed\t \u0002\u0002\u00edQ\u0003\u0002\u0002\u0002\nU",
-    "dq\u008a\u00bd\u00d6\u00dc\u00e5"].join("");
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0005\u0003d\n\u0003\u0003",
+    "\u0004\u0003\u0004\u0005\u0004h\n\u0004\u0003\u0005\u0003\u0005\u0003",
+    "\u0006\u0003\u0006\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0003",
+    "\u0007\u0003\u0007\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0005\by",
+    "\n\b\u0003\b\u0003\b\u0003\t\u0003\t\u0003\n\u0003\n\u0007\n\u0081\n",
+    "\n\f\n\u000e\n\u0084\u000b\n\u0003\n\u0003\n\u0003\u000b\u0003\u000b",
+    "\u0007\u000b\u008a\n\u000b\f\u000b\u000e\u000b\u008d\u000b\u000b\u0003",
+    "\u000b\u0003\u000b\u0003\f\u0003\f\u0003\r\u0003\r\u0003\u000e\u0003",
+    "\u000e\u0003\u000f\u0003\u000f\u0003\u0010\u0003\u0010\u0003\u0011\u0003",
+    "\u0011\u0003\u0011\u0005\u0011\u009e\n\u0011\u0003\u0012\u0003\u0012",
+    "\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013",
+    "\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013",
+    "\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013",
+    "\u0003\u0013\u0003\u0013\u0003\u0013\u0005\u0013\u00b7\n\u0013\u0003",
+    "\u0014\u0003\u0014\u0003\u0015\u0003\u0015\u0003\u0016\u0003\u0016\u0003",
+    "\u0017\u0003\u0017\u0003\u0018\u0003\u0018\u0003\u0019\u0003\u0019\u0003",
+    "\u001a\u0003\u001a\u0003\u001b\u0003\u001b\u0003\u001c\u0003\u001c\u0003",
+    "\u001d\u0003\u001d\u0003\u001e\u0003\u001e\u0003\u001f\u0003\u001f\u0003",
+    " \u0003 \u0003!\u0003!\u0003\"\u0003\"\u0003#\u0003#\u0003$\u0003$\u0003",
+    "%\u0003%\u0003&\u0003&\u0003\'\u0003\'\u0003(\u0003(\u0003)\u0003)\u0003",
+    ")\u0002\u0002*\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016",
+    "\u0018\u001a\u001c\u001e \"$&(*,.02468:<>@BDFHJLNP\u0002\u001a\u0003",
+    "\u0002\u0006\u0007\u0004\u0002\u0006\u0006\bU\u0003\u0002YZ\u0003\u0002",
+    "[w\u0003\u0002x\u0095\u0003\u0002\u0096\u00bb\u0003\u0002\u00bc\u00c2",
+    "\u0003\u0002\u00c3\u00c7\u0003\u0002\u00c8\u00cf\u0003\u0002\u00d0\u00d5",
+    "\u0003\u0002\u00d6\u00e1\u0003\u0002\u00e2\u00f4\u0003\u0002\u00f5\u00fa",
+    "\u0003\u0002\u00fb\u0106\u0003\u0002\u0107\u0109\u0003\u0002\u010a\u0113",
+    "\u0003\u0002\u0114\u0117\u0003\u0002\u0118\u011b\u0003\u0002\u011c\u011d",
+    "\u0003\u0002\u011e\u0126\u0003\u0002\u0127\u0130\u0003\u0002\u0131\u015a",
+    "\u0004\u0002\\\\\u015b\u0167\u0003\u0002\u0168\u0180\u0002\u00e1\u0002",
+    "U\u0003\u0002\u0002\u0002\u0004c\u0003\u0002\u0002\u0002\u0006g\u0003",
+    "\u0002\u0002\u0002\bi\u0003\u0002\u0002\u0002\nk\u0003\u0002\u0002\u0002",
+    "\fm\u0003\u0002\u0002\u0002\u000es\u0003\u0002\u0002\u0002\u0010|\u0003",
+    "\u0002\u0002\u0002\u0012~\u0003\u0002\u0002\u0002\u0014\u0087\u0003",
+    "\u0002\u0002\u0002\u0016\u0090\u0003\u0002\u0002\u0002\u0018\u0092\u0003",
+    "\u0002\u0002\u0002\u001a\u0094\u0003\u0002\u0002\u0002\u001c\u0096\u0003",
+    "\u0002\u0002\u0002\u001e\u0098\u0003\u0002\u0002\u0002 \u009d\u0003",
+    "\u0002\u0002\u0002\"\u009f\u0003\u0002\u0002\u0002$\u00b6\u0003\u0002",
+    "\u0002\u0002&\u00b8\u0003\u0002\u0002\u0002(\u00ba\u0003\u0002\u0002",
+    "\u0002*\u00bc\u0003\u0002\u0002\u0002,\u00be\u0003\u0002\u0002\u0002",
+    ".\u00c0\u0003\u0002\u0002\u00020\u00c2\u0003\u0002\u0002\u00022\u00c4",
+    "\u0003\u0002\u0002\u00024\u00c6\u0003\u0002\u0002\u00026\u00c8\u0003",
+    "\u0002\u0002\u00028\u00ca\u0003\u0002\u0002\u0002:\u00cc\u0003\u0002",
+    "\u0002\u0002<\u00ce\u0003\u0002\u0002\u0002>\u00d0\u0003\u0002\u0002",
+    "\u0002@\u00d2\u0003\u0002\u0002\u0002B\u00d4\u0003\u0002\u0002\u0002",
+    "D\u00d6\u0003\u0002\u0002\u0002F\u00d8\u0003\u0002\u0002\u0002H\u00da",
+    "\u0003\u0002\u0002\u0002J\u00dc\u0003\u0002\u0002\u0002L\u00de\u0003",
+    "\u0002\u0002\u0002N\u00e0\u0003\u0002\u0002\u0002P\u00e2\u0003\u0002",
+    "\u0002\u0002RT\u0005\u0004\u0003\u0002SR\u0003\u0002\u0002\u0002TW\u0003",
+    "\u0002\u0002\u0002US\u0003\u0002\u0002\u0002UV\u0003\u0002\u0002\u0002",
+    "V\u0003\u0003\u0002\u0002\u0002WU\u0003\u0002\u0002\u0002Xd\u0005\u0006",
+    "\u0004\u0002Yd\u0005\f\u0007\u0002Zd\u0005\u000e\b\u0002[d\u0005\u0010",
+    "\t\u0002\\d\u0005\u0012\n\u0002]d\u0005\u0014\u000b\u0002^d\u0005\u0016",
+    "\f\u0002_d\u0005\u0018\r\u0002`d\u0005\u001a\u000e\u0002ad\u0005\u001c",
+    "\u000f\u0002bd\u0005\u001e\u0010\u0002cX\u0003\u0002\u0002\u0002cY\u0003",
+    "\u0002\u0002\u0002cZ\u0003\u0002\u0002\u0002c[\u0003\u0002\u0002\u0002",
+    "c\\\u0003\u0002\u0002\u0002c]\u0003\u0002\u0002\u0002c^\u0003\u0002",
+    "\u0002\u0002c_\u0003\u0002\u0002\u0002c`\u0003\u0002\u0002\u0002ca\u0003",
+    "\u0002\u0002\u0002cb\u0003\u0002\u0002\u0002d\u0005\u0003\u0002\u0002",
+    "\u0002eh\u0005\b\u0005\u0002fh\u0005\n\u0006\u0002ge\u0003\u0002\u0002",
+    "\u0002gf\u0003\u0002\u0002\u0002h\u0007\u0003\u0002\u0002\u0002ij\u0007",
+    "\u0187\u0002\u0002j\t\u0003\u0002\u0002\u0002kl\u0007\u0189\u0002\u0002",
+    "l\u000b\u0003\u0002\u0002\u0002mn\u0007\u0003\u0002\u0002no\u0007\u0188",
+    "\u0002\u0002op\u0007\u0004\u0002\u0002pq\u0005 \u0011\u0002qr\u0007",
+    "\u0005\u0002\u0002r\r\u0003\u0002\u0002\u0002st\u0007\u0003\u0002\u0002",
+    "tu\t\u0002\u0002\u0002ux\u0007\u0188\u0002\u0002vw\u0007\u0004\u0002",
+    "\u0002wy\u0005 \u0011\u0002xv\u0003\u0002\u0002\u0002xy\u0003\u0002",
+    "\u0002\u0002yz\u0003\u0002\u0002\u0002z{\u0007\u0005\u0002\u0002{\u000f",
+    "\u0003\u0002\u0002\u0002|}\t\u0003\u0002\u0002}\u0011\u0003\u0002\u0002",
+    "\u0002~\u0082\u0007V\u0002\u0002\u007f\u0081\u0005\u0004\u0003\u0002",
+    "\u0080\u007f\u0003\u0002\u0002\u0002\u0081\u0084\u0003\u0002\u0002\u0002",
+    "\u0082\u0080\u0003\u0002\u0002\u0002\u0082\u0083\u0003\u0002\u0002\u0002",
+    "\u0083\u0085\u0003\u0002\u0002\u0002\u0084\u0082\u0003\u0002\u0002\u0002",
+    "\u0085\u0086\u0007W\u0002\u0002\u0086\u0013\u0003\u0002\u0002\u0002",
+    "\u0087\u008b\u0007X\u0002\u0002\u0088\u008a\u0005\u0004\u0003\u0002",
+    "\u0089\u0088\u0003\u0002\u0002\u0002\u008a\u008d\u0003\u0002\u0002\u0002",
+    "\u008b\u0089\u0003\u0002\u0002\u0002\u008b\u008c\u0003\u0002\u0002\u0002",
+    "\u008c\u008e\u0003\u0002\u0002\u0002\u008d\u008b\u0003\u0002\u0002\u0002",
+    "\u008e\u008f\u0007W\u0002\u0002\u008f\u0015\u0003\u0002\u0002\u0002",
+    "\u0090\u0091\u0007\u0182\u0002\u0002\u0091\u0017\u0003\u0002\u0002\u0002",
+    "\u0092\u0093\u0007\u0183\u0002\u0002\u0093\u0019\u0003\u0002\u0002\u0002",
+    "\u0094\u0095\u0007\u0184\u0002\u0002\u0095\u001b\u0003\u0002\u0002\u0002",
+    "\u0096\u0097\u0007\u0185\u0002\u0002\u0097\u001d\u0003\u0002\u0002\u0002",
+    "\u0098\u0099\u0007\u0186\u0002\u0002\u0099\u001f\u0003\u0002\u0002\u0002",
+    "\u009a\u009e\u0005\"\u0012\u0002\u009b\u009e\u0005$\u0013\u0002\u009c",
+    "\u009e\u0005P)\u0002\u009d\u009a\u0003\u0002\u0002\u0002\u009d\u009b",
+    "\u0003\u0002\u0002\u0002\u009d\u009c\u0003\u0002\u0002\u0002\u009e!",
+    "\u0003\u0002\u0002\u0002\u009f\u00a0\t\u0004\u0002\u0002\u00a0#\u0003",
+    "\u0002\u0002\u0002\u00a1\u00b7\u0005&\u0014\u0002\u00a2\u00b7\u0005",
+    "(\u0015\u0002\u00a3\u00b7\u0005*\u0016\u0002\u00a4\u00b7\u0005,\u0017",
+    "\u0002\u00a5\u00b7\u0005.\u0018\u0002\u00a6\u00b7\u00050\u0019\u0002",
+    "\u00a7\u00b7\u00052\u001a\u0002\u00a8\u00b7\u00054\u001b\u0002\u00a9",
+    "\u00b7\u00056\u001c\u0002\u00aa\u00b7\u00058\u001d\u0002\u00ab\u00b7",
+    "\u0005:\u001e\u0002\u00ac\u00b7\u0005<\u001f\u0002\u00ad\u00b7\u0005",
+    "> \u0002\u00ae\u00b7\u0005@!\u0002\u00af\u00b7\u0005B\"\u0002\u00b0",
+    "\u00b7\u0005D#\u0002\u00b1\u00b7\u0005F$\u0002\u00b2\u00b7\u0005H%\u0002",
+    "\u00b3\u00b7\u0005J&\u0002\u00b4\u00b7\u0005L\'\u0002\u00b5\u00b7\u0005",
+    "N(\u0002\u00b6\u00a1\u0003\u0002\u0002\u0002\u00b6\u00a2\u0003\u0002",
+    "\u0002\u0002\u00b6\u00a3\u0003\u0002\u0002\u0002\u00b6\u00a4\u0003\u0002",
+    "\u0002\u0002\u00b6\u00a5\u0003\u0002\u0002\u0002\u00b6\u00a6\u0003\u0002",
+    "\u0002\u0002\u00b6\u00a7\u0003\u0002\u0002\u0002\u00b6\u00a8\u0003\u0002",
+    "\u0002\u0002\u00b6\u00a9\u0003\u0002\u0002\u0002\u00b6\u00aa\u0003\u0002",
+    "\u0002\u0002\u00b6\u00ab\u0003\u0002\u0002\u0002\u00b6\u00ac\u0003\u0002",
+    "\u0002\u0002\u00b6\u00ad\u0003\u0002\u0002\u0002\u00b6\u00ae\u0003\u0002",
+    "\u0002\u0002\u00b6\u00af\u0003\u0002\u0002\u0002\u00b6\u00b0\u0003\u0002",
+    "\u0002\u0002\u00b6\u00b1\u0003\u0002\u0002\u0002\u00b6\u00b2\u0003\u0002",
+    "\u0002\u0002\u00b6\u00b3\u0003\u0002\u0002\u0002\u00b6\u00b4\u0003\u0002",
+    "\u0002\u0002\u00b6\u00b5\u0003\u0002\u0002\u0002\u00b7%\u0003\u0002",
+    "\u0002\u0002\u00b8\u00b9\t\u0005\u0002\u0002\u00b9\'\u0003\u0002\u0002",
+    "\u0002\u00ba\u00bb\t\u0006\u0002\u0002\u00bb)\u0003\u0002\u0002\u0002",
+    "\u00bc\u00bd\t\u0007\u0002\u0002\u00bd+\u0003\u0002\u0002\u0002\u00be",
+    "\u00bf\t\b\u0002\u0002\u00bf-\u0003\u0002\u0002\u0002\u00c0\u00c1\t",
+    "\t\u0002\u0002\u00c1/\u0003\u0002\u0002\u0002\u00c2\u00c3\t\n\u0002",
+    "\u0002\u00c31\u0003\u0002\u0002\u0002\u00c4\u00c5\t\u000b\u0002\u0002",
+    "\u00c53\u0003\u0002\u0002\u0002\u00c6\u00c7\t\f\u0002\u0002\u00c75\u0003",
+    "\u0002\u0002\u0002\u00c8\u00c9\t\r\u0002\u0002\u00c97\u0003\u0002\u0002",
+    "\u0002\u00ca\u00cb\t\u000e\u0002\u0002\u00cb9\u0003\u0002\u0002\u0002",
+    "\u00cc\u00cd\t\u000f\u0002\u0002\u00cd;\u0003\u0002\u0002\u0002\u00ce",
+    "\u00cf\t\u0010\u0002\u0002\u00cf=\u0003\u0002\u0002\u0002\u00d0\u00d1",
+    "\t\u0011\u0002\u0002\u00d1?\u0003\u0002\u0002\u0002\u00d2\u00d3\t\u0012",
+    "\u0002\u0002\u00d3A\u0003\u0002\u0002\u0002\u00d4\u00d5\t\u0013\u0002",
+    "\u0002\u00d5C\u0003\u0002\u0002\u0002\u00d6\u00d7\t\u0014\u0002\u0002",
+    "\u00d7E\u0003\u0002\u0002\u0002\u00d8\u00d9\t\u0015\u0002\u0002\u00d9",
+    "G\u0003\u0002\u0002\u0002\u00da\u00db\t\u0016\u0002\u0002\u00dbI\u0003",
+    "\u0002\u0002\u0002\u00dc\u00dd\t\u0017\u0002\u0002\u00ddK\u0003\u0002",
+    "\u0002\u0002\u00de\u00df\t\u0018\u0002\u0002\u00dfM\u0003\u0002\u0002",
+    "\u0002\u00e0\u00e1\t\u0019\u0002\u0002\u00e1O\u0003\u0002\u0002\u0002",
+    "\u00e2\u00e3\u0007\u0181\u0002\u0002\u00e3Q\u0003\u0002\u0002\u0002",
+    "\nUcgx\u0082\u008b\u009d\u00b6"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -167,8 +157,21 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "'('", "','", "')'", "'bool'", "'boolean'", "'meter'", 
-                     "'meters'", "'m'", "'centimeter'", "'centimeters'", 
+var literalNames = [ null, "'('", "','", "')'", "'>'", "'&gt;'", "'+'", 
+                     "'-'", "'/'", "'*'", "'%'", "'++'", "'--'", "'/-/'", 
+                     "'neg'", "'=='", "'!='", "'<'", "'>='", "'<='", "'?'", 
+                     "'&'", "'|'", "'^'", "'~'", "'>>'", "'<<'", "'!'", 
+                     "'NOT'", "'&&'", "'AND'", "'||'", "'OR'", "'abs'", 
+                     "'int'", "'flr'", "'rng'", "'cos'", "'lg'", "'min'", 
+                     "'sin'", "'acos'", "'ctg'", "'ln'", "'sqr'", "'asin'", 
+                     "'eps'", "'log'", "'pi'", "'sqrt'", "'atg2'", "'exp'", 
+                     "'max'", "'pow'", "'tg'", "'atg'", "'div'", "'ceil'", 
+                     "'near'", "'dnor'", "'d360'", "'rdeg'", "'rddg'", "'dgrd'", 
+                     "'rnor'", "'quit'", "'case'", "'lc'", "'uc'", "'cap'", 
+                     "'chr'", "'ord'", "'scat'", "'schr'", "'scmp'", "'scmi'", 
+                     "'sstr'", "'ssub'", "'symb'", "'b'", "'c'", "'d'", 
+                     "'p'", "'r'", "'if{'", "'}'", "'els{'", "'bool'", "'boolean'", 
+                     "'meter'", "'meters'", "'m'", "'centimeter'", "'centimeters'", 
                      "'cm'", "'kilometer'", "'kilometers'", "'km'", "'millimeter'", 
                      "'millimeters'", "'mile'", "'miles'", "'decimile'", 
                      "'decimiles'", "'nautical mile'", "'nautical miles'", 
@@ -246,20 +249,7 @@ var literalNames = [ null, "'('", "','", "')'", "'bool'", "'boolean'", "'meter'"
                      "'bel'", "'bels'", "'decibel'", "'decibels'", "'more_than_a_half'", 
                      "'times'", "'ratio'", "'number'", "'numbers'", "'scaler'", 
                      "'position'", "'enum'", "'bco16'", "'mask'", "'flags'", 
-                     "'per radian'", "'per degree'", "'string'", "'>'", 
-                     "'&gt;'", "'+'", "'-'", "'/'", "'*'", "'%'", "'++'", 
-                     "'--'", "'/-/'", "'neg'", "'=='", "'!='", "'<'", "'>='", 
-                     "'<='", "'?'", "'&'", "'|'", "'^'", "'~'", "'>>'", 
-                     "'<<'", "'!'", "'NOT'", "'&&'", "'AND'", "'||'", "'OR'", 
-                     "'abs'", "'int'", "'flr'", "'rng'", "'cos'", "'lg'", 
-                     "'min'", "'sin'", "'acos'", "'ctg'", "'ln'", "'sqr'", 
-                     "'asin'", "'eps'", "'log'", "'pi'", "'sqrt'", "'atg2'", 
-                     "'exp'", "'max'", "'pow'", "'tg'", "'atg'", "'div'", 
-                     "'ceil'", "'near'", "'dnor'", "'d360'", "'rdeg'", "'rddg'", 
-                     "'dgrd'", "'rnor'", "'quit'", "'case'", "'if{'", "'}'", 
-                     "'els{'", "'lc'", "'uc'", "'cap'", "'chr'", "'ord'", 
-                     "'scat'", "'schr'", "'scmp'", "'scmi'", "'sstr'", "'ssub'", 
-                     "'symb'", "'b'", "'c'", "'d'", "'p'", "'r'" ];
+                     "'per radian'", "'per degree'", "'string'" ];
 
 var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
                       null, null, null, null, null, null, null, null, null, 
@@ -303,21 +293,20 @@ var symbolicNames = [ null, null, null, null, null, null, null, null, null,
                       null, null, null, null, null, null, null, null, null, 
                       null, null, null, null, null, null, null, null, null, 
                       null, null, null, null, null, null, null, null, null, 
-                      null, null, null, null, null, null, "ID", "LABEL", 
-                      "GOTO", "STORE", "LOAD", "STORE_POP", "NUMBER", "STRING", 
+                      null, null, null, null, null, null, "LABEL", "GOTO", 
+                      "STORE", "LOAD", "STORE_POP", "NUMBER", "ID", "STRING", 
                       "WS" ];
 
-var ruleNames =  [ "rpn", "token", "literal", "variableAccess", "type", 
-                   "booleanType", "numberType", "distanceType", "areaType", 
-                   "volumeType", "volumeRateType", "temperatureType", "angleType", 
-                   "globalPositionType", "angularVelocityType", "speedType", 
-                   "accelerationType", "timeType", "powerType", "weightType", 
-                   "weightRateType", "electricalCurrentType", "electricalPotentialType", 
-                   "frequencyType", "densityType", "pressureType", "torqueType", 
-                   "miscellaneousType", "stringType", "assignment", "commonOperator", 
-                   "comparisonOperator", "bitwiseOperator", "logicalOperator", 
-                   "numericalOperator", "specialOperators", "ifStatement", 
-                   "elseStatement", "stringOperator", "stackOperator" ];
+var ruleNames =  [ "program", "action", "literal", "numberLiteral", "stringLiteral", 
+                   "variableAccess", "assignment", "operator", "ifAction", 
+                   "elseAction", "label", "gotoAction", "store", "load", 
+                   "storePop", "type", "booleanType", "numberType", "distanceType", 
+                   "areaType", "volumeType", "volumeRateType", "temperatureType", 
+                   "angleType", "globalPositionType", "angularVelocityType", 
+                   "speedType", "accelerationType", "timeType", "powerType", 
+                   "weightType", "weightRateType", "electricalCurrentType", 
+                   "electricalPotentialType", "frequencyType", "densityType", 
+                   "pressureType", "torqueType", "miscellaneousType", "stringType" ];
 
 function rpnParser (input) {
 	antlr4.Parser.call(this, input);
@@ -721,59 +710,59 @@ rpnParser.T__379 = 380;
 rpnParser.T__380 = 381;
 rpnParser.T__381 = 382;
 rpnParser.T__382 = 383;
-rpnParser.ID = 384;
-rpnParser.LABEL = 385;
-rpnParser.GOTO = 386;
-rpnParser.STORE = 387;
-rpnParser.LOAD = 388;
-rpnParser.STORE_POP = 389;
-rpnParser.NUMBER = 390;
+rpnParser.LABEL = 384;
+rpnParser.GOTO = 385;
+rpnParser.STORE = 386;
+rpnParser.LOAD = 387;
+rpnParser.STORE_POP = 388;
+rpnParser.NUMBER = 389;
+rpnParser.ID = 390;
 rpnParser.STRING = 391;
 rpnParser.WS = 392;
 
-rpnParser.RULE_rpn = 0;
-rpnParser.RULE_token = 1;
+rpnParser.RULE_program = 0;
+rpnParser.RULE_action = 1;
 rpnParser.RULE_literal = 2;
-rpnParser.RULE_variableAccess = 3;
-rpnParser.RULE_type = 4;
-rpnParser.RULE_booleanType = 5;
-rpnParser.RULE_numberType = 6;
-rpnParser.RULE_distanceType = 7;
-rpnParser.RULE_areaType = 8;
-rpnParser.RULE_volumeType = 9;
-rpnParser.RULE_volumeRateType = 10;
-rpnParser.RULE_temperatureType = 11;
-rpnParser.RULE_angleType = 12;
-rpnParser.RULE_globalPositionType = 13;
-rpnParser.RULE_angularVelocityType = 14;
-rpnParser.RULE_speedType = 15;
-rpnParser.RULE_accelerationType = 16;
-rpnParser.RULE_timeType = 17;
-rpnParser.RULE_powerType = 18;
-rpnParser.RULE_weightType = 19;
-rpnParser.RULE_weightRateType = 20;
-rpnParser.RULE_electricalCurrentType = 21;
-rpnParser.RULE_electricalPotentialType = 22;
-rpnParser.RULE_frequencyType = 23;
-rpnParser.RULE_densityType = 24;
-rpnParser.RULE_pressureType = 25;
-rpnParser.RULE_torqueType = 26;
-rpnParser.RULE_miscellaneousType = 27;
-rpnParser.RULE_stringType = 28;
-rpnParser.RULE_assignment = 29;
-rpnParser.RULE_commonOperator = 30;
-rpnParser.RULE_comparisonOperator = 31;
-rpnParser.RULE_bitwiseOperator = 32;
-rpnParser.RULE_logicalOperator = 33;
-rpnParser.RULE_numericalOperator = 34;
-rpnParser.RULE_specialOperators = 35;
-rpnParser.RULE_ifStatement = 36;
-rpnParser.RULE_elseStatement = 37;
-rpnParser.RULE_stringOperator = 38;
-rpnParser.RULE_stackOperator = 39;
+rpnParser.RULE_numberLiteral = 3;
+rpnParser.RULE_stringLiteral = 4;
+rpnParser.RULE_variableAccess = 5;
+rpnParser.RULE_assignment = 6;
+rpnParser.RULE_operator = 7;
+rpnParser.RULE_ifAction = 8;
+rpnParser.RULE_elseAction = 9;
+rpnParser.RULE_label = 10;
+rpnParser.RULE_gotoAction = 11;
+rpnParser.RULE_store = 12;
+rpnParser.RULE_load = 13;
+rpnParser.RULE_storePop = 14;
+rpnParser.RULE_type = 15;
+rpnParser.RULE_booleanType = 16;
+rpnParser.RULE_numberType = 17;
+rpnParser.RULE_distanceType = 18;
+rpnParser.RULE_areaType = 19;
+rpnParser.RULE_volumeType = 20;
+rpnParser.RULE_volumeRateType = 21;
+rpnParser.RULE_temperatureType = 22;
+rpnParser.RULE_angleType = 23;
+rpnParser.RULE_globalPositionType = 24;
+rpnParser.RULE_angularVelocityType = 25;
+rpnParser.RULE_speedType = 26;
+rpnParser.RULE_accelerationType = 27;
+rpnParser.RULE_timeType = 28;
+rpnParser.RULE_powerType = 29;
+rpnParser.RULE_weightType = 30;
+rpnParser.RULE_weightRateType = 31;
+rpnParser.RULE_electricalCurrentType = 32;
+rpnParser.RULE_electricalPotentialType = 33;
+rpnParser.RULE_frequencyType = 34;
+rpnParser.RULE_densityType = 35;
+rpnParser.RULE_pressureType = 36;
+rpnParser.RULE_torqueType = 37;
+rpnParser.RULE_miscellaneousType = 38;
+rpnParser.RULE_stringType = 39;
 
 
-function RpnContext(parser, parent, invokingState) {
+function ProgramContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -782,54 +771,62 @@ function RpnContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_rpn;
+    this.ruleIndex = rpnParser.RULE_program;
     return this;
 }
 
-RpnContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-RpnContext.prototype.constructor = RpnContext;
+ProgramContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+ProgramContext.prototype.constructor = ProgramContext;
 
-RpnContext.prototype.token = function(i) {
+ProgramContext.prototype.action = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(TokenContext);
+        return this.getTypedRuleContexts(ActionContext);
     } else {
-        return this.getTypedRuleContext(TokenContext,i);
+        return this.getTypedRuleContext(ActionContext,i);
     }
 };
 
-RpnContext.prototype.enterRule = function(listener) {
+ProgramContext.prototype.enterRule = function(listener) {
     if(listener instanceof rpnListener ) {
-        listener.enterRpn(this);
+        listener.enterProgram(this);
 	}
 };
 
-RpnContext.prototype.exitRule = function(listener) {
+ProgramContext.prototype.exitRule = function(listener) {
     if(listener instanceof rpnListener ) {
-        listener.exitRpn(this);
+        listener.exitProgram(this);
 	}
+};
+
+ProgramContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitProgram(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
 
 
-rpnParser.RpnContext = RpnContext;
+rpnParser.ProgramContext = ProgramContext;
 
-rpnParser.prototype.rpn = function() {
+rpnParser.prototype.program = function() {
 
-    var localctx = new RpnContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 0, rpnParser.RULE_rpn);
+    var localctx = new ProgramContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 0, rpnParser.RULE_program);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 83;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        while(_la===rpnParser.T__0 || ((((_la - 301)) & ~0x1f) == 0 && ((1 << (_la - 301)) & ((1 << (rpnParser.T__300 - 301)) | (1 << (rpnParser.T__302 - 301)) | (1 << (rpnParser.T__303 - 301)) | (1 << (rpnParser.T__304 - 301)) | (1 << (rpnParser.T__305 - 301)) | (1 << (rpnParser.T__306 - 301)) | (1 << (rpnParser.T__307 - 301)) | (1 << (rpnParser.T__308 - 301)) | (1 << (rpnParser.T__309 - 301)) | (1 << (rpnParser.T__310 - 301)) | (1 << (rpnParser.T__311 - 301)) | (1 << (rpnParser.T__312 - 301)) | (1 << (rpnParser.T__313 - 301)) | (1 << (rpnParser.T__314 - 301)) | (1 << (rpnParser.T__315 - 301)) | (1 << (rpnParser.T__316 - 301)) | (1 << (rpnParser.T__317 - 301)) | (1 << (rpnParser.T__318 - 301)) | (1 << (rpnParser.T__319 - 301)) | (1 << (rpnParser.T__320 - 301)) | (1 << (rpnParser.T__321 - 301)) | (1 << (rpnParser.T__322 - 301)) | (1 << (rpnParser.T__323 - 301)) | (1 << (rpnParser.T__324 - 301)) | (1 << (rpnParser.T__325 - 301)) | (1 << (rpnParser.T__326 - 301)) | (1 << (rpnParser.T__327 - 301)) | (1 << (rpnParser.T__328 - 301)) | (1 << (rpnParser.T__329 - 301)) | (1 << (rpnParser.T__330 - 301)) | (1 << (rpnParser.T__331 - 301)))) !== 0) || ((((_la - 333)) & ~0x1f) == 0 && ((1 << (_la - 333)) & ((1 << (rpnParser.T__332 - 333)) | (1 << (rpnParser.T__333 - 333)) | (1 << (rpnParser.T__334 - 333)) | (1 << (rpnParser.T__335 - 333)) | (1 << (rpnParser.T__336 - 333)) | (1 << (rpnParser.T__337 - 333)) | (1 << (rpnParser.T__338 - 333)) | (1 << (rpnParser.T__339 - 333)) | (1 << (rpnParser.T__340 - 333)) | (1 << (rpnParser.T__341 - 333)) | (1 << (rpnParser.T__342 - 333)) | (1 << (rpnParser.T__343 - 333)) | (1 << (rpnParser.T__344 - 333)) | (1 << (rpnParser.T__345 - 333)) | (1 << (rpnParser.T__346 - 333)) | (1 << (rpnParser.T__347 - 333)) | (1 << (rpnParser.T__348 - 333)) | (1 << (rpnParser.T__349 - 333)) | (1 << (rpnParser.T__350 - 333)) | (1 << (rpnParser.T__351 - 333)) | (1 << (rpnParser.T__352 - 333)) | (1 << (rpnParser.T__353 - 333)) | (1 << (rpnParser.T__354 - 333)) | (1 << (rpnParser.T__355 - 333)) | (1 << (rpnParser.T__356 - 333)) | (1 << (rpnParser.T__357 - 333)) | (1 << (rpnParser.T__358 - 333)) | (1 << (rpnParser.T__359 - 333)) | (1 << (rpnParser.T__360 - 333)) | (1 << (rpnParser.T__361 - 333)) | (1 << (rpnParser.T__362 - 333)) | (1 << (rpnParser.T__363 - 333)))) !== 0) || ((((_la - 366)) & ~0x1f) == 0 && ((1 << (_la - 366)) & ((1 << (rpnParser.T__365 - 366)) | (1 << (rpnParser.T__366 - 366)) | (1 << (rpnParser.T__367 - 366)) | (1 << (rpnParser.T__368 - 366)) | (1 << (rpnParser.T__369 - 366)) | (1 << (rpnParser.T__370 - 366)) | (1 << (rpnParser.T__371 - 366)) | (1 << (rpnParser.T__372 - 366)) | (1 << (rpnParser.T__373 - 366)) | (1 << (rpnParser.T__374 - 366)) | (1 << (rpnParser.T__375 - 366)) | (1 << (rpnParser.T__376 - 366)) | (1 << (rpnParser.T__377 - 366)) | (1 << (rpnParser.T__378 - 366)) | (1 << (rpnParser.T__379 - 366)) | (1 << (rpnParser.T__380 - 366)) | (1 << (rpnParser.T__381 - 366)) | (1 << (rpnParser.T__382 - 366)) | (1 << (rpnParser.LABEL - 366)) | (1 << (rpnParser.GOTO - 366)) | (1 << (rpnParser.STORE - 366)) | (1 << (rpnParser.LOAD - 366)) | (1 << (rpnParser.STORE_POP - 366)) | (1 << (rpnParser.NUMBER - 366)) | (1 << (rpnParser.STRING - 366)))) !== 0)) {
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__0) | (1 << rpnParser.T__3) | (1 << rpnParser.T__5) | (1 << rpnParser.T__6) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__85 - 64)))) !== 0) || ((((_la - 384)) & ~0x1f) == 0 && ((1 << (_la - 384)) & ((1 << (rpnParser.LABEL - 384)) | (1 << (rpnParser.GOTO - 384)) | (1 << (rpnParser.STORE - 384)) | (1 << (rpnParser.LOAD - 384)) | (1 << (rpnParser.STORE_POP - 384)) | (1 << (rpnParser.NUMBER - 384)) | (1 << (rpnParser.STRING - 384)))) !== 0)) {
             this.state = 80;
-            this.token();
+            this.action();
             this.state = 85;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -849,7 +846,7 @@ rpnParser.prototype.rpn = function() {
 };
 
 
-function TokenContext(parser, parent, invokingState) {
+function ActionContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -858,84 +855,88 @@ function TokenContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_token;
+    this.ruleIndex = rpnParser.RULE_action;
     return this;
 }
 
-TokenContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-TokenContext.prototype.constructor = TokenContext;
+ActionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+ActionContext.prototype.constructor = ActionContext;
 
-TokenContext.prototype.literal = function() {
+ActionContext.prototype.literal = function() {
     return this.getTypedRuleContext(LiteralContext,0);
 };
 
-TokenContext.prototype.LABEL = function() {
-    return this.getToken(rpnParser.LABEL, 0);
-};
-
-TokenContext.prototype.variableAccess = function() {
+ActionContext.prototype.variableAccess = function() {
     return this.getTypedRuleContext(VariableAccessContext,0);
 };
 
-TokenContext.prototype.assignment = function() {
+ActionContext.prototype.assignment = function() {
     return this.getTypedRuleContext(AssignmentContext,0);
 };
 
-TokenContext.prototype.commonOperator = function() {
-    return this.getTypedRuleContext(CommonOperatorContext,0);
+ActionContext.prototype.operator = function() {
+    return this.getTypedRuleContext(OperatorContext,0);
 };
 
-TokenContext.prototype.comparisonOperator = function() {
-    return this.getTypedRuleContext(ComparisonOperatorContext,0);
+ActionContext.prototype.ifAction = function() {
+    return this.getTypedRuleContext(IfActionContext,0);
 };
 
-TokenContext.prototype.bitwiseOperator = function() {
-    return this.getTypedRuleContext(BitwiseOperatorContext,0);
+ActionContext.prototype.elseAction = function() {
+    return this.getTypedRuleContext(ElseActionContext,0);
 };
 
-TokenContext.prototype.logicalOperator = function() {
-    return this.getTypedRuleContext(LogicalOperatorContext,0);
+ActionContext.prototype.label = function() {
+    return this.getTypedRuleContext(LabelContext,0);
 };
 
-TokenContext.prototype.numericalOperator = function() {
-    return this.getTypedRuleContext(NumericalOperatorContext,0);
+ActionContext.prototype.gotoAction = function() {
+    return this.getTypedRuleContext(GotoActionContext,0);
 };
 
-TokenContext.prototype.specialOperators = function() {
-    return this.getTypedRuleContext(SpecialOperatorsContext,0);
+ActionContext.prototype.store = function() {
+    return this.getTypedRuleContext(StoreContext,0);
 };
 
-TokenContext.prototype.stringOperator = function() {
-    return this.getTypedRuleContext(StringOperatorContext,0);
+ActionContext.prototype.load = function() {
+    return this.getTypedRuleContext(LoadContext,0);
 };
 
-TokenContext.prototype.stackOperator = function() {
-    return this.getTypedRuleContext(StackOperatorContext,0);
+ActionContext.prototype.storePop = function() {
+    return this.getTypedRuleContext(StorePopContext,0);
 };
 
-TokenContext.prototype.enterRule = function(listener) {
+ActionContext.prototype.enterRule = function(listener) {
     if(listener instanceof rpnListener ) {
-        listener.enterToken(this);
+        listener.enterAction(this);
 	}
 };
 
-TokenContext.prototype.exitRule = function(listener) {
+ActionContext.prototype.exitRule = function(listener) {
     if(listener instanceof rpnListener ) {
-        listener.exitToken(this);
+        listener.exitAction(this);
 	}
+};
+
+ActionContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitAction(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
 
 
-rpnParser.TokenContext = TokenContext;
+rpnParser.ActionContext = ActionContext;
 
-rpnParser.prototype.token = function() {
+rpnParser.prototype.action = function() {
 
-    var localctx = new TokenContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 2, rpnParser.RULE_token);
+    var localctx = new ActionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 2, rpnParser.RULE_action);
     try {
-        this.state = 98;
+        this.state = 97;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,1,this._ctx);
         switch(la_) {
@@ -948,67 +949,61 @@ rpnParser.prototype.token = function() {
         case 2:
             this.enterOuterAlt(localctx, 2);
             this.state = 87;
-            this.match(rpnParser.LABEL);
+            this.variableAccess();
             break;
 
         case 3:
             this.enterOuterAlt(localctx, 3);
             this.state = 88;
-            this.variableAccess();
+            this.assignment();
             break;
 
         case 4:
             this.enterOuterAlt(localctx, 4);
             this.state = 89;
-            this.assignment();
+            this.operator();
             break;
 
         case 5:
             this.enterOuterAlt(localctx, 5);
             this.state = 90;
-            this.commonOperator();
+            this.ifAction();
             break;
 
         case 6:
             this.enterOuterAlt(localctx, 6);
             this.state = 91;
-            this.comparisonOperator();
+            this.elseAction();
             break;
 
         case 7:
             this.enterOuterAlt(localctx, 7);
             this.state = 92;
-            this.bitwiseOperator();
+            this.label();
             break;
 
         case 8:
             this.enterOuterAlt(localctx, 8);
             this.state = 93;
-            this.logicalOperator();
+            this.gotoAction();
             break;
 
         case 9:
             this.enterOuterAlt(localctx, 9);
             this.state = 94;
-            this.numericalOperator();
+            this.store();
             break;
 
         case 10:
             this.enterOuterAlt(localctx, 10);
             this.state = 95;
-            this.specialOperators();
+            this.load();
             break;
 
         case 11:
             this.enterOuterAlt(localctx, 11);
             this.state = 96;
-            this.stringOperator();
-            break;
-
-        case 12:
-            this.enterOuterAlt(localctx, 12);
-            this.state = 97;
-            this.stackOperator();
+            this.storePop();
             break;
 
         }
@@ -1043,12 +1038,12 @@ function LiteralContext(parser, parent, invokingState) {
 LiteralContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 LiteralContext.prototype.constructor = LiteralContext;
 
-LiteralContext.prototype.NUMBER = function() {
-    return this.getToken(rpnParser.NUMBER, 0);
+LiteralContext.prototype.numberLiteral = function() {
+    return this.getTypedRuleContext(NumberLiteralContext,0);
 };
 
-LiteralContext.prototype.STRING = function() {
-    return this.getToken(rpnParser.STRING, 0);
+LiteralContext.prototype.stringLiteral = function() {
+    return this.getTypedRuleContext(StringLiteralContext,0);
 };
 
 LiteralContext.prototype.enterRule = function(listener) {
@@ -1063,6 +1058,14 @@ LiteralContext.prototype.exitRule = function(listener) {
 	}
 };
 
+LiteralContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitLiteral(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -1072,18 +1075,159 @@ rpnParser.prototype.literal = function() {
 
     var localctx = new LiteralContext(this, this._ctx, this.state);
     this.enterRule(localctx, 4, rpnParser.RULE_literal);
-    var _la = 0; // Token type
+    try {
+        this.state = 101;
+        this._errHandler.sync(this);
+        switch(this._input.LA(1)) {
+        case rpnParser.NUMBER:
+            this.enterOuterAlt(localctx, 1);
+            this.state = 99;
+            this.numberLiteral();
+            break;
+        case rpnParser.STRING:
+            this.enterOuterAlt(localctx, 2);
+            this.state = 100;
+            this.stringLiteral();
+            break;
+        default:
+            throw new antlr4.error.NoViableAltException(this);
+        }
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function NumberLiteralContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_numberLiteral;
+    return this;
+}
+
+NumberLiteralContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+NumberLiteralContext.prototype.constructor = NumberLiteralContext;
+
+NumberLiteralContext.prototype.NUMBER = function() {
+    return this.getToken(rpnParser.NUMBER, 0);
+};
+
+NumberLiteralContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterNumberLiteral(this);
+	}
+};
+
+NumberLiteralContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitNumberLiteral(this);
+	}
+};
+
+NumberLiteralContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitNumberLiteral(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.NumberLiteralContext = NumberLiteralContext;
+
+rpnParser.prototype.numberLiteral = function() {
+
+    var localctx = new NumberLiteralContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 6, rpnParser.RULE_numberLiteral);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 100;
-        _la = this._input.LA(1);
-        if(!(_la===rpnParser.NUMBER || _la===rpnParser.STRING)) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
-        }
+        this.state = 103;
+        this.match(rpnParser.NUMBER);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function StringLiteralContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_stringLiteral;
+    return this;
+}
+
+StringLiteralContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+StringLiteralContext.prototype.constructor = StringLiteralContext;
+
+StringLiteralContext.prototype.STRING = function() {
+    return this.getToken(rpnParser.STRING, 0);
+};
+
+StringLiteralContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterStringLiteral(this);
+	}
+};
+
+StringLiteralContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitStringLiteral(this);
+	}
+};
+
+StringLiteralContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitStringLiteral(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.StringLiteralContext = StringLiteralContext;
+
+rpnParser.prototype.stringLiteral = function() {
+
+    var localctx = new StringLiteralContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 8, rpnParser.RULE_stringLiteral);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 105;
+        this.match(rpnParser.STRING);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1135,6 +1279,14 @@ VariableAccessContext.prototype.exitRule = function(listener) {
 	}
 };
 
+VariableAccessContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitVariableAccess(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -1143,19 +1295,704 @@ rpnParser.VariableAccessContext = VariableAccessContext;
 rpnParser.prototype.variableAccess = function() {
 
     var localctx = new VariableAccessContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 6, rpnParser.RULE_variableAccess);
+    this.enterRule(localctx, 10, rpnParser.RULE_variableAccess);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 102;
+        this.state = 107;
         this.match(rpnParser.T__0);
-        this.state = 103;
+        this.state = 108;
         this.match(rpnParser.ID);
-        this.state = 104;
+        this.state = 109;
         this.match(rpnParser.T__1);
-        this.state = 105;
+        this.state = 110;
         this.type();
-        this.state = 106;
+        this.state = 111;
         this.match(rpnParser.T__2);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function AssignmentContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_assignment;
+    return this;
+}
+
+AssignmentContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+AssignmentContext.prototype.constructor = AssignmentContext;
+
+AssignmentContext.prototype.ID = function() {
+    return this.getToken(rpnParser.ID, 0);
+};
+
+AssignmentContext.prototype.type = function() {
+    return this.getTypedRuleContext(TypeContext,0);
+};
+
+AssignmentContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterAssignment(this);
+	}
+};
+
+AssignmentContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitAssignment(this);
+	}
+};
+
+AssignmentContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitAssignment(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.AssignmentContext = AssignmentContext;
+
+rpnParser.prototype.assignment = function() {
+
+    var localctx = new AssignmentContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 12, rpnParser.RULE_assignment);
+    var _la = 0; // Token type
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 113;
+        this.match(rpnParser.T__0);
+        this.state = 114;
+        _la = this._input.LA(1);
+        if(!(_la===rpnParser.T__3 || _la===rpnParser.T__4)) {
+        this._errHandler.recoverInline(this);
+        }
+        else {
+        	this._errHandler.reportMatch(this);
+            this.consume();
+        }
+        this.state = 115;
+        this.match(rpnParser.ID);
+        this.state = 118;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+        if(_la===rpnParser.T__1) {
+            this.state = 116;
+            this.match(rpnParser.T__1);
+            this.state = 117;
+            this.type();
+        }
+
+        this.state = 120;
+        this.match(rpnParser.T__2);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function OperatorContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_operator;
+    return this;
+}
+
+OperatorContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+OperatorContext.prototype.constructor = OperatorContext;
+
+
+OperatorContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterOperator(this);
+	}
+};
+
+OperatorContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitOperator(this);
+	}
+};
+
+OperatorContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitOperator(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.OperatorContext = OperatorContext;
+
+rpnParser.prototype.operator = function() {
+
+    var localctx = new OperatorContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 14, rpnParser.RULE_operator);
+    var _la = 0; // Token type
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 122;
+        _la = this._input.LA(1);
+        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__3) | (1 << rpnParser.T__5) | (1 << rpnParser.T__6) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)))) !== 0))) {
+        this._errHandler.recoverInline(this);
+        }
+        else {
+        	this._errHandler.reportMatch(this);
+            this.consume();
+        }
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function IfActionContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_ifAction;
+    return this;
+}
+
+IfActionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+IfActionContext.prototype.constructor = IfActionContext;
+
+IfActionContext.prototype.action = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ActionContext);
+    } else {
+        return this.getTypedRuleContext(ActionContext,i);
+    }
+};
+
+IfActionContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterIfAction(this);
+	}
+};
+
+IfActionContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitIfAction(this);
+	}
+};
+
+IfActionContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitIfAction(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.IfActionContext = IfActionContext;
+
+rpnParser.prototype.ifAction = function() {
+
+    var localctx = new IfActionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 16, rpnParser.RULE_ifAction);
+    var _la = 0; // Token type
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 124;
+        this.match(rpnParser.T__83);
+        this.state = 128;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__0) | (1 << rpnParser.T__3) | (1 << rpnParser.T__5) | (1 << rpnParser.T__6) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__85 - 64)))) !== 0) || ((((_la - 384)) & ~0x1f) == 0 && ((1 << (_la - 384)) & ((1 << (rpnParser.LABEL - 384)) | (1 << (rpnParser.GOTO - 384)) | (1 << (rpnParser.STORE - 384)) | (1 << (rpnParser.LOAD - 384)) | (1 << (rpnParser.STORE_POP - 384)) | (1 << (rpnParser.NUMBER - 384)) | (1 << (rpnParser.STRING - 384)))) !== 0)) {
+            this.state = 125;
+            this.action();
+            this.state = 130;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
+        }
+        this.state = 131;
+        this.match(rpnParser.T__84);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function ElseActionContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_elseAction;
+    return this;
+}
+
+ElseActionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+ElseActionContext.prototype.constructor = ElseActionContext;
+
+ElseActionContext.prototype.action = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ActionContext);
+    } else {
+        return this.getTypedRuleContext(ActionContext,i);
+    }
+};
+
+ElseActionContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterElseAction(this);
+	}
+};
+
+ElseActionContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitElseAction(this);
+	}
+};
+
+ElseActionContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitElseAction(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.ElseActionContext = ElseActionContext;
+
+rpnParser.prototype.elseAction = function() {
+
+    var localctx = new ElseActionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 18, rpnParser.RULE_elseAction);
+    var _la = 0; // Token type
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 133;
+        this.match(rpnParser.T__85);
+        this.state = 137;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__0) | (1 << rpnParser.T__3) | (1 << rpnParser.T__5) | (1 << rpnParser.T__6) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__85 - 64)))) !== 0) || ((((_la - 384)) & ~0x1f) == 0 && ((1 << (_la - 384)) & ((1 << (rpnParser.LABEL - 384)) | (1 << (rpnParser.GOTO - 384)) | (1 << (rpnParser.STORE - 384)) | (1 << (rpnParser.LOAD - 384)) | (1 << (rpnParser.STORE_POP - 384)) | (1 << (rpnParser.NUMBER - 384)) | (1 << (rpnParser.STRING - 384)))) !== 0)) {
+            this.state = 134;
+            this.action();
+            this.state = 139;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
+        }
+        this.state = 140;
+        this.match(rpnParser.T__84);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function LabelContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_label;
+    return this;
+}
+
+LabelContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+LabelContext.prototype.constructor = LabelContext;
+
+LabelContext.prototype.LABEL = function() {
+    return this.getToken(rpnParser.LABEL, 0);
+};
+
+LabelContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterLabel(this);
+	}
+};
+
+LabelContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitLabel(this);
+	}
+};
+
+LabelContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitLabel(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.LabelContext = LabelContext;
+
+rpnParser.prototype.label = function() {
+
+    var localctx = new LabelContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 20, rpnParser.RULE_label);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 142;
+        this.match(rpnParser.LABEL);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function GotoActionContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_gotoAction;
+    return this;
+}
+
+GotoActionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+GotoActionContext.prototype.constructor = GotoActionContext;
+
+GotoActionContext.prototype.GOTO = function() {
+    return this.getToken(rpnParser.GOTO, 0);
+};
+
+GotoActionContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterGotoAction(this);
+	}
+};
+
+GotoActionContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitGotoAction(this);
+	}
+};
+
+GotoActionContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitGotoAction(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.GotoActionContext = GotoActionContext;
+
+rpnParser.prototype.gotoAction = function() {
+
+    var localctx = new GotoActionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 22, rpnParser.RULE_gotoAction);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 144;
+        this.match(rpnParser.GOTO);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function StoreContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_store;
+    return this;
+}
+
+StoreContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+StoreContext.prototype.constructor = StoreContext;
+
+StoreContext.prototype.STORE = function() {
+    return this.getToken(rpnParser.STORE, 0);
+};
+
+StoreContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterStore(this);
+	}
+};
+
+StoreContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitStore(this);
+	}
+};
+
+StoreContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitStore(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.StoreContext = StoreContext;
+
+rpnParser.prototype.store = function() {
+
+    var localctx = new StoreContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 24, rpnParser.RULE_store);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 146;
+        this.match(rpnParser.STORE);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function LoadContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_load;
+    return this;
+}
+
+LoadContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+LoadContext.prototype.constructor = LoadContext;
+
+LoadContext.prototype.LOAD = function() {
+    return this.getToken(rpnParser.LOAD, 0);
+};
+
+LoadContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterLoad(this);
+	}
+};
+
+LoadContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitLoad(this);
+	}
+};
+
+LoadContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitLoad(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.LoadContext = LoadContext;
+
+rpnParser.prototype.load = function() {
+
+    var localctx = new LoadContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 26, rpnParser.RULE_load);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 148;
+        this.match(rpnParser.LOAD);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function StorePopContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = rpnParser.RULE_storePop;
+    return this;
+}
+
+StorePopContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+StorePopContext.prototype.constructor = StorePopContext;
+
+StorePopContext.prototype.STORE_POP = function() {
+    return this.getToken(rpnParser.STORE_POP, 0);
+};
+
+StorePopContext.prototype.enterRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.enterStorePop(this);
+	}
+};
+
+StorePopContext.prototype.exitRule = function(listener) {
+    if(listener instanceof rpnListener ) {
+        listener.exitStorePop(this);
+	}
+};
+
+StorePopContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitStorePop(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+rpnParser.StorePopContext = StorePopContext;
+
+rpnParser.prototype.storePop = function() {
+
+    var localctx = new StorePopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 28, rpnParser.RULE_storePop);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 150;
+        this.match(rpnParser.STORE_POP);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1211,6 +2048,14 @@ TypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+TypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -1219,100 +2064,17 @@ rpnParser.TypeContext = TypeContext;
 rpnParser.prototype.type = function() {
 
     var localctx = new TypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 8, rpnParser.RULE_type);
+    this.enterRule(localctx, 30, rpnParser.RULE_type);
     try {
-        this.state = 111;
+        this.state = 155;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
-        case rpnParser.T__3:
-        case rpnParser.T__4:
-            this.enterOuterAlt(localctx, 1);
-            this.state = 108;
-            this.booleanType();
-            break;
-        case rpnParser.T__5:
-        case rpnParser.T__6:
-        case rpnParser.T__7:
-        case rpnParser.T__8:
-        case rpnParser.T__9:
-        case rpnParser.T__10:
-        case rpnParser.T__11:
-        case rpnParser.T__12:
-        case rpnParser.T__13:
-        case rpnParser.T__14:
-        case rpnParser.T__15:
-        case rpnParser.T__16:
-        case rpnParser.T__17:
-        case rpnParser.T__18:
-        case rpnParser.T__19:
-        case rpnParser.T__20:
-        case rpnParser.T__21:
-        case rpnParser.T__22:
-        case rpnParser.T__23:
-        case rpnParser.T__24:
-        case rpnParser.T__25:
-        case rpnParser.T__26:
-        case rpnParser.T__27:
-        case rpnParser.T__28:
-        case rpnParser.T__29:
-        case rpnParser.T__30:
-        case rpnParser.T__31:
-        case rpnParser.T__32:
-        case rpnParser.T__33:
-        case rpnParser.T__34:
-        case rpnParser.T__35:
-        case rpnParser.T__36:
-        case rpnParser.T__37:
-        case rpnParser.T__38:
-        case rpnParser.T__39:
-        case rpnParser.T__40:
-        case rpnParser.T__41:
-        case rpnParser.T__42:
-        case rpnParser.T__43:
-        case rpnParser.T__44:
-        case rpnParser.T__45:
-        case rpnParser.T__46:
-        case rpnParser.T__47:
-        case rpnParser.T__48:
-        case rpnParser.T__49:
-        case rpnParser.T__50:
-        case rpnParser.T__51:
-        case rpnParser.T__52:
-        case rpnParser.T__53:
-        case rpnParser.T__54:
-        case rpnParser.T__55:
-        case rpnParser.T__56:
-        case rpnParser.T__57:
-        case rpnParser.T__58:
-        case rpnParser.T__59:
-        case rpnParser.T__60:
-        case rpnParser.T__61:
-        case rpnParser.T__62:
-        case rpnParser.T__63:
-        case rpnParser.T__64:
-        case rpnParser.T__65:
-        case rpnParser.T__66:
-        case rpnParser.T__67:
-        case rpnParser.T__68:
-        case rpnParser.T__69:
-        case rpnParser.T__70:
-        case rpnParser.T__71:
-        case rpnParser.T__72:
-        case rpnParser.T__73:
-        case rpnParser.T__74:
-        case rpnParser.T__75:
-        case rpnParser.T__76:
-        case rpnParser.T__77:
-        case rpnParser.T__78:
-        case rpnParser.T__79:
-        case rpnParser.T__80:
-        case rpnParser.T__81:
-        case rpnParser.T__82:
-        case rpnParser.T__83:
-        case rpnParser.T__84:
-        case rpnParser.T__85:
         case rpnParser.T__86:
         case rpnParser.T__87:
+            this.enterOuterAlt(localctx, 1);
+            this.state = 152;
+            this.booleanType();
+            break;
         case rpnParser.T__88:
         case rpnParser.T__89:
         case rpnParser.T__90:
@@ -1524,13 +2286,96 @@ rpnParser.prototype.type = function() {
         case rpnParser.T__296:
         case rpnParser.T__297:
         case rpnParser.T__298:
+        case rpnParser.T__299:
+        case rpnParser.T__300:
+        case rpnParser.T__301:
+        case rpnParser.T__302:
+        case rpnParser.T__303:
+        case rpnParser.T__304:
+        case rpnParser.T__305:
+        case rpnParser.T__306:
+        case rpnParser.T__307:
+        case rpnParser.T__308:
+        case rpnParser.T__309:
+        case rpnParser.T__310:
+        case rpnParser.T__311:
+        case rpnParser.T__312:
+        case rpnParser.T__313:
+        case rpnParser.T__314:
+        case rpnParser.T__315:
+        case rpnParser.T__316:
+        case rpnParser.T__317:
+        case rpnParser.T__318:
+        case rpnParser.T__319:
+        case rpnParser.T__320:
+        case rpnParser.T__321:
+        case rpnParser.T__322:
+        case rpnParser.T__323:
+        case rpnParser.T__324:
+        case rpnParser.T__325:
+        case rpnParser.T__326:
+        case rpnParser.T__327:
+        case rpnParser.T__328:
+        case rpnParser.T__329:
+        case rpnParser.T__330:
+        case rpnParser.T__331:
+        case rpnParser.T__332:
+        case rpnParser.T__333:
+        case rpnParser.T__334:
+        case rpnParser.T__335:
+        case rpnParser.T__336:
+        case rpnParser.T__337:
+        case rpnParser.T__338:
+        case rpnParser.T__339:
+        case rpnParser.T__340:
+        case rpnParser.T__341:
+        case rpnParser.T__342:
+        case rpnParser.T__343:
+        case rpnParser.T__344:
+        case rpnParser.T__345:
+        case rpnParser.T__346:
+        case rpnParser.T__347:
+        case rpnParser.T__348:
+        case rpnParser.T__349:
+        case rpnParser.T__350:
+        case rpnParser.T__351:
+        case rpnParser.T__352:
+        case rpnParser.T__353:
+        case rpnParser.T__354:
+        case rpnParser.T__355:
+        case rpnParser.T__356:
+        case rpnParser.T__357:
+        case rpnParser.T__358:
+        case rpnParser.T__359:
+        case rpnParser.T__360:
+        case rpnParser.T__361:
+        case rpnParser.T__362:
+        case rpnParser.T__363:
+        case rpnParser.T__364:
+        case rpnParser.T__365:
+        case rpnParser.T__366:
+        case rpnParser.T__367:
+        case rpnParser.T__368:
+        case rpnParser.T__369:
+        case rpnParser.T__370:
+        case rpnParser.T__371:
+        case rpnParser.T__372:
+        case rpnParser.T__373:
+        case rpnParser.T__374:
+        case rpnParser.T__375:
+        case rpnParser.T__376:
+        case rpnParser.T__377:
+        case rpnParser.T__378:
+        case rpnParser.T__379:
+        case rpnParser.T__380:
+        case rpnParser.T__381:
             this.enterOuterAlt(localctx, 2);
-            this.state = 109;
+            this.state = 153;
             this.numberType();
             break;
-        case rpnParser.T__299:
+        case rpnParser.T__382:
             this.enterOuterAlt(localctx, 3);
-            this.state = 110;
+            this.state = 154;
             this.stringType();
             break;
         default:
@@ -1580,6 +2425,14 @@ BooleanTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+BooleanTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitBooleanType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -1588,13 +2441,13 @@ rpnParser.BooleanTypeContext = BooleanTypeContext;
 rpnParser.prototype.booleanType = function() {
 
     var localctx = new BooleanTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 10, rpnParser.RULE_booleanType);
+    this.enterRule(localctx, 32, rpnParser.RULE_booleanType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 113;
+        this.state = 157;
         _la = this._input.LA(1);
-        if(!(_la===rpnParser.T__3 || _la===rpnParser.T__4)) {
+        if(!(_la===rpnParser.T__86 || _la===rpnParser.T__87)) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -1728,6 +2581,14 @@ NumberTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+NumberTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitNumberType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -1736,135 +2597,135 @@ rpnParser.NumberTypeContext = NumberTypeContext;
 rpnParser.prototype.numberType = function() {
 
     var localctx = new NumberTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 12, rpnParser.RULE_numberType);
+    this.enterRule(localctx, 34, rpnParser.RULE_numberType);
     try {
-        this.state = 136;
+        this.state = 180;
         this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,3,this._ctx);
+        var la_ = this._interp.adaptivePredict(this._input,7,this._ctx);
         switch(la_) {
         case 1:
             this.enterOuterAlt(localctx, 1);
-            this.state = 115;
+            this.state = 159;
             this.distanceType();
             break;
 
         case 2:
             this.enterOuterAlt(localctx, 2);
-            this.state = 116;
+            this.state = 160;
             this.areaType();
             break;
 
         case 3:
             this.enterOuterAlt(localctx, 3);
-            this.state = 117;
+            this.state = 161;
             this.volumeType();
             break;
 
         case 4:
             this.enterOuterAlt(localctx, 4);
-            this.state = 118;
+            this.state = 162;
             this.volumeRateType();
             break;
 
         case 5:
             this.enterOuterAlt(localctx, 5);
-            this.state = 119;
+            this.state = 163;
             this.temperatureType();
             break;
 
         case 6:
             this.enterOuterAlt(localctx, 6);
-            this.state = 120;
+            this.state = 164;
             this.angleType();
             break;
 
         case 7:
             this.enterOuterAlt(localctx, 7);
-            this.state = 121;
+            this.state = 165;
             this.globalPositionType();
             break;
 
         case 8:
             this.enterOuterAlt(localctx, 8);
-            this.state = 122;
+            this.state = 166;
             this.angularVelocityType();
             break;
 
         case 9:
             this.enterOuterAlt(localctx, 9);
-            this.state = 123;
+            this.state = 167;
             this.speedType();
             break;
 
         case 10:
             this.enterOuterAlt(localctx, 10);
-            this.state = 124;
+            this.state = 168;
             this.accelerationType();
             break;
 
         case 11:
             this.enterOuterAlt(localctx, 11);
-            this.state = 125;
+            this.state = 169;
             this.timeType();
             break;
 
         case 12:
             this.enterOuterAlt(localctx, 12);
-            this.state = 126;
+            this.state = 170;
             this.powerType();
             break;
 
         case 13:
             this.enterOuterAlt(localctx, 13);
-            this.state = 127;
+            this.state = 171;
             this.weightType();
             break;
 
         case 14:
             this.enterOuterAlt(localctx, 14);
-            this.state = 128;
+            this.state = 172;
             this.weightRateType();
             break;
 
         case 15:
             this.enterOuterAlt(localctx, 15);
-            this.state = 129;
+            this.state = 173;
             this.electricalCurrentType();
             break;
 
         case 16:
             this.enterOuterAlt(localctx, 16);
-            this.state = 130;
+            this.state = 174;
             this.electricalPotentialType();
             break;
 
         case 17:
             this.enterOuterAlt(localctx, 17);
-            this.state = 131;
+            this.state = 175;
             this.frequencyType();
             break;
 
         case 18:
             this.enterOuterAlt(localctx, 18);
-            this.state = 132;
+            this.state = 176;
             this.densityType();
             break;
 
         case 19:
             this.enterOuterAlt(localctx, 19);
-            this.state = 133;
+            this.state = 177;
             this.pressureType();
             break;
 
         case 20:
             this.enterOuterAlt(localctx, 20);
-            this.state = 134;
+            this.state = 178;
             this.torqueType();
             break;
 
         case 21:
             this.enterOuterAlt(localctx, 21);
-            this.state = 135;
+            this.state = 179;
             this.miscellaneousType();
             break;
 
@@ -1913,6 +2774,14 @@ DistanceTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+DistanceTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitDistanceType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -1921,13 +2790,13 @@ rpnParser.DistanceTypeContext = DistanceTypeContext;
 rpnParser.prototype.distanceType = function() {
 
     var localctx = new DistanceTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 14, rpnParser.RULE_distanceType);
+    this.enterRule(localctx, 36, rpnParser.RULE_distanceType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 138;
+        this.state = 182;
         _la = this._input.LA(1);
-        if(!(((((_la - 6)) & ~0x1f) == 0 && ((1 << (_la - 6)) & ((1 << (rpnParser.T__5 - 6)) | (1 << (rpnParser.T__6 - 6)) | (1 << (rpnParser.T__7 - 6)) | (1 << (rpnParser.T__8 - 6)) | (1 << (rpnParser.T__9 - 6)) | (1 << (rpnParser.T__10 - 6)) | (1 << (rpnParser.T__11 - 6)) | (1 << (rpnParser.T__12 - 6)) | (1 << (rpnParser.T__13 - 6)) | (1 << (rpnParser.T__14 - 6)) | (1 << (rpnParser.T__15 - 6)) | (1 << (rpnParser.T__16 - 6)) | (1 << (rpnParser.T__17 - 6)) | (1 << (rpnParser.T__18 - 6)) | (1 << (rpnParser.T__19 - 6)) | (1 << (rpnParser.T__20 - 6)) | (1 << (rpnParser.T__21 - 6)) | (1 << (rpnParser.T__22 - 6)) | (1 << (rpnParser.T__23 - 6)) | (1 << (rpnParser.T__24 - 6)) | (1 << (rpnParser.T__25 - 6)) | (1 << (rpnParser.T__26 - 6)) | (1 << (rpnParser.T__27 - 6)) | (1 << (rpnParser.T__28 - 6)) | (1 << (rpnParser.T__29 - 6)) | (1 << (rpnParser.T__30 - 6)) | (1 << (rpnParser.T__31 - 6)) | (1 << (rpnParser.T__32 - 6)) | (1 << (rpnParser.T__33 - 6)))) !== 0))) {
+        if(!(((((_la - 89)) & ~0x1f) == 0 && ((1 << (_la - 89)) & ((1 << (rpnParser.T__88 - 89)) | (1 << (rpnParser.T__89 - 89)) | (1 << (rpnParser.T__90 - 89)) | (1 << (rpnParser.T__91 - 89)) | (1 << (rpnParser.T__92 - 89)) | (1 << (rpnParser.T__93 - 89)) | (1 << (rpnParser.T__94 - 89)) | (1 << (rpnParser.T__95 - 89)) | (1 << (rpnParser.T__96 - 89)) | (1 << (rpnParser.T__97 - 89)) | (1 << (rpnParser.T__98 - 89)) | (1 << (rpnParser.T__99 - 89)) | (1 << (rpnParser.T__100 - 89)) | (1 << (rpnParser.T__101 - 89)) | (1 << (rpnParser.T__102 - 89)) | (1 << (rpnParser.T__103 - 89)) | (1 << (rpnParser.T__104 - 89)) | (1 << (rpnParser.T__105 - 89)) | (1 << (rpnParser.T__106 - 89)) | (1 << (rpnParser.T__107 - 89)) | (1 << (rpnParser.T__108 - 89)) | (1 << (rpnParser.T__109 - 89)) | (1 << (rpnParser.T__110 - 89)) | (1 << (rpnParser.T__111 - 89)) | (1 << (rpnParser.T__112 - 89)) | (1 << (rpnParser.T__113 - 89)) | (1 << (rpnParser.T__114 - 89)) | (1 << (rpnParser.T__115 - 89)) | (1 << (rpnParser.T__116 - 89)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -1978,6 +2847,14 @@ AreaTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+AreaTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitAreaType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -1986,13 +2863,13 @@ rpnParser.AreaTypeContext = AreaTypeContext;
 rpnParser.prototype.areaType = function() {
 
     var localctx = new AreaTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 16, rpnParser.RULE_areaType);
+    this.enterRule(localctx, 38, rpnParser.RULE_areaType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 140;
+        this.state = 184;
         _la = this._input.LA(1);
-        if(!(((((_la - 35)) & ~0x1f) == 0 && ((1 << (_la - 35)) & ((1 << (rpnParser.T__34 - 35)) | (1 << (rpnParser.T__35 - 35)) | (1 << (rpnParser.T__36 - 35)) | (1 << (rpnParser.T__37 - 35)) | (1 << (rpnParser.T__38 - 35)) | (1 << (rpnParser.T__39 - 35)) | (1 << (rpnParser.T__40 - 35)) | (1 << (rpnParser.T__41 - 35)) | (1 << (rpnParser.T__42 - 35)) | (1 << (rpnParser.T__43 - 35)) | (1 << (rpnParser.T__44 - 35)) | (1 << (rpnParser.T__45 - 35)) | (1 << (rpnParser.T__46 - 35)) | (1 << (rpnParser.T__47 - 35)) | (1 << (rpnParser.T__48 - 35)) | (1 << (rpnParser.T__49 - 35)) | (1 << (rpnParser.T__50 - 35)) | (1 << (rpnParser.T__51 - 35)) | (1 << (rpnParser.T__52 - 35)) | (1 << (rpnParser.T__53 - 35)) | (1 << (rpnParser.T__54 - 35)) | (1 << (rpnParser.T__55 - 35)) | (1 << (rpnParser.T__56 - 35)) | (1 << (rpnParser.T__57 - 35)) | (1 << (rpnParser.T__58 - 35)) | (1 << (rpnParser.T__59 - 35)) | (1 << (rpnParser.T__60 - 35)) | (1 << (rpnParser.T__61 - 35)) | (1 << (rpnParser.T__62 - 35)) | (1 << (rpnParser.T__63 - 35)))) !== 0))) {
+        if(!(((((_la - 118)) & ~0x1f) == 0 && ((1 << (_la - 118)) & ((1 << (rpnParser.T__117 - 118)) | (1 << (rpnParser.T__118 - 118)) | (1 << (rpnParser.T__119 - 118)) | (1 << (rpnParser.T__120 - 118)) | (1 << (rpnParser.T__121 - 118)) | (1 << (rpnParser.T__122 - 118)) | (1 << (rpnParser.T__123 - 118)) | (1 << (rpnParser.T__124 - 118)) | (1 << (rpnParser.T__125 - 118)) | (1 << (rpnParser.T__126 - 118)) | (1 << (rpnParser.T__127 - 118)) | (1 << (rpnParser.T__128 - 118)) | (1 << (rpnParser.T__129 - 118)) | (1 << (rpnParser.T__130 - 118)) | (1 << (rpnParser.T__131 - 118)) | (1 << (rpnParser.T__132 - 118)) | (1 << (rpnParser.T__133 - 118)) | (1 << (rpnParser.T__134 - 118)) | (1 << (rpnParser.T__135 - 118)) | (1 << (rpnParser.T__136 - 118)) | (1 << (rpnParser.T__137 - 118)) | (1 << (rpnParser.T__138 - 118)) | (1 << (rpnParser.T__139 - 118)) | (1 << (rpnParser.T__140 - 118)) | (1 << (rpnParser.T__141 - 118)) | (1 << (rpnParser.T__142 - 118)) | (1 << (rpnParser.T__143 - 118)) | (1 << (rpnParser.T__144 - 118)) | (1 << (rpnParser.T__145 - 118)) | (1 << (rpnParser.T__146 - 118)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2043,6 +2920,14 @@ VolumeTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+VolumeTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitVolumeType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2051,13 +2936,13 @@ rpnParser.VolumeTypeContext = VolumeTypeContext;
 rpnParser.prototype.volumeType = function() {
 
     var localctx = new VolumeTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 18, rpnParser.RULE_volumeType);
+    this.enterRule(localctx, 40, rpnParser.RULE_volumeType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 142;
+        this.state = 186;
         _la = this._input.LA(1);
-        if(!(((((_la - 65)) & ~0x1f) == 0 && ((1 << (_la - 65)) & ((1 << (rpnParser.T__64 - 65)) | (1 << (rpnParser.T__65 - 65)) | (1 << (rpnParser.T__66 - 65)) | (1 << (rpnParser.T__67 - 65)) | (1 << (rpnParser.T__68 - 65)) | (1 << (rpnParser.T__69 - 65)) | (1 << (rpnParser.T__70 - 65)) | (1 << (rpnParser.T__71 - 65)) | (1 << (rpnParser.T__72 - 65)) | (1 << (rpnParser.T__73 - 65)) | (1 << (rpnParser.T__74 - 65)) | (1 << (rpnParser.T__75 - 65)) | (1 << (rpnParser.T__76 - 65)) | (1 << (rpnParser.T__77 - 65)) | (1 << (rpnParser.T__78 - 65)) | (1 << (rpnParser.T__79 - 65)) | (1 << (rpnParser.T__80 - 65)) | (1 << (rpnParser.T__81 - 65)) | (1 << (rpnParser.T__82 - 65)) | (1 << (rpnParser.T__83 - 65)) | (1 << (rpnParser.T__84 - 65)) | (1 << (rpnParser.T__85 - 65)) | (1 << (rpnParser.T__86 - 65)) | (1 << (rpnParser.T__87 - 65)) | (1 << (rpnParser.T__88 - 65)) | (1 << (rpnParser.T__89 - 65)) | (1 << (rpnParser.T__90 - 65)) | (1 << (rpnParser.T__91 - 65)) | (1 << (rpnParser.T__92 - 65)) | (1 << (rpnParser.T__93 - 65)) | (1 << (rpnParser.T__94 - 65)) | (1 << (rpnParser.T__95 - 65)))) !== 0) || ((((_la - 97)) & ~0x1f) == 0 && ((1 << (_la - 97)) & ((1 << (rpnParser.T__96 - 97)) | (1 << (rpnParser.T__97 - 97)) | (1 << (rpnParser.T__98 - 97)) | (1 << (rpnParser.T__99 - 97)) | (1 << (rpnParser.T__100 - 97)) | (1 << (rpnParser.T__101 - 97)))) !== 0))) {
+        if(!(((((_la - 148)) & ~0x1f) == 0 && ((1 << (_la - 148)) & ((1 << (rpnParser.T__147 - 148)) | (1 << (rpnParser.T__148 - 148)) | (1 << (rpnParser.T__149 - 148)) | (1 << (rpnParser.T__150 - 148)) | (1 << (rpnParser.T__151 - 148)) | (1 << (rpnParser.T__152 - 148)) | (1 << (rpnParser.T__153 - 148)) | (1 << (rpnParser.T__154 - 148)) | (1 << (rpnParser.T__155 - 148)) | (1 << (rpnParser.T__156 - 148)) | (1 << (rpnParser.T__157 - 148)) | (1 << (rpnParser.T__158 - 148)) | (1 << (rpnParser.T__159 - 148)) | (1 << (rpnParser.T__160 - 148)) | (1 << (rpnParser.T__161 - 148)) | (1 << (rpnParser.T__162 - 148)) | (1 << (rpnParser.T__163 - 148)) | (1 << (rpnParser.T__164 - 148)) | (1 << (rpnParser.T__165 - 148)) | (1 << (rpnParser.T__166 - 148)) | (1 << (rpnParser.T__167 - 148)) | (1 << (rpnParser.T__168 - 148)) | (1 << (rpnParser.T__169 - 148)) | (1 << (rpnParser.T__170 - 148)) | (1 << (rpnParser.T__171 - 148)) | (1 << (rpnParser.T__172 - 148)) | (1 << (rpnParser.T__173 - 148)) | (1 << (rpnParser.T__174 - 148)) | (1 << (rpnParser.T__175 - 148)) | (1 << (rpnParser.T__176 - 148)) | (1 << (rpnParser.T__177 - 148)) | (1 << (rpnParser.T__178 - 148)))) !== 0) || ((((_la - 180)) & ~0x1f) == 0 && ((1 << (_la - 180)) & ((1 << (rpnParser.T__179 - 180)) | (1 << (rpnParser.T__180 - 180)) | (1 << (rpnParser.T__181 - 180)) | (1 << (rpnParser.T__182 - 180)) | (1 << (rpnParser.T__183 - 180)) | (1 << (rpnParser.T__184 - 180)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2108,6 +2993,14 @@ VolumeRateTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+VolumeRateTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitVolumeRateType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2116,13 +3009,13 @@ rpnParser.VolumeRateTypeContext = VolumeRateTypeContext;
 rpnParser.prototype.volumeRateType = function() {
 
     var localctx = new VolumeRateTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 20, rpnParser.RULE_volumeRateType);
+    this.enterRule(localctx, 42, rpnParser.RULE_volumeRateType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 144;
+        this.state = 188;
         _la = this._input.LA(1);
-        if(!(((((_la - 103)) & ~0x1f) == 0 && ((1 << (_la - 103)) & ((1 << (rpnParser.T__102 - 103)) | (1 << (rpnParser.T__103 - 103)) | (1 << (rpnParser.T__104 - 103)) | (1 << (rpnParser.T__105 - 103)) | (1 << (rpnParser.T__106 - 103)) | (1 << (rpnParser.T__107 - 103)) | (1 << (rpnParser.T__108 - 103)))) !== 0))) {
+        if(!(((((_la - 186)) & ~0x1f) == 0 && ((1 << (_la - 186)) & ((1 << (rpnParser.T__185 - 186)) | (1 << (rpnParser.T__186 - 186)) | (1 << (rpnParser.T__187 - 186)) | (1 << (rpnParser.T__188 - 186)) | (1 << (rpnParser.T__189 - 186)) | (1 << (rpnParser.T__190 - 186)) | (1 << (rpnParser.T__191 - 186)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2173,6 +3066,14 @@ TemperatureTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+TemperatureTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitTemperatureType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2181,13 +3082,13 @@ rpnParser.TemperatureTypeContext = TemperatureTypeContext;
 rpnParser.prototype.temperatureType = function() {
 
     var localctx = new TemperatureTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 22, rpnParser.RULE_temperatureType);
+    this.enterRule(localctx, 44, rpnParser.RULE_temperatureType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 146;
+        this.state = 190;
         _la = this._input.LA(1);
-        if(!(((((_la - 110)) & ~0x1f) == 0 && ((1 << (_la - 110)) & ((1 << (rpnParser.T__109 - 110)) | (1 << (rpnParser.T__110 - 110)) | (1 << (rpnParser.T__111 - 110)) | (1 << (rpnParser.T__112 - 110)) | (1 << (rpnParser.T__113 - 110)))) !== 0))) {
+        if(!(((((_la - 193)) & ~0x1f) == 0 && ((1 << (_la - 193)) & ((1 << (rpnParser.T__192 - 193)) | (1 << (rpnParser.T__193 - 193)) | (1 << (rpnParser.T__194 - 193)) | (1 << (rpnParser.T__195 - 193)) | (1 << (rpnParser.T__196 - 193)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2238,6 +3139,14 @@ AngleTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+AngleTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitAngleType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2246,13 +3155,13 @@ rpnParser.AngleTypeContext = AngleTypeContext;
 rpnParser.prototype.angleType = function() {
 
     var localctx = new AngleTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 24, rpnParser.RULE_angleType);
+    this.enterRule(localctx, 46, rpnParser.RULE_angleType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 148;
+        this.state = 192;
         _la = this._input.LA(1);
-        if(!(((((_la - 115)) & ~0x1f) == 0 && ((1 << (_la - 115)) & ((1 << (rpnParser.T__114 - 115)) | (1 << (rpnParser.T__115 - 115)) | (1 << (rpnParser.T__116 - 115)) | (1 << (rpnParser.T__117 - 115)) | (1 << (rpnParser.T__118 - 115)) | (1 << (rpnParser.T__119 - 115)) | (1 << (rpnParser.T__120 - 115)) | (1 << (rpnParser.T__121 - 115)))) !== 0))) {
+        if(!(((((_la - 198)) & ~0x1f) == 0 && ((1 << (_la - 198)) & ((1 << (rpnParser.T__197 - 198)) | (1 << (rpnParser.T__198 - 198)) | (1 << (rpnParser.T__199 - 198)) | (1 << (rpnParser.T__200 - 198)) | (1 << (rpnParser.T__201 - 198)) | (1 << (rpnParser.T__202 - 198)) | (1 << (rpnParser.T__203 - 198)) | (1 << (rpnParser.T__204 - 198)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2303,6 +3212,14 @@ GlobalPositionTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+GlobalPositionTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitGlobalPositionType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2311,13 +3228,13 @@ rpnParser.GlobalPositionTypeContext = GlobalPositionTypeContext;
 rpnParser.prototype.globalPositionType = function() {
 
     var localctx = new GlobalPositionTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 26, rpnParser.RULE_globalPositionType);
+    this.enterRule(localctx, 48, rpnParser.RULE_globalPositionType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 150;
+        this.state = 194;
         _la = this._input.LA(1);
-        if(!(((((_la - 123)) & ~0x1f) == 0 && ((1 << (_la - 123)) & ((1 << (rpnParser.T__122 - 123)) | (1 << (rpnParser.T__123 - 123)) | (1 << (rpnParser.T__124 - 123)) | (1 << (rpnParser.T__125 - 123)) | (1 << (rpnParser.T__126 - 123)) | (1 << (rpnParser.T__127 - 123)))) !== 0))) {
+        if(!(((((_la - 206)) & ~0x1f) == 0 && ((1 << (_la - 206)) & ((1 << (rpnParser.T__205 - 206)) | (1 << (rpnParser.T__206 - 206)) | (1 << (rpnParser.T__207 - 206)) | (1 << (rpnParser.T__208 - 206)) | (1 << (rpnParser.T__209 - 206)) | (1 << (rpnParser.T__210 - 206)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2368,6 +3285,14 @@ AngularVelocityTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+AngularVelocityTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitAngularVelocityType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2376,13 +3301,13 @@ rpnParser.AngularVelocityTypeContext = AngularVelocityTypeContext;
 rpnParser.prototype.angularVelocityType = function() {
 
     var localctx = new AngularVelocityTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 28, rpnParser.RULE_angularVelocityType);
+    this.enterRule(localctx, 50, rpnParser.RULE_angularVelocityType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 152;
+        this.state = 196;
         _la = this._input.LA(1);
-        if(!(((((_la - 129)) & ~0x1f) == 0 && ((1 << (_la - 129)) & ((1 << (rpnParser.T__128 - 129)) | (1 << (rpnParser.T__129 - 129)) | (1 << (rpnParser.T__130 - 129)) | (1 << (rpnParser.T__131 - 129)) | (1 << (rpnParser.T__132 - 129)) | (1 << (rpnParser.T__133 - 129)) | (1 << (rpnParser.T__134 - 129)) | (1 << (rpnParser.T__135 - 129)) | (1 << (rpnParser.T__136 - 129)) | (1 << (rpnParser.T__137 - 129)) | (1 << (rpnParser.T__138 - 129)) | (1 << (rpnParser.T__139 - 129)))) !== 0))) {
+        if(!(((((_la - 212)) & ~0x1f) == 0 && ((1 << (_la - 212)) & ((1 << (rpnParser.T__211 - 212)) | (1 << (rpnParser.T__212 - 212)) | (1 << (rpnParser.T__213 - 212)) | (1 << (rpnParser.T__214 - 212)) | (1 << (rpnParser.T__215 - 212)) | (1 << (rpnParser.T__216 - 212)) | (1 << (rpnParser.T__217 - 212)) | (1 << (rpnParser.T__218 - 212)) | (1 << (rpnParser.T__219 - 212)) | (1 << (rpnParser.T__220 - 212)) | (1 << (rpnParser.T__221 - 212)) | (1 << (rpnParser.T__222 - 212)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2433,6 +3358,14 @@ SpeedTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+SpeedTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitSpeedType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2441,13 +3374,13 @@ rpnParser.SpeedTypeContext = SpeedTypeContext;
 rpnParser.prototype.speedType = function() {
 
     var localctx = new SpeedTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 30, rpnParser.RULE_speedType);
+    this.enterRule(localctx, 52, rpnParser.RULE_speedType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 154;
+        this.state = 198;
         _la = this._input.LA(1);
-        if(!(((((_la - 141)) & ~0x1f) == 0 && ((1 << (_la - 141)) & ((1 << (rpnParser.T__140 - 141)) | (1 << (rpnParser.T__141 - 141)) | (1 << (rpnParser.T__142 - 141)) | (1 << (rpnParser.T__143 - 141)) | (1 << (rpnParser.T__144 - 141)) | (1 << (rpnParser.T__145 - 141)) | (1 << (rpnParser.T__146 - 141)) | (1 << (rpnParser.T__147 - 141)) | (1 << (rpnParser.T__148 - 141)) | (1 << (rpnParser.T__149 - 141)) | (1 << (rpnParser.T__150 - 141)) | (1 << (rpnParser.T__151 - 141)) | (1 << (rpnParser.T__152 - 141)) | (1 << (rpnParser.T__153 - 141)) | (1 << (rpnParser.T__154 - 141)) | (1 << (rpnParser.T__155 - 141)) | (1 << (rpnParser.T__156 - 141)) | (1 << (rpnParser.T__157 - 141)) | (1 << (rpnParser.T__158 - 141)))) !== 0))) {
+        if(!(((((_la - 224)) & ~0x1f) == 0 && ((1 << (_la - 224)) & ((1 << (rpnParser.T__223 - 224)) | (1 << (rpnParser.T__224 - 224)) | (1 << (rpnParser.T__225 - 224)) | (1 << (rpnParser.T__226 - 224)) | (1 << (rpnParser.T__227 - 224)) | (1 << (rpnParser.T__228 - 224)) | (1 << (rpnParser.T__229 - 224)) | (1 << (rpnParser.T__230 - 224)) | (1 << (rpnParser.T__231 - 224)) | (1 << (rpnParser.T__232 - 224)) | (1 << (rpnParser.T__233 - 224)) | (1 << (rpnParser.T__234 - 224)) | (1 << (rpnParser.T__235 - 224)) | (1 << (rpnParser.T__236 - 224)) | (1 << (rpnParser.T__237 - 224)) | (1 << (rpnParser.T__238 - 224)) | (1 << (rpnParser.T__239 - 224)) | (1 << (rpnParser.T__240 - 224)) | (1 << (rpnParser.T__241 - 224)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2498,6 +3431,14 @@ AccelerationTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+AccelerationTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitAccelerationType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2506,13 +3447,13 @@ rpnParser.AccelerationTypeContext = AccelerationTypeContext;
 rpnParser.prototype.accelerationType = function() {
 
     var localctx = new AccelerationTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 32, rpnParser.RULE_accelerationType);
+    this.enterRule(localctx, 54, rpnParser.RULE_accelerationType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 156;
+        this.state = 200;
         _la = this._input.LA(1);
-        if(!(((((_la - 160)) & ~0x1f) == 0 && ((1 << (_la - 160)) & ((1 << (rpnParser.T__159 - 160)) | (1 << (rpnParser.T__160 - 160)) | (1 << (rpnParser.T__161 - 160)) | (1 << (rpnParser.T__162 - 160)) | (1 << (rpnParser.T__163 - 160)) | (1 << (rpnParser.T__164 - 160)))) !== 0))) {
+        if(!(((((_la - 243)) & ~0x1f) == 0 && ((1 << (_la - 243)) & ((1 << (rpnParser.T__242 - 243)) | (1 << (rpnParser.T__243 - 243)) | (1 << (rpnParser.T__244 - 243)) | (1 << (rpnParser.T__245 - 243)) | (1 << (rpnParser.T__246 - 243)) | (1 << (rpnParser.T__247 - 243)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2563,6 +3504,14 @@ TimeTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+TimeTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitTimeType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2571,13 +3520,13 @@ rpnParser.TimeTypeContext = TimeTypeContext;
 rpnParser.prototype.timeType = function() {
 
     var localctx = new TimeTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 34, rpnParser.RULE_timeType);
+    this.enterRule(localctx, 56, rpnParser.RULE_timeType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 158;
+        this.state = 202;
         _la = this._input.LA(1);
-        if(!(((((_la - 166)) & ~0x1f) == 0 && ((1 << (_la - 166)) & ((1 << (rpnParser.T__165 - 166)) | (1 << (rpnParser.T__166 - 166)) | (1 << (rpnParser.T__167 - 166)) | (1 << (rpnParser.T__168 - 166)) | (1 << (rpnParser.T__169 - 166)) | (1 << (rpnParser.T__170 - 166)) | (1 << (rpnParser.T__171 - 166)) | (1 << (rpnParser.T__172 - 166)) | (1 << (rpnParser.T__173 - 166)) | (1 << (rpnParser.T__174 - 166)) | (1 << (rpnParser.T__175 - 166)) | (1 << (rpnParser.T__176 - 166)))) !== 0))) {
+        if(!(((((_la - 249)) & ~0x1f) == 0 && ((1 << (_la - 249)) & ((1 << (rpnParser.T__248 - 249)) | (1 << (rpnParser.T__249 - 249)) | (1 << (rpnParser.T__250 - 249)) | (1 << (rpnParser.T__251 - 249)) | (1 << (rpnParser.T__252 - 249)) | (1 << (rpnParser.T__253 - 249)) | (1 << (rpnParser.T__254 - 249)) | (1 << (rpnParser.T__255 - 249)) | (1 << (rpnParser.T__256 - 249)) | (1 << (rpnParser.T__257 - 249)) | (1 << (rpnParser.T__258 - 249)) | (1 << (rpnParser.T__259 - 249)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2628,6 +3577,14 @@ PowerTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+PowerTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitPowerType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2636,13 +3593,13 @@ rpnParser.PowerTypeContext = PowerTypeContext;
 rpnParser.prototype.powerType = function() {
 
     var localctx = new PowerTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 36, rpnParser.RULE_powerType);
+    this.enterRule(localctx, 58, rpnParser.RULE_powerType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 160;
+        this.state = 204;
         _la = this._input.LA(1);
-        if(!(((((_la - 178)) & ~0x1f) == 0 && ((1 << (_la - 178)) & ((1 << (rpnParser.T__177 - 178)) | (1 << (rpnParser.T__178 - 178)) | (1 << (rpnParser.T__179 - 178)))) !== 0))) {
+        if(!(((((_la - 261)) & ~0x1f) == 0 && ((1 << (_la - 261)) & ((1 << (rpnParser.T__260 - 261)) | (1 << (rpnParser.T__261 - 261)) | (1 << (rpnParser.T__262 - 261)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2693,6 +3650,14 @@ WeightTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+WeightTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitWeightType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2701,13 +3666,13 @@ rpnParser.WeightTypeContext = WeightTypeContext;
 rpnParser.prototype.weightType = function() {
 
     var localctx = new WeightTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 38, rpnParser.RULE_weightType);
+    this.enterRule(localctx, 60, rpnParser.RULE_weightType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 162;
+        this.state = 206;
         _la = this._input.LA(1);
-        if(!(((((_la - 181)) & ~0x1f) == 0 && ((1 << (_la - 181)) & ((1 << (rpnParser.T__180 - 181)) | (1 << (rpnParser.T__181 - 181)) | (1 << (rpnParser.T__182 - 181)) | (1 << (rpnParser.T__183 - 181)) | (1 << (rpnParser.T__184 - 181)) | (1 << (rpnParser.T__185 - 181)) | (1 << (rpnParser.T__186 - 181)) | (1 << (rpnParser.T__187 - 181)) | (1 << (rpnParser.T__188 - 181)) | (1 << (rpnParser.T__189 - 181)))) !== 0))) {
+        if(!(((((_la - 264)) & ~0x1f) == 0 && ((1 << (_la - 264)) & ((1 << (rpnParser.T__263 - 264)) | (1 << (rpnParser.T__264 - 264)) | (1 << (rpnParser.T__265 - 264)) | (1 << (rpnParser.T__266 - 264)) | (1 << (rpnParser.T__267 - 264)) | (1 << (rpnParser.T__268 - 264)) | (1 << (rpnParser.T__269 - 264)) | (1 << (rpnParser.T__270 - 264)) | (1 << (rpnParser.T__271 - 264)) | (1 << (rpnParser.T__272 - 264)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2758,6 +3723,14 @@ WeightRateTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+WeightRateTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitWeightRateType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2766,13 +3739,13 @@ rpnParser.WeightRateTypeContext = WeightRateTypeContext;
 rpnParser.prototype.weightRateType = function() {
 
     var localctx = new WeightRateTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 40, rpnParser.RULE_weightRateType);
+    this.enterRule(localctx, 62, rpnParser.RULE_weightRateType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 164;
+        this.state = 208;
         _la = this._input.LA(1);
-        if(!(((((_la - 191)) & ~0x1f) == 0 && ((1 << (_la - 191)) & ((1 << (rpnParser.T__190 - 191)) | (1 << (rpnParser.T__191 - 191)) | (1 << (rpnParser.T__192 - 191)) | (1 << (rpnParser.T__193 - 191)))) !== 0))) {
+        if(!(((((_la - 274)) & ~0x1f) == 0 && ((1 << (_la - 274)) & ((1 << (rpnParser.T__273 - 274)) | (1 << (rpnParser.T__274 - 274)) | (1 << (rpnParser.T__275 - 274)) | (1 << (rpnParser.T__276 - 274)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2823,6 +3796,14 @@ ElectricalCurrentTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+ElectricalCurrentTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitElectricalCurrentType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2831,13 +3812,13 @@ rpnParser.ElectricalCurrentTypeContext = ElectricalCurrentTypeContext;
 rpnParser.prototype.electricalCurrentType = function() {
 
     var localctx = new ElectricalCurrentTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 42, rpnParser.RULE_electricalCurrentType);
+    this.enterRule(localctx, 64, rpnParser.RULE_electricalCurrentType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 166;
+        this.state = 210;
         _la = this._input.LA(1);
-        if(!(((((_la - 195)) & ~0x1f) == 0 && ((1 << (_la - 195)) & ((1 << (rpnParser.T__194 - 195)) | (1 << (rpnParser.T__195 - 195)) | (1 << (rpnParser.T__196 - 195)) | (1 << (rpnParser.T__197 - 195)))) !== 0))) {
+        if(!(((((_la - 278)) & ~0x1f) == 0 && ((1 << (_la - 278)) & ((1 << (rpnParser.T__277 - 278)) | (1 << (rpnParser.T__278 - 278)) | (1 << (rpnParser.T__279 - 278)) | (1 << (rpnParser.T__280 - 278)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2888,6 +3869,14 @@ ElectricalPotentialTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+ElectricalPotentialTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitElectricalPotentialType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2896,13 +3885,13 @@ rpnParser.ElectricalPotentialTypeContext = ElectricalPotentialTypeContext;
 rpnParser.prototype.electricalPotentialType = function() {
 
     var localctx = new ElectricalPotentialTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 44, rpnParser.RULE_electricalPotentialType);
+    this.enterRule(localctx, 66, rpnParser.RULE_electricalPotentialType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 168;
+        this.state = 212;
         _la = this._input.LA(1);
-        if(!(_la===rpnParser.T__198 || _la===rpnParser.T__199)) {
+        if(!(_la===rpnParser.T__281 || _la===rpnParser.T__282)) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2953,6 +3942,14 @@ FrequencyTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+FrequencyTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitFrequencyType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -2961,13 +3958,13 @@ rpnParser.FrequencyTypeContext = FrequencyTypeContext;
 rpnParser.prototype.frequencyType = function() {
 
     var localctx = new FrequencyTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 46, rpnParser.RULE_frequencyType);
+    this.enterRule(localctx, 68, rpnParser.RULE_frequencyType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 170;
+        this.state = 214;
         _la = this._input.LA(1);
-        if(!(((((_la - 201)) & ~0x1f) == 0 && ((1 << (_la - 201)) & ((1 << (rpnParser.T__200 - 201)) | (1 << (rpnParser.T__201 - 201)) | (1 << (rpnParser.T__202 - 201)) | (1 << (rpnParser.T__203 - 201)) | (1 << (rpnParser.T__204 - 201)) | (1 << (rpnParser.T__205 - 201)) | (1 << (rpnParser.T__206 - 201)) | (1 << (rpnParser.T__207 - 201)) | (1 << (rpnParser.T__208 - 201)))) !== 0))) {
+        if(!(((((_la - 284)) & ~0x1f) == 0 && ((1 << (_la - 284)) & ((1 << (rpnParser.T__283 - 284)) | (1 << (rpnParser.T__284 - 284)) | (1 << (rpnParser.T__285 - 284)) | (1 << (rpnParser.T__286 - 284)) | (1 << (rpnParser.T__287 - 284)) | (1 << (rpnParser.T__288 - 284)) | (1 << (rpnParser.T__289 - 284)) | (1 << (rpnParser.T__290 - 284)) | (1 << (rpnParser.T__291 - 284)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3018,6 +4015,14 @@ DensityTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+DensityTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitDensityType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -3026,13 +4031,13 @@ rpnParser.DensityTypeContext = DensityTypeContext;
 rpnParser.prototype.densityType = function() {
 
     var localctx = new DensityTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 48, rpnParser.RULE_densityType);
+    this.enterRule(localctx, 70, rpnParser.RULE_densityType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 172;
+        this.state = 216;
         _la = this._input.LA(1);
-        if(!(((((_la - 210)) & ~0x1f) == 0 && ((1 << (_la - 210)) & ((1 << (rpnParser.T__209 - 210)) | (1 << (rpnParser.T__210 - 210)) | (1 << (rpnParser.T__211 - 210)) | (1 << (rpnParser.T__212 - 210)) | (1 << (rpnParser.T__213 - 210)) | (1 << (rpnParser.T__214 - 210)) | (1 << (rpnParser.T__215 - 210)) | (1 << (rpnParser.T__216 - 210)) | (1 << (rpnParser.T__217 - 210)) | (1 << (rpnParser.T__218 - 210)))) !== 0))) {
+        if(!(((((_la - 293)) & ~0x1f) == 0 && ((1 << (_la - 293)) & ((1 << (rpnParser.T__292 - 293)) | (1 << (rpnParser.T__293 - 293)) | (1 << (rpnParser.T__294 - 293)) | (1 << (rpnParser.T__295 - 293)) | (1 << (rpnParser.T__296 - 293)) | (1 << (rpnParser.T__297 - 293)) | (1 << (rpnParser.T__298 - 293)) | (1 << (rpnParser.T__299 - 293)) | (1 << (rpnParser.T__300 - 293)) | (1 << (rpnParser.T__301 - 293)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3083,6 +4088,14 @@ PressureTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+PressureTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitPressureType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -3091,13 +4104,13 @@ rpnParser.PressureTypeContext = PressureTypeContext;
 rpnParser.prototype.pressureType = function() {
 
     var localctx = new PressureTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 50, rpnParser.RULE_pressureType);
+    this.enterRule(localctx, 72, rpnParser.RULE_pressureType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 174;
+        this.state = 218;
         _la = this._input.LA(1);
-        if(!(((((_la - 220)) & ~0x1f) == 0 && ((1 << (_la - 220)) & ((1 << (rpnParser.T__219 - 220)) | (1 << (rpnParser.T__220 - 220)) | (1 << (rpnParser.T__221 - 220)) | (1 << (rpnParser.T__222 - 220)) | (1 << (rpnParser.T__223 - 220)) | (1 << (rpnParser.T__224 - 220)) | (1 << (rpnParser.T__225 - 220)) | (1 << (rpnParser.T__226 - 220)) | (1 << (rpnParser.T__227 - 220)) | (1 << (rpnParser.T__228 - 220)) | (1 << (rpnParser.T__229 - 220)) | (1 << (rpnParser.T__230 - 220)) | (1 << (rpnParser.T__231 - 220)) | (1 << (rpnParser.T__232 - 220)) | (1 << (rpnParser.T__233 - 220)) | (1 << (rpnParser.T__234 - 220)) | (1 << (rpnParser.T__235 - 220)) | (1 << (rpnParser.T__236 - 220)) | (1 << (rpnParser.T__237 - 220)) | (1 << (rpnParser.T__238 - 220)) | (1 << (rpnParser.T__239 - 220)) | (1 << (rpnParser.T__240 - 220)) | (1 << (rpnParser.T__241 - 220)) | (1 << (rpnParser.T__242 - 220)) | (1 << (rpnParser.T__243 - 220)) | (1 << (rpnParser.T__244 - 220)) | (1 << (rpnParser.T__245 - 220)) | (1 << (rpnParser.T__246 - 220)) | (1 << (rpnParser.T__247 - 220)) | (1 << (rpnParser.T__248 - 220)) | (1 << (rpnParser.T__249 - 220)) | (1 << (rpnParser.T__250 - 220)))) !== 0) || ((((_la - 252)) & ~0x1f) == 0 && ((1 << (_la - 252)) & ((1 << (rpnParser.T__251 - 252)) | (1 << (rpnParser.T__252 - 252)) | (1 << (rpnParser.T__253 - 252)) | (1 << (rpnParser.T__254 - 252)) | (1 << (rpnParser.T__255 - 252)) | (1 << (rpnParser.T__256 - 252)) | (1 << (rpnParser.T__257 - 252)) | (1 << (rpnParser.T__258 - 252)) | (1 << (rpnParser.T__259 - 252)) | (1 << (rpnParser.T__260 - 252)))) !== 0))) {
+        if(!(((((_la - 303)) & ~0x1f) == 0 && ((1 << (_la - 303)) & ((1 << (rpnParser.T__302 - 303)) | (1 << (rpnParser.T__303 - 303)) | (1 << (rpnParser.T__304 - 303)) | (1 << (rpnParser.T__305 - 303)) | (1 << (rpnParser.T__306 - 303)) | (1 << (rpnParser.T__307 - 303)) | (1 << (rpnParser.T__308 - 303)) | (1 << (rpnParser.T__309 - 303)) | (1 << (rpnParser.T__310 - 303)) | (1 << (rpnParser.T__311 - 303)) | (1 << (rpnParser.T__312 - 303)) | (1 << (rpnParser.T__313 - 303)) | (1 << (rpnParser.T__314 - 303)) | (1 << (rpnParser.T__315 - 303)) | (1 << (rpnParser.T__316 - 303)) | (1 << (rpnParser.T__317 - 303)) | (1 << (rpnParser.T__318 - 303)) | (1 << (rpnParser.T__319 - 303)) | (1 << (rpnParser.T__320 - 303)) | (1 << (rpnParser.T__321 - 303)) | (1 << (rpnParser.T__322 - 303)) | (1 << (rpnParser.T__323 - 303)) | (1 << (rpnParser.T__324 - 303)) | (1 << (rpnParser.T__325 - 303)) | (1 << (rpnParser.T__326 - 303)) | (1 << (rpnParser.T__327 - 303)) | (1 << (rpnParser.T__328 - 303)) | (1 << (rpnParser.T__329 - 303)) | (1 << (rpnParser.T__330 - 303)) | (1 << (rpnParser.T__331 - 303)) | (1 << (rpnParser.T__332 - 303)) | (1 << (rpnParser.T__333 - 303)))) !== 0) || ((((_la - 335)) & ~0x1f) == 0 && ((1 << (_la - 335)) & ((1 << (rpnParser.T__334 - 335)) | (1 << (rpnParser.T__335 - 335)) | (1 << (rpnParser.T__336 - 335)) | (1 << (rpnParser.T__337 - 335)) | (1 << (rpnParser.T__338 - 335)) | (1 << (rpnParser.T__339 - 335)) | (1 << (rpnParser.T__340 - 335)) | (1 << (rpnParser.T__341 - 335)) | (1 << (rpnParser.T__342 - 335)) | (1 << (rpnParser.T__343 - 335)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3148,6 +4161,14 @@ TorqueTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+TorqueTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitTorqueType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -3156,13 +4177,13 @@ rpnParser.TorqueTypeContext = TorqueTypeContext;
 rpnParser.prototype.torqueType = function() {
 
     var localctx = new TorqueTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 52, rpnParser.RULE_torqueType);
+    this.enterRule(localctx, 74, rpnParser.RULE_torqueType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 176;
+        this.state = 220;
         _la = this._input.LA(1);
-        if(!(_la===rpnParser.T__6 || ((((_la - 262)) & ~0x1f) == 0 && ((1 << (_la - 262)) & ((1 << (rpnParser.T__261 - 262)) | (1 << (rpnParser.T__262 - 262)) | (1 << (rpnParser.T__263 - 262)) | (1 << (rpnParser.T__264 - 262)) | (1 << (rpnParser.T__265 - 262)) | (1 << (rpnParser.T__266 - 262)) | (1 << (rpnParser.T__267 - 262)) | (1 << (rpnParser.T__268 - 262)) | (1 << (rpnParser.T__269 - 262)) | (1 << (rpnParser.T__270 - 262)) | (1 << (rpnParser.T__271 - 262)) | (1 << (rpnParser.T__272 - 262)) | (1 << (rpnParser.T__273 - 262)))) !== 0))) {
+        if(!(_la===rpnParser.T__89 || ((((_la - 345)) & ~0x1f) == 0 && ((1 << (_la - 345)) & ((1 << (rpnParser.T__344 - 345)) | (1 << (rpnParser.T__345 - 345)) | (1 << (rpnParser.T__346 - 345)) | (1 << (rpnParser.T__347 - 345)) | (1 << (rpnParser.T__348 - 345)) | (1 << (rpnParser.T__349 - 345)) | (1 << (rpnParser.T__350 - 345)) | (1 << (rpnParser.T__351 - 345)) | (1 << (rpnParser.T__352 - 345)) | (1 << (rpnParser.T__353 - 345)) | (1 << (rpnParser.T__354 - 345)) | (1 << (rpnParser.T__355 - 345)) | (1 << (rpnParser.T__356 - 345)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3213,6 +4234,14 @@ MiscellaneousTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+MiscellaneousTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitMiscellaneousType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -3221,13 +4250,13 @@ rpnParser.MiscellaneousTypeContext = MiscellaneousTypeContext;
 rpnParser.prototype.miscellaneousType = function() {
 
     var localctx = new MiscellaneousTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 54, rpnParser.RULE_miscellaneousType);
+    this.enterRule(localctx, 76, rpnParser.RULE_miscellaneousType);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 178;
+        this.state = 222;
         _la = this._input.LA(1);
-        if(!(((((_la - 275)) & ~0x1f) == 0 && ((1 << (_la - 275)) & ((1 << (rpnParser.T__274 - 275)) | (1 << (rpnParser.T__275 - 275)) | (1 << (rpnParser.T__276 - 275)) | (1 << (rpnParser.T__277 - 275)) | (1 << (rpnParser.T__278 - 275)) | (1 << (rpnParser.T__279 - 275)) | (1 << (rpnParser.T__280 - 275)) | (1 << (rpnParser.T__281 - 275)) | (1 << (rpnParser.T__282 - 275)) | (1 << (rpnParser.T__283 - 275)) | (1 << (rpnParser.T__284 - 275)) | (1 << (rpnParser.T__285 - 275)) | (1 << (rpnParser.T__286 - 275)) | (1 << (rpnParser.T__287 - 275)) | (1 << (rpnParser.T__288 - 275)) | (1 << (rpnParser.T__289 - 275)) | (1 << (rpnParser.T__290 - 275)) | (1 << (rpnParser.T__291 - 275)) | (1 << (rpnParser.T__292 - 275)) | (1 << (rpnParser.T__293 - 275)) | (1 << (rpnParser.T__294 - 275)) | (1 << (rpnParser.T__295 - 275)) | (1 << (rpnParser.T__296 - 275)) | (1 << (rpnParser.T__297 - 275)) | (1 << (rpnParser.T__298 - 275)))) !== 0))) {
+        if(!(((((_la - 358)) & ~0x1f) == 0 && ((1 << (_la - 358)) & ((1 << (rpnParser.T__357 - 358)) | (1 << (rpnParser.T__358 - 358)) | (1 << (rpnParser.T__359 - 358)) | (1 << (rpnParser.T__360 - 358)) | (1 << (rpnParser.T__361 - 358)) | (1 << (rpnParser.T__362 - 358)) | (1 << (rpnParser.T__363 - 358)) | (1 << (rpnParser.T__364 - 358)) | (1 << (rpnParser.T__365 - 358)) | (1 << (rpnParser.T__366 - 358)) | (1 << (rpnParser.T__367 - 358)) | (1 << (rpnParser.T__368 - 358)) | (1 << (rpnParser.T__369 - 358)) | (1 << (rpnParser.T__370 - 358)) | (1 << (rpnParser.T__371 - 358)) | (1 << (rpnParser.T__372 - 358)) | (1 << (rpnParser.T__373 - 358)) | (1 << (rpnParser.T__374 - 358)) | (1 << (rpnParser.T__375 - 358)) | (1 << (rpnParser.T__376 - 358)) | (1 << (rpnParser.T__377 - 358)) | (1 << (rpnParser.T__378 - 358)) | (1 << (rpnParser.T__379 - 358)) | (1 << (rpnParser.T__380 - 358)) | (1 << (rpnParser.T__381 - 358)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3278,6 +4307,14 @@ StringTypeContext.prototype.exitRule = function(listener) {
 	}
 };
 
+StringTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof rpnVisitor ) {
+        return visitor.visitStringType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -3286,851 +4323,11 @@ rpnParser.StringTypeContext = StringTypeContext;
 rpnParser.prototype.stringType = function() {
 
     var localctx = new StringTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 56, rpnParser.RULE_stringType);
+    this.enterRule(localctx, 78, rpnParser.RULE_stringType);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 180;
-        this.match(rpnParser.T__299);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function AssignmentContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_assignment;
-    return this;
-}
-
-AssignmentContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-AssignmentContext.prototype.constructor = AssignmentContext;
-
-AssignmentContext.prototype.ID = function() {
-    return this.getToken(rpnParser.ID, 0);
-};
-
-AssignmentContext.prototype.type = function() {
-    return this.getTypedRuleContext(TypeContext,0);
-};
-
-AssignmentContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterAssignment(this);
-	}
-};
-
-AssignmentContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitAssignment(this);
-	}
-};
-
-
-
-
-rpnParser.AssignmentContext = AssignmentContext;
-
-rpnParser.prototype.assignment = function() {
-
-    var localctx = new AssignmentContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 58, rpnParser.RULE_assignment);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 182;
-        this.match(rpnParser.T__0);
-        this.state = 183;
-        _la = this._input.LA(1);
-        if(!(_la===rpnParser.T__300 || _la===rpnParser.T__301)) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
-        }
-        this.state = 184;
-        this.match(rpnParser.ID);
-        this.state = 187;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-        if(_la===rpnParser.T__1) {
-            this.state = 185;
-            this.match(rpnParser.T__1);
-            this.state = 186;
-            this.type();
-        }
-
-        this.state = 189;
-        this.match(rpnParser.T__2);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function CommonOperatorContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_commonOperator;
-    return this;
-}
-
-CommonOperatorContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-CommonOperatorContext.prototype.constructor = CommonOperatorContext;
-
-
-CommonOperatorContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterCommonOperator(this);
-	}
-};
-
-CommonOperatorContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitCommonOperator(this);
-	}
-};
-
-
-
-
-rpnParser.CommonOperatorContext = CommonOperatorContext;
-
-rpnParser.prototype.commonOperator = function() {
-
-    var localctx = new CommonOperatorContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 60, rpnParser.RULE_commonOperator);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 191;
-        _la = this._input.LA(1);
-        if(!(((((_la - 303)) & ~0x1f) == 0 && ((1 << (_la - 303)) & ((1 << (rpnParser.T__302 - 303)) | (1 << (rpnParser.T__303 - 303)) | (1 << (rpnParser.T__304 - 303)) | (1 << (rpnParser.T__305 - 303)) | (1 << (rpnParser.T__306 - 303)) | (1 << (rpnParser.T__307 - 303)) | (1 << (rpnParser.T__308 - 303)) | (1 << (rpnParser.T__309 - 303)) | (1 << (rpnParser.T__310 - 303)))) !== 0))) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
-        }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function ComparisonOperatorContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_comparisonOperator;
-    return this;
-}
-
-ComparisonOperatorContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-ComparisonOperatorContext.prototype.constructor = ComparisonOperatorContext;
-
-
-ComparisonOperatorContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterComparisonOperator(this);
-	}
-};
-
-ComparisonOperatorContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitComparisonOperator(this);
-	}
-};
-
-
-
-
-rpnParser.ComparisonOperatorContext = ComparisonOperatorContext;
-
-rpnParser.prototype.comparisonOperator = function() {
-
-    var localctx = new ComparisonOperatorContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 62, rpnParser.RULE_comparisonOperator);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 193;
-        _la = this._input.LA(1);
-        if(!(((((_la - 301)) & ~0x1f) == 0 && ((1 << (_la - 301)) & ((1 << (rpnParser.T__300 - 301)) | (1 << (rpnParser.T__311 - 301)) | (1 << (rpnParser.T__312 - 301)) | (1 << (rpnParser.T__313 - 301)) | (1 << (rpnParser.T__314 - 301)) | (1 << (rpnParser.T__315 - 301)) | (1 << (rpnParser.T__316 - 301)))) !== 0))) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
-        }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function BitwiseOperatorContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_bitwiseOperator;
-    return this;
-}
-
-BitwiseOperatorContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-BitwiseOperatorContext.prototype.constructor = BitwiseOperatorContext;
-
-
-BitwiseOperatorContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterBitwiseOperator(this);
-	}
-};
-
-BitwiseOperatorContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitBitwiseOperator(this);
-	}
-};
-
-
-
-
-rpnParser.BitwiseOperatorContext = BitwiseOperatorContext;
-
-rpnParser.prototype.bitwiseOperator = function() {
-
-    var localctx = new BitwiseOperatorContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 64, rpnParser.RULE_bitwiseOperator);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 195;
-        _la = this._input.LA(1);
-        if(!(((((_la - 318)) & ~0x1f) == 0 && ((1 << (_la - 318)) & ((1 << (rpnParser.T__317 - 318)) | (1 << (rpnParser.T__318 - 318)) | (1 << (rpnParser.T__319 - 318)) | (1 << (rpnParser.T__320 - 318)) | (1 << (rpnParser.T__321 - 318)) | (1 << (rpnParser.T__322 - 318)))) !== 0))) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
-        }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function LogicalOperatorContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_logicalOperator;
-    return this;
-}
-
-LogicalOperatorContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-LogicalOperatorContext.prototype.constructor = LogicalOperatorContext;
-
-
-LogicalOperatorContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterLogicalOperator(this);
-	}
-};
-
-LogicalOperatorContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitLogicalOperator(this);
-	}
-};
-
-
-
-
-rpnParser.LogicalOperatorContext = LogicalOperatorContext;
-
-rpnParser.prototype.logicalOperator = function() {
-
-    var localctx = new LogicalOperatorContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 66, rpnParser.RULE_logicalOperator);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 197;
-        _la = this._input.LA(1);
-        if(!(((((_la - 324)) & ~0x1f) == 0 && ((1 << (_la - 324)) & ((1 << (rpnParser.T__323 - 324)) | (1 << (rpnParser.T__324 - 324)) | (1 << (rpnParser.T__325 - 324)) | (1 << (rpnParser.T__326 - 324)) | (1 << (rpnParser.T__327 - 324)) | (1 << (rpnParser.T__328 - 324)))) !== 0))) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
-        }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function NumericalOperatorContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_numericalOperator;
-    return this;
-}
-
-NumericalOperatorContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-NumericalOperatorContext.prototype.constructor = NumericalOperatorContext;
-
-
-NumericalOperatorContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterNumericalOperator(this);
-	}
-};
-
-NumericalOperatorContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitNumericalOperator(this);
-	}
-};
-
-
-
-
-rpnParser.NumericalOperatorContext = NumericalOperatorContext;
-
-rpnParser.prototype.numericalOperator = function() {
-
-    var localctx = new NumericalOperatorContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 68, rpnParser.RULE_numericalOperator);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 199;
-        _la = this._input.LA(1);
-        if(!(((((_la - 330)) & ~0x1f) == 0 && ((1 << (_la - 330)) & ((1 << (rpnParser.T__329 - 330)) | (1 << (rpnParser.T__330 - 330)) | (1 << (rpnParser.T__331 - 330)) | (1 << (rpnParser.T__332 - 330)) | (1 << (rpnParser.T__333 - 330)) | (1 << (rpnParser.T__334 - 330)) | (1 << (rpnParser.T__335 - 330)) | (1 << (rpnParser.T__336 - 330)) | (1 << (rpnParser.T__337 - 330)) | (1 << (rpnParser.T__338 - 330)) | (1 << (rpnParser.T__339 - 330)) | (1 << (rpnParser.T__340 - 330)) | (1 << (rpnParser.T__341 - 330)) | (1 << (rpnParser.T__342 - 330)) | (1 << (rpnParser.T__343 - 330)) | (1 << (rpnParser.T__344 - 330)) | (1 << (rpnParser.T__345 - 330)) | (1 << (rpnParser.T__346 - 330)) | (1 << (rpnParser.T__347 - 330)) | (1 << (rpnParser.T__348 - 330)) | (1 << (rpnParser.T__349 - 330)) | (1 << (rpnParser.T__350 - 330)) | (1 << (rpnParser.T__351 - 330)) | (1 << (rpnParser.T__352 - 330)) | (1 << (rpnParser.T__353 - 330)) | (1 << (rpnParser.T__354 - 330)))) !== 0))) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
-        }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function SpecialOperatorsContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_specialOperators;
-    return this;
-}
-
-SpecialOperatorsContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-SpecialOperatorsContext.prototype.constructor = SpecialOperatorsContext;
-
-SpecialOperatorsContext.prototype.ifStatement = function() {
-    return this.getTypedRuleContext(IfStatementContext,0);
-};
-
-SpecialOperatorsContext.prototype.elseStatement = function() {
-    return this.getTypedRuleContext(ElseStatementContext,0);
-};
-
-SpecialOperatorsContext.prototype.GOTO = function() {
-    return this.getToken(rpnParser.GOTO, 0);
-};
-
-SpecialOperatorsContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterSpecialOperators(this);
-	}
-};
-
-SpecialOperatorsContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitSpecialOperators(this);
-	}
-};
-
-
-
-
-rpnParser.SpecialOperatorsContext = SpecialOperatorsContext;
-
-rpnParser.prototype.specialOperators = function() {
-
-    var localctx = new SpecialOperatorsContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 70, rpnParser.RULE_specialOperators);
-    try {
-        this.state = 212;
-        this._errHandler.sync(this);
-        switch(this._input.LA(1)) {
-        case rpnParser.T__355:
-            this.enterOuterAlt(localctx, 1);
-            this.state = 201;
-            this.match(rpnParser.T__355);
-            break;
-        case rpnParser.T__356:
-            this.enterOuterAlt(localctx, 2);
-            this.state = 202;
-            this.match(rpnParser.T__356);
-            break;
-        case rpnParser.T__357:
-            this.enterOuterAlt(localctx, 3);
-            this.state = 203;
-            this.match(rpnParser.T__357);
-            break;
-        case rpnParser.T__358:
-            this.enterOuterAlt(localctx, 4);
-            this.state = 204;
-            this.match(rpnParser.T__358);
-            break;
-        case rpnParser.T__359:
-            this.enterOuterAlt(localctx, 5);
-            this.state = 205;
-            this.match(rpnParser.T__359);
-            break;
-        case rpnParser.T__360:
-            this.enterOuterAlt(localctx, 6);
-            this.state = 206;
-            this.match(rpnParser.T__360);
-            break;
-        case rpnParser.T__363:
-            this.enterOuterAlt(localctx, 7);
-            this.state = 207;
-            this.ifStatement();
-            break;
-        case rpnParser.T__365:
-            this.enterOuterAlt(localctx, 8);
-            this.state = 208;
-            this.elseStatement();
-            break;
-        case rpnParser.T__361:
-            this.enterOuterAlt(localctx, 9);
-            this.state = 209;
-            this.match(rpnParser.T__361);
-            break;
-        case rpnParser.GOTO:
-            this.enterOuterAlt(localctx, 10);
-            this.state = 210;
-            this.match(rpnParser.GOTO);
-            break;
-        case rpnParser.T__362:
-            this.enterOuterAlt(localctx, 11);
-            this.state = 211;
-            this.match(rpnParser.T__362);
-            break;
-        default:
-            throw new antlr4.error.NoViableAltException(this);
-        }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function IfStatementContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_ifStatement;
-    return this;
-}
-
-IfStatementContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-IfStatementContext.prototype.constructor = IfStatementContext;
-
-IfStatementContext.prototype.token = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(TokenContext);
-    } else {
-        return this.getTypedRuleContext(TokenContext,i);
-    }
-};
-
-IfStatementContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterIfStatement(this);
-	}
-};
-
-IfStatementContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitIfStatement(this);
-	}
-};
-
-
-
-
-rpnParser.IfStatementContext = IfStatementContext;
-
-rpnParser.prototype.ifStatement = function() {
-
-    var localctx = new IfStatementContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 72, rpnParser.RULE_ifStatement);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 214;
-        this.match(rpnParser.T__363);
-        this.state = 218;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-        while(_la===rpnParser.T__0 || ((((_la - 301)) & ~0x1f) == 0 && ((1 << (_la - 301)) & ((1 << (rpnParser.T__300 - 301)) | (1 << (rpnParser.T__302 - 301)) | (1 << (rpnParser.T__303 - 301)) | (1 << (rpnParser.T__304 - 301)) | (1 << (rpnParser.T__305 - 301)) | (1 << (rpnParser.T__306 - 301)) | (1 << (rpnParser.T__307 - 301)) | (1 << (rpnParser.T__308 - 301)) | (1 << (rpnParser.T__309 - 301)) | (1 << (rpnParser.T__310 - 301)) | (1 << (rpnParser.T__311 - 301)) | (1 << (rpnParser.T__312 - 301)) | (1 << (rpnParser.T__313 - 301)) | (1 << (rpnParser.T__314 - 301)) | (1 << (rpnParser.T__315 - 301)) | (1 << (rpnParser.T__316 - 301)) | (1 << (rpnParser.T__317 - 301)) | (1 << (rpnParser.T__318 - 301)) | (1 << (rpnParser.T__319 - 301)) | (1 << (rpnParser.T__320 - 301)) | (1 << (rpnParser.T__321 - 301)) | (1 << (rpnParser.T__322 - 301)) | (1 << (rpnParser.T__323 - 301)) | (1 << (rpnParser.T__324 - 301)) | (1 << (rpnParser.T__325 - 301)) | (1 << (rpnParser.T__326 - 301)) | (1 << (rpnParser.T__327 - 301)) | (1 << (rpnParser.T__328 - 301)) | (1 << (rpnParser.T__329 - 301)) | (1 << (rpnParser.T__330 - 301)) | (1 << (rpnParser.T__331 - 301)))) !== 0) || ((((_la - 333)) & ~0x1f) == 0 && ((1 << (_la - 333)) & ((1 << (rpnParser.T__332 - 333)) | (1 << (rpnParser.T__333 - 333)) | (1 << (rpnParser.T__334 - 333)) | (1 << (rpnParser.T__335 - 333)) | (1 << (rpnParser.T__336 - 333)) | (1 << (rpnParser.T__337 - 333)) | (1 << (rpnParser.T__338 - 333)) | (1 << (rpnParser.T__339 - 333)) | (1 << (rpnParser.T__340 - 333)) | (1 << (rpnParser.T__341 - 333)) | (1 << (rpnParser.T__342 - 333)) | (1 << (rpnParser.T__343 - 333)) | (1 << (rpnParser.T__344 - 333)) | (1 << (rpnParser.T__345 - 333)) | (1 << (rpnParser.T__346 - 333)) | (1 << (rpnParser.T__347 - 333)) | (1 << (rpnParser.T__348 - 333)) | (1 << (rpnParser.T__349 - 333)) | (1 << (rpnParser.T__350 - 333)) | (1 << (rpnParser.T__351 - 333)) | (1 << (rpnParser.T__352 - 333)) | (1 << (rpnParser.T__353 - 333)) | (1 << (rpnParser.T__354 - 333)) | (1 << (rpnParser.T__355 - 333)) | (1 << (rpnParser.T__356 - 333)) | (1 << (rpnParser.T__357 - 333)) | (1 << (rpnParser.T__358 - 333)) | (1 << (rpnParser.T__359 - 333)) | (1 << (rpnParser.T__360 - 333)) | (1 << (rpnParser.T__361 - 333)) | (1 << (rpnParser.T__362 - 333)) | (1 << (rpnParser.T__363 - 333)))) !== 0) || ((((_la - 366)) & ~0x1f) == 0 && ((1 << (_la - 366)) & ((1 << (rpnParser.T__365 - 366)) | (1 << (rpnParser.T__366 - 366)) | (1 << (rpnParser.T__367 - 366)) | (1 << (rpnParser.T__368 - 366)) | (1 << (rpnParser.T__369 - 366)) | (1 << (rpnParser.T__370 - 366)) | (1 << (rpnParser.T__371 - 366)) | (1 << (rpnParser.T__372 - 366)) | (1 << (rpnParser.T__373 - 366)) | (1 << (rpnParser.T__374 - 366)) | (1 << (rpnParser.T__375 - 366)) | (1 << (rpnParser.T__376 - 366)) | (1 << (rpnParser.T__377 - 366)) | (1 << (rpnParser.T__378 - 366)) | (1 << (rpnParser.T__379 - 366)) | (1 << (rpnParser.T__380 - 366)) | (1 << (rpnParser.T__381 - 366)) | (1 << (rpnParser.T__382 - 366)) | (1 << (rpnParser.LABEL - 366)) | (1 << (rpnParser.GOTO - 366)) | (1 << (rpnParser.STORE - 366)) | (1 << (rpnParser.LOAD - 366)) | (1 << (rpnParser.STORE_POP - 366)) | (1 << (rpnParser.NUMBER - 366)) | (1 << (rpnParser.STRING - 366)))) !== 0)) {
-            this.state = 215;
-            this.token();
-            this.state = 220;
-            this._errHandler.sync(this);
-            _la = this._input.LA(1);
-        }
-        this.state = 221;
-        this.match(rpnParser.T__364);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function ElseStatementContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_elseStatement;
-    return this;
-}
-
-ElseStatementContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-ElseStatementContext.prototype.constructor = ElseStatementContext;
-
-ElseStatementContext.prototype.token = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(TokenContext);
-    } else {
-        return this.getTypedRuleContext(TokenContext,i);
-    }
-};
-
-ElseStatementContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterElseStatement(this);
-	}
-};
-
-ElseStatementContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitElseStatement(this);
-	}
-};
-
-
-
-
-rpnParser.ElseStatementContext = ElseStatementContext;
-
-rpnParser.prototype.elseStatement = function() {
-
-    var localctx = new ElseStatementContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 74, rpnParser.RULE_elseStatement);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 223;
-        this.match(rpnParser.T__365);
-        this.state = 227;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-        while(_la===rpnParser.T__0 || ((((_la - 301)) & ~0x1f) == 0 && ((1 << (_la - 301)) & ((1 << (rpnParser.T__300 - 301)) | (1 << (rpnParser.T__302 - 301)) | (1 << (rpnParser.T__303 - 301)) | (1 << (rpnParser.T__304 - 301)) | (1 << (rpnParser.T__305 - 301)) | (1 << (rpnParser.T__306 - 301)) | (1 << (rpnParser.T__307 - 301)) | (1 << (rpnParser.T__308 - 301)) | (1 << (rpnParser.T__309 - 301)) | (1 << (rpnParser.T__310 - 301)) | (1 << (rpnParser.T__311 - 301)) | (1 << (rpnParser.T__312 - 301)) | (1 << (rpnParser.T__313 - 301)) | (1 << (rpnParser.T__314 - 301)) | (1 << (rpnParser.T__315 - 301)) | (1 << (rpnParser.T__316 - 301)) | (1 << (rpnParser.T__317 - 301)) | (1 << (rpnParser.T__318 - 301)) | (1 << (rpnParser.T__319 - 301)) | (1 << (rpnParser.T__320 - 301)) | (1 << (rpnParser.T__321 - 301)) | (1 << (rpnParser.T__322 - 301)) | (1 << (rpnParser.T__323 - 301)) | (1 << (rpnParser.T__324 - 301)) | (1 << (rpnParser.T__325 - 301)) | (1 << (rpnParser.T__326 - 301)) | (1 << (rpnParser.T__327 - 301)) | (1 << (rpnParser.T__328 - 301)) | (1 << (rpnParser.T__329 - 301)) | (1 << (rpnParser.T__330 - 301)) | (1 << (rpnParser.T__331 - 301)))) !== 0) || ((((_la - 333)) & ~0x1f) == 0 && ((1 << (_la - 333)) & ((1 << (rpnParser.T__332 - 333)) | (1 << (rpnParser.T__333 - 333)) | (1 << (rpnParser.T__334 - 333)) | (1 << (rpnParser.T__335 - 333)) | (1 << (rpnParser.T__336 - 333)) | (1 << (rpnParser.T__337 - 333)) | (1 << (rpnParser.T__338 - 333)) | (1 << (rpnParser.T__339 - 333)) | (1 << (rpnParser.T__340 - 333)) | (1 << (rpnParser.T__341 - 333)) | (1 << (rpnParser.T__342 - 333)) | (1 << (rpnParser.T__343 - 333)) | (1 << (rpnParser.T__344 - 333)) | (1 << (rpnParser.T__345 - 333)) | (1 << (rpnParser.T__346 - 333)) | (1 << (rpnParser.T__347 - 333)) | (1 << (rpnParser.T__348 - 333)) | (1 << (rpnParser.T__349 - 333)) | (1 << (rpnParser.T__350 - 333)) | (1 << (rpnParser.T__351 - 333)) | (1 << (rpnParser.T__352 - 333)) | (1 << (rpnParser.T__353 - 333)) | (1 << (rpnParser.T__354 - 333)) | (1 << (rpnParser.T__355 - 333)) | (1 << (rpnParser.T__356 - 333)) | (1 << (rpnParser.T__357 - 333)) | (1 << (rpnParser.T__358 - 333)) | (1 << (rpnParser.T__359 - 333)) | (1 << (rpnParser.T__360 - 333)) | (1 << (rpnParser.T__361 - 333)) | (1 << (rpnParser.T__362 - 333)) | (1 << (rpnParser.T__363 - 333)))) !== 0) || ((((_la - 366)) & ~0x1f) == 0 && ((1 << (_la - 366)) & ((1 << (rpnParser.T__365 - 366)) | (1 << (rpnParser.T__366 - 366)) | (1 << (rpnParser.T__367 - 366)) | (1 << (rpnParser.T__368 - 366)) | (1 << (rpnParser.T__369 - 366)) | (1 << (rpnParser.T__370 - 366)) | (1 << (rpnParser.T__371 - 366)) | (1 << (rpnParser.T__372 - 366)) | (1 << (rpnParser.T__373 - 366)) | (1 << (rpnParser.T__374 - 366)) | (1 << (rpnParser.T__375 - 366)) | (1 << (rpnParser.T__376 - 366)) | (1 << (rpnParser.T__377 - 366)) | (1 << (rpnParser.T__378 - 366)) | (1 << (rpnParser.T__379 - 366)) | (1 << (rpnParser.T__380 - 366)) | (1 << (rpnParser.T__381 - 366)) | (1 << (rpnParser.T__382 - 366)) | (1 << (rpnParser.LABEL - 366)) | (1 << (rpnParser.GOTO - 366)) | (1 << (rpnParser.STORE - 366)) | (1 << (rpnParser.LOAD - 366)) | (1 << (rpnParser.STORE_POP - 366)) | (1 << (rpnParser.NUMBER - 366)) | (1 << (rpnParser.STRING - 366)))) !== 0)) {
-            this.state = 224;
-            this.token();
-            this.state = 229;
-            this._errHandler.sync(this);
-            _la = this._input.LA(1);
-        }
-        this.state = 230;
-        this.match(rpnParser.T__364);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function StringOperatorContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_stringOperator;
-    return this;
-}
-
-StringOperatorContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-StringOperatorContext.prototype.constructor = StringOperatorContext;
-
-
-StringOperatorContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterStringOperator(this);
-	}
-};
-
-StringOperatorContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitStringOperator(this);
-	}
-};
-
-
-
-
-rpnParser.StringOperatorContext = StringOperatorContext;
-
-rpnParser.prototype.stringOperator = function() {
-
-    var localctx = new StringOperatorContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 76, rpnParser.RULE_stringOperator);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 232;
-        _la = this._input.LA(1);
-        if(!(((((_la - 367)) & ~0x1f) == 0 && ((1 << (_la - 367)) & ((1 << (rpnParser.T__366 - 367)) | (1 << (rpnParser.T__367 - 367)) | (1 << (rpnParser.T__368 - 367)) | (1 << (rpnParser.T__369 - 367)) | (1 << (rpnParser.T__370 - 367)) | (1 << (rpnParser.T__371 - 367)) | (1 << (rpnParser.T__372 - 367)) | (1 << (rpnParser.T__373 - 367)) | (1 << (rpnParser.T__374 - 367)) | (1 << (rpnParser.T__375 - 367)) | (1 << (rpnParser.T__376 - 367)) | (1 << (rpnParser.T__377 - 367)))) !== 0))) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
-        }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function StackOperatorContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_stackOperator;
-    return this;
-}
-
-StackOperatorContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-StackOperatorContext.prototype.constructor = StackOperatorContext;
-
-StackOperatorContext.prototype.STORE = function() {
-    return this.getToken(rpnParser.STORE, 0);
-};
-
-StackOperatorContext.prototype.LOAD = function() {
-    return this.getToken(rpnParser.LOAD, 0);
-};
-
-StackOperatorContext.prototype.STORE_POP = function() {
-    return this.getToken(rpnParser.STORE_POP, 0);
-};
-
-StackOperatorContext.prototype.enterRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.enterStackOperator(this);
-	}
-};
-
-StackOperatorContext.prototype.exitRule = function(listener) {
-    if(listener instanceof rpnListener ) {
-        listener.exitStackOperator(this);
-	}
-};
-
-
-
-
-rpnParser.StackOperatorContext = StackOperatorContext;
-
-rpnParser.prototype.stackOperator = function() {
-
-    var localctx = new StackOperatorContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 78, rpnParser.RULE_stackOperator);
-    var _la = 0; // Token type
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 234;
-        _la = this._input.LA(1);
-        if(!(((((_la - 379)) & ~0x1f) == 0 && ((1 << (_la - 379)) & ((1 << (rpnParser.T__378 - 379)) | (1 << (rpnParser.T__379 - 379)) | (1 << (rpnParser.T__380 - 379)) | (1 << (rpnParser.T__381 - 379)) | (1 << (rpnParser.T__382 - 379)) | (1 << (rpnParser.STORE - 379)) | (1 << (rpnParser.LOAD - 379)) | (1 << (rpnParser.STORE_POP - 379)))) !== 0))) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
-        }
+        this.state = 224;
+        this.match(rpnParser.T__382);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;

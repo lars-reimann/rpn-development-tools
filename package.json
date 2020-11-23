@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "grammar": "java -jar lib/antlr-4.8-complete.jar -Dlanguage=JavaScript -o src/parser src/parser/rpn.g4"
+    "grammar": "java -jar lib/antlr-4.8-complete.jar -Dlanguage=JavaScript -visitor -o src/parser src/parser/rpn.g4"
   },
   "eslintConfig": {
     "extends": [

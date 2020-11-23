@@ -1,6 +1,8 @@
+import {RpnValue} from "./programState";
+
 export interface ExternalValue {
     name: string
-    value: boolean | number | string
+    value: RpnValue
 }
 
 export class ExternalBoolean implements ExternalValue {

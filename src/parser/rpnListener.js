@@ -11,21 +11,21 @@ function rpnListener() {
 rpnListener.prototype = Object.create(antlr4.tree.ParseTreeListener.prototype);
 rpnListener.prototype.constructor = rpnListener;
 
-// Enter a parse tree produced by rpnParser#rpn.
-rpnListener.prototype.enterRpn = function(ctx) {
+// Enter a parse tree produced by rpnParser#program.
+rpnListener.prototype.enterProgram = function(ctx) {
 };
 
-// Exit a parse tree produced by rpnParser#rpn.
-rpnListener.prototype.exitRpn = function(ctx) {
+// Exit a parse tree produced by rpnParser#program.
+rpnListener.prototype.exitProgram = function(ctx) {
 };
 
 
-// Enter a parse tree produced by rpnParser#token.
-rpnListener.prototype.enterToken = function(ctx) {
+// Enter a parse tree produced by rpnParser#action.
+rpnListener.prototype.enterAction = function(ctx) {
 };
 
-// Exit a parse tree produced by rpnParser#token.
-rpnListener.prototype.exitToken = function(ctx) {
+// Exit a parse tree produced by rpnParser#action.
+rpnListener.prototype.exitAction = function(ctx) {
 };
 
 
@@ -38,12 +38,111 @@ rpnListener.prototype.exitLiteral = function(ctx) {
 };
 
 
+// Enter a parse tree produced by rpnParser#numberLiteral.
+rpnListener.prototype.enterNumberLiteral = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#numberLiteral.
+rpnListener.prototype.exitNumberLiteral = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#stringLiteral.
+rpnListener.prototype.enterStringLiteral = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#stringLiteral.
+rpnListener.prototype.exitStringLiteral = function(ctx) {
+};
+
+
 // Enter a parse tree produced by rpnParser#variableAccess.
 rpnListener.prototype.enterVariableAccess = function(ctx) {
 };
 
 // Exit a parse tree produced by rpnParser#variableAccess.
 rpnListener.prototype.exitVariableAccess = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#assignment.
+rpnListener.prototype.enterAssignment = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#assignment.
+rpnListener.prototype.exitAssignment = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#operator.
+rpnListener.prototype.enterOperator = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#operator.
+rpnListener.prototype.exitOperator = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#ifAction.
+rpnListener.prototype.enterIfAction = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#ifAction.
+rpnListener.prototype.exitIfAction = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#elseAction.
+rpnListener.prototype.enterElseAction = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#elseAction.
+rpnListener.prototype.exitElseAction = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#label.
+rpnListener.prototype.enterLabel = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#label.
+rpnListener.prototype.exitLabel = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#gotoAction.
+rpnListener.prototype.enterGotoAction = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#gotoAction.
+rpnListener.prototype.exitGotoAction = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#store.
+rpnListener.prototype.enterStore = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#store.
+rpnListener.prototype.exitStore = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#load.
+rpnListener.prototype.enterLoad = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#load.
+rpnListener.prototype.exitLoad = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#storePop.
+rpnListener.prototype.enterStorePop = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#storePop.
+rpnListener.prototype.exitStorePop = function(ctx) {
 };
 
 
@@ -269,105 +368,6 @@ rpnListener.prototype.enterStringType = function(ctx) {
 
 // Exit a parse tree produced by rpnParser#stringType.
 rpnListener.prototype.exitStringType = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#assignment.
-rpnListener.prototype.enterAssignment = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#assignment.
-rpnListener.prototype.exitAssignment = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#commonOperator.
-rpnListener.prototype.enterCommonOperator = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#commonOperator.
-rpnListener.prototype.exitCommonOperator = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#comparisonOperator.
-rpnListener.prototype.enterComparisonOperator = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#comparisonOperator.
-rpnListener.prototype.exitComparisonOperator = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#bitwiseOperator.
-rpnListener.prototype.enterBitwiseOperator = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#bitwiseOperator.
-rpnListener.prototype.exitBitwiseOperator = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#logicalOperator.
-rpnListener.prototype.enterLogicalOperator = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#logicalOperator.
-rpnListener.prototype.exitLogicalOperator = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#numericalOperator.
-rpnListener.prototype.enterNumericalOperator = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#numericalOperator.
-rpnListener.prototype.exitNumericalOperator = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#specialOperators.
-rpnListener.prototype.enterSpecialOperators = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#specialOperators.
-rpnListener.prototype.exitSpecialOperators = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#ifStatement.
-rpnListener.prototype.enterIfStatement = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#ifStatement.
-rpnListener.prototype.exitIfStatement = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#elseStatement.
-rpnListener.prototype.enterElseStatement = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#elseStatement.
-rpnListener.prototype.exitElseStatement = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#stringOperator.
-rpnListener.prototype.enterStringOperator = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#stringOperator.
-rpnListener.prototype.exitStringOperator = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#stackOperator.
-rpnListener.prototype.enterStackOperator = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#stackOperator.
-rpnListener.prototype.exitStackOperator = function(ctx) {
 };
 
 
