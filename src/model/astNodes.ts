@@ -44,12 +44,38 @@ export class Operator extends Action {
         this.operator = operator
     }
 
+    private static unaryNumericOperator(initialState: ProgramState, operator: (a: number) => number): ProgramState {
+        const [a, nextState1] = initialState.popNumberOrThrow()
+        return nextState1.push(operator(a))
+    }
+
+    private static binaryNumericOperator(initialState: ProgramState, operator: (a: number, b: number) => number): ProgramState {
+        const [b, nextState1] = initialState.popNumberOrThrow()
+        const [a, nextState2] = nextState1.popNumberOrThrow()
+        return nextState2.push(operator(a, b))
+    }
+
     execute(initialState: ProgramState): ProgramState {
         switch (this.operator) {
+
+            // Common operators
             case "+":
-                const [b, nextState1] = initialState.popNumberOrThrow()
-                const [a, nextState2] = nextState1.popNumberOrThrow()
-                return nextState2.push(a + b)
+                return Operator.binaryNumericOperator(initialState, (a, b) => a + b)
+            case "-":
+                return Operator.binaryNumericOperator(initialState, (a, b) => a - b)
+            case "/":
+                return Operator.binaryNumericOperator(initialState, (a, b) => a / b)
+            case "*":
+                return Operator.binaryNumericOperator(initialState, (a, b) => a * b)
+            case "%":
+                return Operator.binaryNumericOperator(initialState, (a, b) => Math.abs(a) % Math.abs(b))
+            case "++":
+                return Operator.unaryNumericOperator(initialState, (a) => a + 1)
+            case "--":
+                return Operator.unaryNumericOperator(initialState, (a) => a - 1)
+            case "/-/":
+            case "neg":
+                return Operator.unaryNumericOperator(initialState, (a) => -a)
             default:
                 return initialState
         }
