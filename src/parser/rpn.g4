@@ -5,7 +5,7 @@ grammar rpn;
  **********************************************************************************************************************/
 
 program
-    : action*
+    : ' '* (action ' '*)*
     ;
 
 action
@@ -19,6 +19,7 @@ action
     | elseAction
     | label
     | gotoAction
+    | quit
     | store
     | load
     | storePop
@@ -38,11 +39,15 @@ stringLiteral
     ;
 
 variableAccess
-    : '(' ID ',' type ')'
+    : '(' ' '* id ' '* ',' ' '* type ' '* ')'
     ;
 
 assignment
-    : '(' ('>' | '&gt;') ID (',' type)? ')'
+    : '(' ' '* ('>' | '&gt;') ' '* id (' '* ',' ' '* type)? ' '* ')'
+    ;
+
+id
+    : ID_PART (' '* ID_PART)*
     ;
 
 operator
@@ -81,8 +86,7 @@ operator
 
     // Numerical operator
     | 'abs'
-    | 'int'
-    | 'flr'
+    | 'int' | 'flr'
     | 'rng'
     | 'cos'
     | 'lg'
@@ -112,13 +116,11 @@ operator
     | 'rddg'
     | 'dgrd'
     | 'rnor'
-    | 'quit'
     | 'case'
 
     // String operators
     | 'lc'
-    | 'uc'
-    | 'cap'
+    | 'uc' | 'cap'
     | 'chr'
     | 'ord'
     | 'scat'
@@ -151,6 +153,10 @@ label
 
 gotoAction
     : GOTO
+    ;
+
+quit
+    : 'quit'
     ;
 
 store
@@ -425,16 +431,16 @@ NUMBER
     : IntegerDigits ('.' [0-9] [0-9_]*)?
     ;
 
-ID
-    : [a-zA-Z] | [a-zA-Z] [a-zA-Z0-9:_ ]* [a-zA-Z0-9:_]
+ID_PART
+    : [a-zA-Z] [a-zA-Z0-9:_]*
     ;
 
 STRING
-	:	'"' (~["])* '"'
+	:	['] (~['])* [']
 	;
 
 WS
-    : [ \t\r\n]+ -> skip
+    : [\t\r\n]+ -> skip
     ;
 
 fragment IntegerDigits

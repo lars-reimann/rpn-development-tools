@@ -25,13 +25,15 @@ class AstCreator extends RpnVisitor {
     }
 
     visitProgram(ctx: any) {
+        console.log(ctx.errorCode);
+        console.log(ctx.action());
         for (const action of ctx.action()) {
             this.visitAction(action)
         }
     }
 
     visitBooleanLiteral(ctx: any) {
-        const value = ctx.NUMBER().getText() === 'True'
+        const value = ctx.getText() === 'True'
         this.nodes.push(new Literal(value))
     }
 
@@ -84,6 +86,10 @@ class AstCreator extends RpnVisitor {
 //         return this.visitChildren(ctx);
 //     };
 //
+//     // Visit a parse tree produced by rpnParser#quit.
+//     rpnVisitor.prototype.visitQuit = function(ctx) {
+//         return this.visitChildren(ctx);
+//     };
 //
 // // Visit a parse tree produced by rpnParser#store.
 //     rpnVisitor.prototype.visitStore = function(ctx) {

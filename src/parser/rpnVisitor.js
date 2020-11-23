@@ -54,6 +54,12 @@ rpnVisitor.prototype.visitAssignment = function(ctx) {
 };
 
 
+// Visit a parse tree produced by rpnParser#id.
+rpnVisitor.prototype.visitId = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by rpnParser#operator.
 rpnVisitor.prototype.visitOperator = function(ctx) {
   return this.visitChildren(ctx);
@@ -80,6 +86,12 @@ rpnVisitor.prototype.visitLabel = function(ctx) {
 
 // Visit a parse tree produced by rpnParser#gotoAction.
 rpnVisitor.prototype.visitGotoAction = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by rpnParser#quit.
+rpnVisitor.prototype.visitQuit = function(ctx) {
   return this.visitChildren(ctx);
 };
 

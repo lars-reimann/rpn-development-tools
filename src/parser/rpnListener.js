@@ -74,6 +74,15 @@ rpnListener.prototype.exitAssignment = function(ctx) {
 };
 
 
+// Enter a parse tree produced by rpnParser#id.
+rpnListener.prototype.enterId = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#id.
+rpnListener.prototype.exitId = function(ctx) {
+};
+
+
 // Enter a parse tree produced by rpnParser#operator.
 rpnListener.prototype.enterOperator = function(ctx) {
 };
@@ -116,6 +125,15 @@ rpnListener.prototype.enterGotoAction = function(ctx) {
 
 // Exit a parse tree produced by rpnParser#gotoAction.
 rpnListener.prototype.exitGotoAction = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#quit.
+rpnListener.prototype.enterQuit = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#quit.
+rpnListener.prototype.exitQuit = function(ctx) {
 };
 
 
