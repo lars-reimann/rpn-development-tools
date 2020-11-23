@@ -9,7 +9,8 @@ program
     ;
 
 action
-    : numberLiteral
+    : booleanLiteral
+    | numberLiteral
     | stringLiteral
     | variableAccess
     | assignment
@@ -21,6 +22,11 @@ action
     | store
     | load
     | storePop
+    ;
+
+booleanLiteral
+    : 'False'
+    | 'True'
     ;
 
 numberLiteral

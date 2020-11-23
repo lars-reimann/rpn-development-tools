@@ -43,6 +43,7 @@ export default function App() {
             try {
                 const newState = astNodes.execute(initialState)
                 setStack(newState.stack.stack)
+                console.log(newState)
             } catch (error) {
                 console.error(error)
             }

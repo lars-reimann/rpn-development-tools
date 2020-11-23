@@ -30,6 +30,11 @@ class AstCreator extends RpnVisitor {
         }
     }
 
+    visitBooleanLiteral(ctx: any) {
+        const value = ctx.NUMBER().getText() === 'True'
+        this.nodes.push(new Literal(value))
+    }
+
     visitNumberLiteral(ctx: any) {
         const value = parseFloat(ctx.NUMBER().getText())
         this.nodes.push(new Literal(value))
@@ -246,15 +251,4 @@ class AstCreator extends RpnVisitor {
 //     rpnVisitor.prototype.visitStringType = function(ctx) {
 //         return this.visitChildren(ctx);
 //     };
-
-//     variableAccess
-// | assignment
-// | operator
-// | ifAction
-// | elseAction
-// | label
-// | gotoAction
-// | store
-// | load
-// | storePop
 }

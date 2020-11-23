@@ -1,7 +1,8 @@
 import React from "react";
 import './Stack.css';
+import {RpnValue} from "../model/programState";
 
-export default function Stack(props: { values: any[] }) {
+export default function Stack(props: { values: RpnValue[] }) {
     return (
         <div className="Stack">
             <h2>Stack</h2>
@@ -12,10 +13,10 @@ export default function Stack(props: { values: any[] }) {
     )
 }
 
-function StackItem(props: { value: any }) {
+function StackItem(props: { value: RpnValue }) {
     return (
         <div className="StackItem">
-            {props.value}
+            {props.value.toString()}
         </div>
     )
 }

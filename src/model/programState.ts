@@ -15,15 +15,18 @@ export class ProgramState {
         return this.copy({stack: this.stack.push(value)})
     }
 
-    pop(): [value: RpnValue | void, newProgramState: ProgramState]{
+    pop(): [value: RpnValue, newProgramState: ProgramState]{
         const [value, newStack] = this.stack.pop()
+        if (value === null || value === undefined) {
+            throw new Error("Stack is depleted.")
+        }
         return [
             value,
             this.copy({stack: newStack})
         ]
     }
 
-    popNumberOrThrow(): [value: number, newProgramState: ProgramState] {
+    popNumber(): [value: number, newProgramState: ProgramState] {
         const [value, newProgramState] = this.pop()
         if (value === null || value === undefined) {
             throw new Error("Stack is depleted.")

@@ -12,14 +12,15 @@ export default function Controls(props: {
     if (props.isExecuting) {
         return (
             <div className="Controls">
-                <button type="button" onClick={props.onToggleExecuting}>Stop execution</button>
+                <button type="button" onClick={props.onToggleExecuting}>Stop stepwise execution</button>
                 <button type="button" onClick={props.onNextStep}>Next step</button>
             </div>
         )
     } else {
         return (
             <div className="Controls">
-                <button type="button" onClick={props.onToggleExecuting}>Start execution</button>
+                <button type="button" onClick={props.onToggleExecuting}>Start stepwise execution</button>
+                <button type="button">Run complete program</button>
                 <button type="button" onClick={props.onClearStack}>Clear stack</button>
                 <button type="button" onClick={props.onRestoreInitialExternalValues}>Restore initial SimVars/registers</button>
             </div>

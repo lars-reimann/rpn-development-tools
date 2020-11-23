@@ -8,7 +8,7 @@ var grammarFileName = "rpn.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u018a\u00e5\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\u0003\u018c\u00e5\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
     "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
     "\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f",
     "\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010",
@@ -20,8 +20,8 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "$\t$\u0004%\t%\u0004&\t&\u0004\'\t\'\u0004(\t(\u0004)\t)\u0003\u0002",
     "\u0007\u0002T\n\u0002\f\u0002\u000e\u0002W\u000b\u0002\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0005\u0003d\n\u0003\u0003",
-    "\u0004\u0003\u0004\u0005\u0004h\n\u0004\u0003\u0005\u0003\u0005\u0003",
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0005",
+    "\u0003f\n\u0003\u0003\u0004\u0003\u0004\u0003\u0005\u0003\u0005\u0003",
     "\u0006\u0003\u0006\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0003",
     "\u0007\u0003\u0007\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0005\by",
     "\n\b\u0003\b\u0003\b\u0003\t\u0003\t\u0003\n\u0003\n\u0007\n\u0081\n",
@@ -41,114 +41,114 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     " \u0003 \u0003!\u0003!\u0003\"\u0003\"\u0003#\u0003#\u0003$\u0003$\u0003",
     "%\u0003%\u0003&\u0003&\u0003\'\u0003\'\u0003(\u0003(\u0003)\u0003)\u0003",
     ")\u0002\u0002*\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016",
-    "\u0018\u001a\u001c\u001e \"$&(*,.02468:<>@BDFHJLNP\u0002\u001a\u0003",
-    "\u0002\u0006\u0007\u0004\u0002\u0006\u0006\bU\u0003\u0002YZ\u0003\u0002",
-    "[w\u0003\u0002x\u0095\u0003\u0002\u0096\u00bb\u0003\u0002\u00bc\u00c2",
-    "\u0003\u0002\u00c3\u00c7\u0003\u0002\u00c8\u00cf\u0003\u0002\u00d0\u00d5",
-    "\u0003\u0002\u00d6\u00e1\u0003\u0002\u00e2\u00f4\u0003\u0002\u00f5\u00fa",
-    "\u0003\u0002\u00fb\u0106\u0003\u0002\u0107\u0109\u0003\u0002\u010a\u0113",
-    "\u0003\u0002\u0114\u0117\u0003\u0002\u0118\u011b\u0003\u0002\u011c\u011d",
-    "\u0003\u0002\u011e\u0126\u0003\u0002\u0127\u0130\u0003\u0002\u0131\u015a",
-    "\u0004\u0002\\\\\u015b\u0167\u0003\u0002\u0168\u0180\u0002\u00e1\u0002",
-    "U\u0003\u0002\u0002\u0002\u0004c\u0003\u0002\u0002\u0002\u0006g\u0003",
-    "\u0002\u0002\u0002\bi\u0003\u0002\u0002\u0002\nk\u0003\u0002\u0002\u0002",
-    "\fm\u0003\u0002\u0002\u0002\u000es\u0003\u0002\u0002\u0002\u0010|\u0003",
-    "\u0002\u0002\u0002\u0012~\u0003\u0002\u0002\u0002\u0014\u0087\u0003",
-    "\u0002\u0002\u0002\u0016\u0090\u0003\u0002\u0002\u0002\u0018\u0092\u0003",
-    "\u0002\u0002\u0002\u001a\u0094\u0003\u0002\u0002\u0002\u001c\u0096\u0003",
-    "\u0002\u0002\u0002\u001e\u0098\u0003\u0002\u0002\u0002 \u009d\u0003",
-    "\u0002\u0002\u0002\"\u009f\u0003\u0002\u0002\u0002$\u00b6\u0003\u0002",
-    "\u0002\u0002&\u00b8\u0003\u0002\u0002\u0002(\u00ba\u0003\u0002\u0002",
-    "\u0002*\u00bc\u0003\u0002\u0002\u0002,\u00be\u0003\u0002\u0002\u0002",
-    ".\u00c0\u0003\u0002\u0002\u00020\u00c2\u0003\u0002\u0002\u00022\u00c4",
-    "\u0003\u0002\u0002\u00024\u00c6\u0003\u0002\u0002\u00026\u00c8\u0003",
-    "\u0002\u0002\u00028\u00ca\u0003\u0002\u0002\u0002:\u00cc\u0003\u0002",
-    "\u0002\u0002<\u00ce\u0003\u0002\u0002\u0002>\u00d0\u0003\u0002\u0002",
-    "\u0002@\u00d2\u0003\u0002\u0002\u0002B\u00d4\u0003\u0002\u0002\u0002",
-    "D\u00d6\u0003\u0002\u0002\u0002F\u00d8\u0003\u0002\u0002\u0002H\u00da",
-    "\u0003\u0002\u0002\u0002J\u00dc\u0003\u0002\u0002\u0002L\u00de\u0003",
-    "\u0002\u0002\u0002N\u00e0\u0003\u0002\u0002\u0002P\u00e2\u0003\u0002",
-    "\u0002\u0002RT\u0005\u0004\u0003\u0002SR\u0003\u0002\u0002\u0002TW\u0003",
-    "\u0002\u0002\u0002US\u0003\u0002\u0002\u0002UV\u0003\u0002\u0002\u0002",
-    "V\u0003\u0003\u0002\u0002\u0002WU\u0003\u0002\u0002\u0002Xd\u0005\u0006",
-    "\u0004\u0002Yd\u0005\f\u0007\u0002Zd\u0005\u000e\b\u0002[d\u0005\u0010",
-    "\t\u0002\\d\u0005\u0012\n\u0002]d\u0005\u0014\u000b\u0002^d\u0005\u0016",
-    "\f\u0002_d\u0005\u0018\r\u0002`d\u0005\u001a\u000e\u0002ad\u0005\u001c",
-    "\u000f\u0002bd\u0005\u001e\u0010\u0002cX\u0003\u0002\u0002\u0002cY\u0003",
-    "\u0002\u0002\u0002cZ\u0003\u0002\u0002\u0002c[\u0003\u0002\u0002\u0002",
-    "c\\\u0003\u0002\u0002\u0002c]\u0003\u0002\u0002\u0002c^\u0003\u0002",
-    "\u0002\u0002c_\u0003\u0002\u0002\u0002c`\u0003\u0002\u0002\u0002ca\u0003",
-    "\u0002\u0002\u0002cb\u0003\u0002\u0002\u0002d\u0005\u0003\u0002\u0002",
-    "\u0002eh\u0005\b\u0005\u0002fh\u0005\n\u0006\u0002ge\u0003\u0002\u0002",
-    "\u0002gf\u0003\u0002\u0002\u0002h\u0007\u0003\u0002\u0002\u0002ij\u0007",
-    "\u0187\u0002\u0002j\t\u0003\u0002\u0002\u0002kl\u0007\u0189\u0002\u0002",
-    "l\u000b\u0003\u0002\u0002\u0002mn\u0007\u0003\u0002\u0002no\u0007\u0188",
-    "\u0002\u0002op\u0007\u0004\u0002\u0002pq\u0005 \u0011\u0002qr\u0007",
-    "\u0005\u0002\u0002r\r\u0003\u0002\u0002\u0002st\u0007\u0003\u0002\u0002",
-    "tu\t\u0002\u0002\u0002ux\u0007\u0188\u0002\u0002vw\u0007\u0004\u0002",
-    "\u0002wy\u0005 \u0011\u0002xv\u0003\u0002\u0002\u0002xy\u0003\u0002",
-    "\u0002\u0002yz\u0003\u0002\u0002\u0002z{\u0007\u0005\u0002\u0002{\u000f",
-    "\u0003\u0002\u0002\u0002|}\t\u0003\u0002\u0002}\u0011\u0003\u0002\u0002",
-    "\u0002~\u0082\u0007V\u0002\u0002\u007f\u0081\u0005\u0004\u0003\u0002",
-    "\u0080\u007f\u0003\u0002\u0002\u0002\u0081\u0084\u0003\u0002\u0002\u0002",
-    "\u0082\u0080\u0003\u0002\u0002\u0002\u0082\u0083\u0003\u0002\u0002\u0002",
-    "\u0083\u0085\u0003\u0002\u0002\u0002\u0084\u0082\u0003\u0002\u0002\u0002",
-    "\u0085\u0086\u0007W\u0002\u0002\u0086\u0013\u0003\u0002\u0002\u0002",
-    "\u0087\u008b\u0007X\u0002\u0002\u0088\u008a\u0005\u0004\u0003\u0002",
-    "\u0089\u0088\u0003\u0002\u0002\u0002\u008a\u008d\u0003\u0002\u0002\u0002",
-    "\u008b\u0089\u0003\u0002\u0002\u0002\u008b\u008c\u0003\u0002\u0002\u0002",
-    "\u008c\u008e\u0003\u0002\u0002\u0002\u008d\u008b\u0003\u0002\u0002\u0002",
-    "\u008e\u008f\u0007W\u0002\u0002\u008f\u0015\u0003\u0002\u0002\u0002",
-    "\u0090\u0091\u0007\u0182\u0002\u0002\u0091\u0017\u0003\u0002\u0002\u0002",
-    "\u0092\u0093\u0007\u0183\u0002\u0002\u0093\u0019\u0003\u0002\u0002\u0002",
-    "\u0094\u0095\u0007\u0184\u0002\u0002\u0095\u001b\u0003\u0002\u0002\u0002",
-    "\u0096\u0097\u0007\u0185\u0002\u0002\u0097\u001d\u0003\u0002\u0002\u0002",
-    "\u0098\u0099\u0007\u0186\u0002\u0002\u0099\u001f\u0003\u0002\u0002\u0002",
-    "\u009a\u009e\u0005\"\u0012\u0002\u009b\u009e\u0005$\u0013\u0002\u009c",
-    "\u009e\u0005P)\u0002\u009d\u009a\u0003\u0002\u0002\u0002\u009d\u009b",
-    "\u0003\u0002\u0002\u0002\u009d\u009c\u0003\u0002\u0002\u0002\u009e!",
-    "\u0003\u0002\u0002\u0002\u009f\u00a0\t\u0004\u0002\u0002\u00a0#\u0003",
-    "\u0002\u0002\u0002\u00a1\u00b7\u0005&\u0014\u0002\u00a2\u00b7\u0005",
-    "(\u0015\u0002\u00a3\u00b7\u0005*\u0016\u0002\u00a4\u00b7\u0005,\u0017",
-    "\u0002\u00a5\u00b7\u0005.\u0018\u0002\u00a6\u00b7\u00050\u0019\u0002",
-    "\u00a7\u00b7\u00052\u001a\u0002\u00a8\u00b7\u00054\u001b\u0002\u00a9",
-    "\u00b7\u00056\u001c\u0002\u00aa\u00b7\u00058\u001d\u0002\u00ab\u00b7",
-    "\u0005:\u001e\u0002\u00ac\u00b7\u0005<\u001f\u0002\u00ad\u00b7\u0005",
-    "> \u0002\u00ae\u00b7\u0005@!\u0002\u00af\u00b7\u0005B\"\u0002\u00b0",
-    "\u00b7\u0005D#\u0002\u00b1\u00b7\u0005F$\u0002\u00b2\u00b7\u0005H%\u0002",
-    "\u00b3\u00b7\u0005J&\u0002\u00b4\u00b7\u0005L\'\u0002\u00b5\u00b7\u0005",
-    "N(\u0002\u00b6\u00a1\u0003\u0002\u0002\u0002\u00b6\u00a2\u0003\u0002",
-    "\u0002\u0002\u00b6\u00a3\u0003\u0002\u0002\u0002\u00b6\u00a4\u0003\u0002",
-    "\u0002\u0002\u00b6\u00a5\u0003\u0002\u0002\u0002\u00b6\u00a6\u0003\u0002",
-    "\u0002\u0002\u00b6\u00a7\u0003\u0002\u0002\u0002\u00b6\u00a8\u0003\u0002",
-    "\u0002\u0002\u00b6\u00a9\u0003\u0002\u0002\u0002\u00b6\u00aa\u0003\u0002",
-    "\u0002\u0002\u00b6\u00ab\u0003\u0002\u0002\u0002\u00b6\u00ac\u0003\u0002",
-    "\u0002\u0002\u00b6\u00ad\u0003\u0002\u0002\u0002\u00b6\u00ae\u0003\u0002",
-    "\u0002\u0002\u00b6\u00af\u0003\u0002\u0002\u0002\u00b6\u00b0\u0003\u0002",
-    "\u0002\u0002\u00b6\u00b1\u0003\u0002\u0002\u0002\u00b6\u00b2\u0003\u0002",
-    "\u0002\u0002\u00b6\u00b3\u0003\u0002\u0002\u0002\u00b6\u00b4\u0003\u0002",
-    "\u0002\u0002\u00b6\u00b5\u0003\u0002\u0002\u0002\u00b7%\u0003\u0002",
-    "\u0002\u0002\u00b8\u00b9\t\u0005\u0002\u0002\u00b9\'\u0003\u0002\u0002",
-    "\u0002\u00ba\u00bb\t\u0006\u0002\u0002\u00bb)\u0003\u0002\u0002\u0002",
-    "\u00bc\u00bd\t\u0007\u0002\u0002\u00bd+\u0003\u0002\u0002\u0002\u00be",
-    "\u00bf\t\b\u0002\u0002\u00bf-\u0003\u0002\u0002\u0002\u00c0\u00c1\t",
-    "\t\u0002\u0002\u00c1/\u0003\u0002\u0002\u0002\u00c2\u00c3\t\n\u0002",
-    "\u0002\u00c31\u0003\u0002\u0002\u0002\u00c4\u00c5\t\u000b\u0002\u0002",
-    "\u00c53\u0003\u0002\u0002\u0002\u00c6\u00c7\t\f\u0002\u0002\u00c75\u0003",
-    "\u0002\u0002\u0002\u00c8\u00c9\t\r\u0002\u0002\u00c97\u0003\u0002\u0002",
-    "\u0002\u00ca\u00cb\t\u000e\u0002\u0002\u00cb9\u0003\u0002\u0002\u0002",
-    "\u00cc\u00cd\t\u000f\u0002\u0002\u00cd;\u0003\u0002\u0002\u0002\u00ce",
-    "\u00cf\t\u0010\u0002\u0002\u00cf=\u0003\u0002\u0002\u0002\u00d0\u00d1",
-    "\t\u0011\u0002\u0002\u00d1?\u0003\u0002\u0002\u0002\u00d2\u00d3\t\u0012",
-    "\u0002\u0002\u00d3A\u0003\u0002\u0002\u0002\u00d4\u00d5\t\u0013\u0002",
-    "\u0002\u00d5C\u0003\u0002\u0002\u0002\u00d6\u00d7\t\u0014\u0002\u0002",
-    "\u00d7E\u0003\u0002\u0002\u0002\u00d8\u00d9\t\u0015\u0002\u0002\u00d9",
-    "G\u0003\u0002\u0002\u0002\u00da\u00db\t\u0016\u0002\u0002\u00dbI\u0003",
-    "\u0002\u0002\u0002\u00dc\u00dd\t\u0017\u0002\u0002\u00ddK\u0003\u0002",
-    "\u0002\u0002\u00de\u00df\t\u0018\u0002\u0002\u00dfM\u0003\u0002\u0002",
-    "\u0002\u00e0\u00e1\t\u0019\u0002\u0002\u00e1O\u0003\u0002\u0002\u0002",
-    "\u00e2\u00e3\u0007\u0181\u0002\u0002\u00e3Q\u0003\u0002\u0002\u0002",
-    "\nUcgx\u0082\u008b\u009d\u00b6"].join("");
+    "\u0018\u001a\u001c\u001e \"$&(*,.02468:<>@BDFHJLNP\u0002\u001b\u0003",
+    "\u0002\u0003\u0004\u0003\u0002\b\t\u0004\u0002\b\b\nW\u0003\u0002[\\",
+    "\u0003\u0002]y\u0003\u0002z\u0097\u0003\u0002\u0098\u00bd\u0003\u0002",
+    "\u00be\u00c4\u0003\u0002\u00c5\u00c9\u0003\u0002\u00ca\u00d1\u0003\u0002",
+    "\u00d2\u00d7\u0003\u0002\u00d8\u00e3\u0003\u0002\u00e4\u00f6\u0003\u0002",
+    "\u00f7\u00fc\u0003\u0002\u00fd\u0108\u0003\u0002\u0109\u010b\u0003\u0002",
+    "\u010c\u0115\u0003\u0002\u0116\u0119\u0003\u0002\u011a\u011d\u0003\u0002",
+    "\u011e\u011f\u0003\u0002\u0120\u0128\u0003\u0002\u0129\u0132\u0003\u0002",
+    "\u0133\u015c\u0004\u0002^^\u015d\u0169\u0003\u0002\u016a\u0182\u0002",
+    "\u00e2\u0002U\u0003\u0002\u0002\u0002\u0004e\u0003\u0002\u0002\u0002",
+    "\u0006g\u0003\u0002\u0002\u0002\bi\u0003\u0002\u0002\u0002\nk\u0003",
+    "\u0002\u0002\u0002\fm\u0003\u0002\u0002\u0002\u000es\u0003\u0002\u0002",
+    "\u0002\u0010|\u0003\u0002\u0002\u0002\u0012~\u0003\u0002\u0002\u0002",
+    "\u0014\u0087\u0003\u0002\u0002\u0002\u0016\u0090\u0003\u0002\u0002\u0002",
+    "\u0018\u0092\u0003\u0002\u0002\u0002\u001a\u0094\u0003\u0002\u0002\u0002",
+    "\u001c\u0096\u0003\u0002\u0002\u0002\u001e\u0098\u0003\u0002\u0002\u0002",
+    " \u009d\u0003\u0002\u0002\u0002\"\u009f\u0003\u0002\u0002\u0002$\u00b6",
+    "\u0003\u0002\u0002\u0002&\u00b8\u0003\u0002\u0002\u0002(\u00ba\u0003",
+    "\u0002\u0002\u0002*\u00bc\u0003\u0002\u0002\u0002,\u00be\u0003\u0002",
+    "\u0002\u0002.\u00c0\u0003\u0002\u0002\u00020\u00c2\u0003\u0002\u0002",
+    "\u00022\u00c4\u0003\u0002\u0002\u00024\u00c6\u0003\u0002\u0002\u0002",
+    "6\u00c8\u0003\u0002\u0002\u00028\u00ca\u0003\u0002\u0002\u0002:\u00cc",
+    "\u0003\u0002\u0002\u0002<\u00ce\u0003\u0002\u0002\u0002>\u00d0\u0003",
+    "\u0002\u0002\u0002@\u00d2\u0003\u0002\u0002\u0002B\u00d4\u0003\u0002",
+    "\u0002\u0002D\u00d6\u0003\u0002\u0002\u0002F\u00d8\u0003\u0002\u0002",
+    "\u0002H\u00da\u0003\u0002\u0002\u0002J\u00dc\u0003\u0002\u0002\u0002",
+    "L\u00de\u0003\u0002\u0002\u0002N\u00e0\u0003\u0002\u0002\u0002P\u00e2",
+    "\u0003\u0002\u0002\u0002RT\u0005\u0004\u0003\u0002SR\u0003\u0002\u0002",
+    "\u0002TW\u0003\u0002\u0002\u0002US\u0003\u0002\u0002\u0002UV\u0003\u0002",
+    "\u0002\u0002V\u0003\u0003\u0002\u0002\u0002WU\u0003\u0002\u0002\u0002",
+    "Xf\u0005\u0006\u0004\u0002Yf\u0005\b\u0005\u0002Zf\u0005\n\u0006\u0002",
+    "[f\u0005\f\u0007\u0002\\f\u0005\u000e\b\u0002]f\u0005\u0010\t\u0002",
+    "^f\u0005\u0012\n\u0002_f\u0005\u0014\u000b\u0002`f\u0005\u0016\f\u0002",
+    "af\u0005\u0018\r\u0002bf\u0005\u001a\u000e\u0002cf\u0005\u001c\u000f",
+    "\u0002df\u0005\u001e\u0010\u0002eX\u0003\u0002\u0002\u0002eY\u0003\u0002",
+    "\u0002\u0002eZ\u0003\u0002\u0002\u0002e[\u0003\u0002\u0002\u0002e\\",
+    "\u0003\u0002\u0002\u0002e]\u0003\u0002\u0002\u0002e^\u0003\u0002\u0002",
+    "\u0002e_\u0003\u0002\u0002\u0002e`\u0003\u0002\u0002\u0002ea\u0003\u0002",
+    "\u0002\u0002eb\u0003\u0002\u0002\u0002ec\u0003\u0002\u0002\u0002ed\u0003",
+    "\u0002\u0002\u0002f\u0005\u0003\u0002\u0002\u0002gh\t\u0002\u0002\u0002",
+    "h\u0007\u0003\u0002\u0002\u0002ij\u0007\u0189\u0002\u0002j\t\u0003\u0002",
+    "\u0002\u0002kl\u0007\u018b\u0002\u0002l\u000b\u0003\u0002\u0002\u0002",
+    "mn\u0007\u0005\u0002\u0002no\u0007\u018a\u0002\u0002op\u0007\u0006\u0002",
+    "\u0002pq\u0005 \u0011\u0002qr\u0007\u0007\u0002\u0002r\r\u0003\u0002",
+    "\u0002\u0002st\u0007\u0005\u0002\u0002tu\t\u0003\u0002\u0002ux\u0007",
+    "\u018a\u0002\u0002vw\u0007\u0006\u0002\u0002wy\u0005 \u0011\u0002xv",
+    "\u0003\u0002\u0002\u0002xy\u0003\u0002\u0002\u0002yz\u0003\u0002\u0002",
+    "\u0002z{\u0007\u0007\u0002\u0002{\u000f\u0003\u0002\u0002\u0002|}\t",
+    "\u0004\u0002\u0002}\u0011\u0003\u0002\u0002\u0002~\u0082\u0007X\u0002",
+    "\u0002\u007f\u0081\u0005\u0004\u0003\u0002\u0080\u007f\u0003\u0002\u0002",
+    "\u0002\u0081\u0084\u0003\u0002\u0002\u0002\u0082\u0080\u0003\u0002\u0002",
+    "\u0002\u0082\u0083\u0003\u0002\u0002\u0002\u0083\u0085\u0003\u0002\u0002",
+    "\u0002\u0084\u0082\u0003\u0002\u0002\u0002\u0085\u0086\u0007Y\u0002",
+    "\u0002\u0086\u0013\u0003\u0002\u0002\u0002\u0087\u008b\u0007Z\u0002",
+    "\u0002\u0088\u008a\u0005\u0004\u0003\u0002\u0089\u0088\u0003\u0002\u0002",
+    "\u0002\u008a\u008d\u0003\u0002\u0002\u0002\u008b\u0089\u0003\u0002\u0002",
+    "\u0002\u008b\u008c\u0003\u0002\u0002\u0002\u008c\u008e\u0003\u0002\u0002",
+    "\u0002\u008d\u008b\u0003\u0002\u0002\u0002\u008e\u008f\u0007Y\u0002",
+    "\u0002\u008f\u0015\u0003\u0002\u0002\u0002\u0090\u0091\u0007\u0184\u0002",
+    "\u0002\u0091\u0017\u0003\u0002\u0002\u0002\u0092\u0093\u0007\u0185\u0002",
+    "\u0002\u0093\u0019\u0003\u0002\u0002\u0002\u0094\u0095\u0007\u0186\u0002",
+    "\u0002\u0095\u001b\u0003\u0002\u0002\u0002\u0096\u0097\u0007\u0187\u0002",
+    "\u0002\u0097\u001d\u0003\u0002\u0002\u0002\u0098\u0099\u0007\u0188\u0002",
+    "\u0002\u0099\u001f\u0003\u0002\u0002\u0002\u009a\u009e\u0005\"\u0012",
+    "\u0002\u009b\u009e\u0005$\u0013\u0002\u009c\u009e\u0005P)\u0002\u009d",
+    "\u009a\u0003\u0002\u0002\u0002\u009d\u009b\u0003\u0002\u0002\u0002\u009d",
+    "\u009c\u0003\u0002\u0002\u0002\u009e!\u0003\u0002\u0002\u0002\u009f",
+    "\u00a0\t\u0005\u0002\u0002\u00a0#\u0003\u0002\u0002\u0002\u00a1\u00b7",
+    "\u0005&\u0014\u0002\u00a2\u00b7\u0005(\u0015\u0002\u00a3\u00b7\u0005",
+    "*\u0016\u0002\u00a4\u00b7\u0005,\u0017\u0002\u00a5\u00b7\u0005.\u0018",
+    "\u0002\u00a6\u00b7\u00050\u0019\u0002\u00a7\u00b7\u00052\u001a\u0002",
+    "\u00a8\u00b7\u00054\u001b\u0002\u00a9\u00b7\u00056\u001c\u0002\u00aa",
+    "\u00b7\u00058\u001d\u0002\u00ab\u00b7\u0005:\u001e\u0002\u00ac\u00b7",
+    "\u0005<\u001f\u0002\u00ad\u00b7\u0005> \u0002\u00ae\u00b7\u0005@!\u0002",
+    "\u00af\u00b7\u0005B\"\u0002\u00b0\u00b7\u0005D#\u0002\u00b1\u00b7\u0005",
+    "F$\u0002\u00b2\u00b7\u0005H%\u0002\u00b3\u00b7\u0005J&\u0002\u00b4\u00b7",
+    "\u0005L\'\u0002\u00b5\u00b7\u0005N(\u0002\u00b6\u00a1\u0003\u0002\u0002",
+    "\u0002\u00b6\u00a2\u0003\u0002\u0002\u0002\u00b6\u00a3\u0003\u0002\u0002",
+    "\u0002\u00b6\u00a4\u0003\u0002\u0002\u0002\u00b6\u00a5\u0003\u0002\u0002",
+    "\u0002\u00b6\u00a6\u0003\u0002\u0002\u0002\u00b6\u00a7\u0003\u0002\u0002",
+    "\u0002\u00b6\u00a8\u0003\u0002\u0002\u0002\u00b6\u00a9\u0003\u0002\u0002",
+    "\u0002\u00b6\u00aa\u0003\u0002\u0002\u0002\u00b6\u00ab\u0003\u0002\u0002",
+    "\u0002\u00b6\u00ac\u0003\u0002\u0002\u0002\u00b6\u00ad\u0003\u0002\u0002",
+    "\u0002\u00b6\u00ae\u0003\u0002\u0002\u0002\u00b6\u00af\u0003\u0002\u0002",
+    "\u0002\u00b6\u00b0\u0003\u0002\u0002\u0002\u00b6\u00b1\u0003\u0002\u0002",
+    "\u0002\u00b6\u00b2\u0003\u0002\u0002\u0002\u00b6\u00b3\u0003\u0002\u0002",
+    "\u0002\u00b6\u00b4\u0003\u0002\u0002\u0002\u00b6\u00b5\u0003\u0002\u0002",
+    "\u0002\u00b7%\u0003\u0002\u0002\u0002\u00b8\u00b9\t\u0006\u0002\u0002",
+    "\u00b9\'\u0003\u0002\u0002\u0002\u00ba\u00bb\t\u0007\u0002\u0002\u00bb",
+    ")\u0003\u0002\u0002\u0002\u00bc\u00bd\t\b\u0002\u0002\u00bd+\u0003\u0002",
+    "\u0002\u0002\u00be\u00bf\t\t\u0002\u0002\u00bf-\u0003\u0002\u0002\u0002",
+    "\u00c0\u00c1\t\n\u0002\u0002\u00c1/\u0003\u0002\u0002\u0002\u00c2\u00c3",
+    "\t\u000b\u0002\u0002\u00c31\u0003\u0002\u0002\u0002\u00c4\u00c5\t\f",
+    "\u0002\u0002\u00c53\u0003\u0002\u0002\u0002\u00c6\u00c7\t\r\u0002\u0002",
+    "\u00c75\u0003\u0002\u0002\u0002\u00c8\u00c9\t\u000e\u0002\u0002\u00c9",
+    "7\u0003\u0002\u0002\u0002\u00ca\u00cb\t\u000f\u0002\u0002\u00cb9\u0003",
+    "\u0002\u0002\u0002\u00cc\u00cd\t\u0010\u0002\u0002\u00cd;\u0003\u0002",
+    "\u0002\u0002\u00ce\u00cf\t\u0011\u0002\u0002\u00cf=\u0003\u0002\u0002",
+    "\u0002\u00d0\u00d1\t\u0012\u0002\u0002\u00d1?\u0003\u0002\u0002\u0002",
+    "\u00d2\u00d3\t\u0013\u0002\u0002\u00d3A\u0003\u0002\u0002\u0002\u00d4",
+    "\u00d5\t\u0014\u0002\u0002\u00d5C\u0003\u0002\u0002\u0002\u00d6\u00d7",
+    "\t\u0015\u0002\u0002\u00d7E\u0003\u0002\u0002\u0002\u00d8\u00d9\t\u0016",
+    "\u0002\u0002\u00d9G\u0003\u0002\u0002\u0002\u00da\u00db\t\u0017\u0002",
+    "\u0002\u00dbI\u0003\u0002\u0002\u0002\u00dc\u00dd\t\u0018\u0002\u0002",
+    "\u00ddK\u0003\u0002\u0002\u0002\u00de\u00df\t\u0019\u0002\u0002\u00df",
+    "M\u0003\u0002\u0002\u0002\u00e0\u00e1\t\u001a\u0002\u0002\u00e1O\u0003",
+    "\u0002\u0002\u0002\u00e2\u00e3\u0007\u0183\u0002\u0002\u00e3Q\u0003",
+    "\u0002\u0002\u0002\tUex\u0082\u008b\u009d\u00b6"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -157,44 +157,45 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "'('", "','", "')'", "'>'", "'&gt;'", "'+'", 
-                     "'-'", "'/'", "'*'", "'%'", "'++'", "'--'", "'/-/'", 
-                     "'neg'", "'=='", "'!='", "'<'", "'>='", "'<='", "'?'", 
-                     "'&'", "'|'", "'^'", "'~'", "'>>'", "'<<'", "'!'", 
-                     "'NOT'", "'&&'", "'AND'", "'||'", "'OR'", "'abs'", 
-                     "'int'", "'flr'", "'rng'", "'cos'", "'lg'", "'min'", 
-                     "'sin'", "'acos'", "'ctg'", "'ln'", "'sqr'", "'asin'", 
-                     "'eps'", "'log'", "'pi'", "'sqrt'", "'atg2'", "'exp'", 
-                     "'max'", "'pow'", "'tg'", "'atg'", "'div'", "'ceil'", 
-                     "'near'", "'dnor'", "'d360'", "'rdeg'", "'rddg'", "'dgrd'", 
-                     "'rnor'", "'quit'", "'case'", "'lc'", "'uc'", "'cap'", 
-                     "'chr'", "'ord'", "'scat'", "'schr'", "'scmp'", "'scmi'", 
-                     "'sstr'", "'ssub'", "'symb'", "'b'", "'c'", "'d'", 
-                     "'p'", "'r'", "'if{'", "'}'", "'els{'", "'bool'", "'boolean'", 
-                     "'meter'", "'meters'", "'m'", "'centimeter'", "'centimeters'", 
-                     "'cm'", "'kilometer'", "'kilometers'", "'km'", "'millimeter'", 
-                     "'millimeters'", "'mile'", "'miles'", "'decimile'", 
-                     "'decimiles'", "'nautical mile'", "'nautical miles'", 
-                     "'nmile'", "'nmiles'", "'decinmile'", "'decinmiles'", 
-                     "'foot'", "'feet'", "'ft'", "'inch'", "'inches'", "'in'", 
-                     "'yard'", "'yards'", "'square inch'", "'square inches'", 
-                     "'sq in'", "'in2'", "'square feet'", "'square foot'", 
-                     "'sq ft'", "'ft2'", "'square yard'", "'square yards'", 
-                     "'sq yd'", "'yd2'", "'square meter'", "'square meters'", 
-                     "'sq m'", "'m2'", "'square centimeter'", "'square centimeters'", 
-                     "'sq cm'", "'cm2'", "'square kilometer'", "'square kilometers'", 
-                     "'sq km'", "'km2'", "'square millimeter'", "'square millimeters'", 
-                     "'sq mm'", "'mm2'", "'square mile'", "'square miles'", 
-                     "'cubic inch'", "'cubic inches'", "'cu in'", "'in3'", 
-                     "'cubic foot'", "'cubic feet'", "'cu ft'", "'ft3'", 
-                     "'cubic yard'", "'cubic yards'", "'cu yd'", "'yd3'", 
-                     "'cubic mile'", "'cubic miles'", "'cubic millimeter'", 
-                     "'cubic millimeters'", "'cu mm'", "'mm3'", "'cubic centimeter'", 
-                     "'cubic centimeters'", "'cu cm'", "'cm3'", "'meter cubed'", 
-                     "'meters cubed'", "'cubic meter'", "'cubic meters'", 
-                     "'cu m'", "'m3'", "'cubic kilometer'", "'cubic kilometers'", 
-                     "'cu km'", "'km3'", "'liter'", "'liters'", "'gallon'", 
-                     "'gallons'", "'quart'", "'quarts'", "'meter cubed per second'", 
+var literalNames = [ null, "'False'", "'True'", "'('", "','", "')'", "'>'", 
+                     "'&gt;'", "'+'", "'-'", "'/'", "'*'", "'%'", "'++'", 
+                     "'--'", "'/-/'", "'neg'", "'=='", "'!='", "'<'", "'>='", 
+                     "'<='", "'?'", "'&'", "'|'", "'^'", "'~'", "'>>'", 
+                     "'<<'", "'!'", "'NOT'", "'&&'", "'AND'", "'||'", "'OR'", 
+                     "'abs'", "'int'", "'flr'", "'rng'", "'cos'", "'lg'", 
+                     "'min'", "'sin'", "'acos'", "'ctg'", "'ln'", "'sqr'", 
+                     "'asin'", "'eps'", "'log'", "'pi'", "'sqrt'", "'atg2'", 
+                     "'exp'", "'max'", "'pow'", "'tg'", "'atg'", "'div'", 
+                     "'ceil'", "'near'", "'dnor'", "'d360'", "'rdeg'", "'rddg'", 
+                     "'dgrd'", "'rnor'", "'quit'", "'case'", "'lc'", "'uc'", 
+                     "'cap'", "'chr'", "'ord'", "'scat'", "'schr'", "'scmp'", 
+                     "'scmi'", "'sstr'", "'ssub'", "'symb'", "'b'", "'c'", 
+                     "'d'", "'p'", "'r'", "'if{'", "'}'", "'els{'", "'bool'", 
+                     "'boolean'", "'meter'", "'meters'", "'m'", "'centimeter'", 
+                     "'centimeters'", "'cm'", "'kilometer'", "'kilometers'", 
+                     "'km'", "'millimeter'", "'millimeters'", "'mile'", 
+                     "'miles'", "'decimile'", "'decimiles'", "'nautical mile'", 
+                     "'nautical miles'", "'nmile'", "'nmiles'", "'decinmile'", 
+                     "'decinmiles'", "'foot'", "'feet'", "'ft'", "'inch'", 
+                     "'inches'", "'in'", "'yard'", "'yards'", "'square inch'", 
+                     "'square inches'", "'sq in'", "'in2'", "'square feet'", 
+                     "'square foot'", "'sq ft'", "'ft2'", "'square yard'", 
+                     "'square yards'", "'sq yd'", "'yd2'", "'square meter'", 
+                     "'square meters'", "'sq m'", "'m2'", "'square centimeter'", 
+                     "'square centimeters'", "'sq cm'", "'cm2'", "'square kilometer'", 
+                     "'square kilometers'", "'sq km'", "'km2'", "'square millimeter'", 
+                     "'square millimeters'", "'sq mm'", "'mm2'", "'square mile'", 
+                     "'square miles'", "'cubic inch'", "'cubic inches'", 
+                     "'cu in'", "'in3'", "'cubic foot'", "'cubic feet'", 
+                     "'cu ft'", "'ft3'", "'cubic yard'", "'cubic yards'", 
+                     "'cu yd'", "'yd3'", "'cubic mile'", "'cubic miles'", 
+                     "'cubic millimeter'", "'cubic millimeters'", "'cu mm'", 
+                     "'mm3'", "'cubic centimeter'", "'cubic centimeters'", 
+                     "'cu cm'", "'cm3'", "'meter cubed'", "'meters cubed'", 
+                     "'cubic meter'", "'cubic meters'", "'cu m'", "'m3'", 
+                     "'cubic kilometer'", "'cubic kilometers'", "'cu km'", 
+                     "'km3'", "'liter'", "'liters'", "'gallon'", "'gallons'", 
+                     "'quart'", "'quarts'", "'meter cubed per second'", 
                      "'meters cubed per second'", "'gallon per hour'", "'gallons per hour'", 
                      "'gph'", "'liter per hour'", "'liters per hour'", "'kelvin'", 
                      "'rankine'", "'farenheit'", "'fahrenheit'", "'celsius'", 
@@ -293,20 +294,21 @@ var symbolicNames = [ null, null, null, null, null, null, null, null, null,
                       null, null, null, null, null, null, null, null, null, 
                       null, null, null, null, null, null, null, null, null, 
                       null, null, null, null, null, null, null, null, null, 
-                      null, null, null, null, null, null, "LABEL", "GOTO", 
-                      "STORE", "LOAD", "STORE_POP", "NUMBER", "ID", "STRING", 
-                      "WS" ];
+                      null, null, null, null, null, null, null, null, "LABEL", 
+                      "GOTO", "STORE", "LOAD", "STORE_POP", "NUMBER", "ID", 
+                      "STRING", "WS" ];
 
-var ruleNames =  [ "program", "action", "literal", "numberLiteral", "stringLiteral", 
-                   "variableAccess", "assignment", "operator", "ifAction", 
-                   "elseAction", "label", "gotoAction", "store", "load", 
-                   "storePop", "type", "booleanType", "numberType", "distanceType", 
-                   "areaType", "volumeType", "volumeRateType", "temperatureType", 
-                   "angleType", "globalPositionType", "angularVelocityType", 
-                   "speedType", "accelerationType", "timeType", "powerType", 
-                   "weightType", "weightRateType", "electricalCurrentType", 
-                   "electricalPotentialType", "frequencyType", "densityType", 
-                   "pressureType", "torqueType", "miscellaneousType", "stringType" ];
+var ruleNames =  [ "program", "action", "booleanLiteral", "numberLiteral", 
+                   "stringLiteral", "variableAccess", "assignment", "operator", 
+                   "ifAction", "elseAction", "label", "gotoAction", "store", 
+                   "load", "storePop", "type", "booleanType", "numberType", 
+                   "distanceType", "areaType", "volumeType", "volumeRateType", 
+                   "temperatureType", "angleType", "globalPositionType", 
+                   "angularVelocityType", "speedType", "accelerationType", 
+                   "timeType", "powerType", "weightType", "weightRateType", 
+                   "electricalCurrentType", "electricalPotentialType", "frequencyType", 
+                   "densityType", "pressureType", "torqueType", "miscellaneousType", 
+                   "stringType" ];
 
 function rpnParser (input) {
 	antlr4.Parser.call(this, input);
@@ -710,19 +712,21 @@ rpnParser.T__379 = 380;
 rpnParser.T__380 = 381;
 rpnParser.T__381 = 382;
 rpnParser.T__382 = 383;
-rpnParser.LABEL = 384;
-rpnParser.GOTO = 385;
-rpnParser.STORE = 386;
-rpnParser.LOAD = 387;
-rpnParser.STORE_POP = 388;
-rpnParser.NUMBER = 389;
-rpnParser.ID = 390;
-rpnParser.STRING = 391;
-rpnParser.WS = 392;
+rpnParser.T__383 = 384;
+rpnParser.T__384 = 385;
+rpnParser.LABEL = 386;
+rpnParser.GOTO = 387;
+rpnParser.STORE = 388;
+rpnParser.LOAD = 389;
+rpnParser.STORE_POP = 390;
+rpnParser.NUMBER = 391;
+rpnParser.ID = 392;
+rpnParser.STRING = 393;
+rpnParser.WS = 394;
 
 rpnParser.RULE_program = 0;
 rpnParser.RULE_action = 1;
-rpnParser.RULE_literal = 2;
+rpnParser.RULE_booleanLiteral = 2;
 rpnParser.RULE_numberLiteral = 3;
 rpnParser.RULE_stringLiteral = 4;
 rpnParser.RULE_variableAccess = 5;
@@ -824,7 +828,7 @@ rpnParser.prototype.program = function() {
         this.state = 83;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__0) | (1 << rpnParser.T__3) | (1 << rpnParser.T__5) | (1 << rpnParser.T__6) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__85 - 64)))) !== 0) || ((((_la - 384)) & ~0x1f) == 0 && ((1 << (_la - 384)) & ((1 << (rpnParser.LABEL - 384)) | (1 << (rpnParser.GOTO - 384)) | (1 << (rpnParser.STORE - 384)) | (1 << (rpnParser.LOAD - 384)) | (1 << (rpnParser.STORE_POP - 384)) | (1 << (rpnParser.NUMBER - 384)) | (1 << (rpnParser.STRING - 384)))) !== 0)) {
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__0) | (1 << rpnParser.T__1) | (1 << rpnParser.T__2) | (1 << rpnParser.T__5) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__84 - 64)) | (1 << (rpnParser.T__85 - 64)) | (1 << (rpnParser.T__87 - 64)))) !== 0) || ((((_la - 386)) & ~0x1f) == 0 && ((1 << (_la - 386)) & ((1 << (rpnParser.LABEL - 386)) | (1 << (rpnParser.GOTO - 386)) | (1 << (rpnParser.STORE - 386)) | (1 << (rpnParser.LOAD - 386)) | (1 << (rpnParser.STORE_POP - 386)) | (1 << (rpnParser.NUMBER - 386)) | (1 << (rpnParser.STRING - 386)))) !== 0)) {
             this.state = 80;
             this.action();
             this.state = 85;
@@ -862,8 +866,16 @@ function ActionContext(parser, parent, invokingState) {
 ActionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 ActionContext.prototype.constructor = ActionContext;
 
-ActionContext.prototype.literal = function() {
-    return this.getTypedRuleContext(LiteralContext,0);
+ActionContext.prototype.booleanLiteral = function() {
+    return this.getTypedRuleContext(BooleanLiteralContext,0);
+};
+
+ActionContext.prototype.numberLiteral = function() {
+    return this.getTypedRuleContext(NumberLiteralContext,0);
+};
+
+ActionContext.prototype.stringLiteral = function() {
+    return this.getTypedRuleContext(StringLiteralContext,0);
 };
 
 ActionContext.prototype.variableAccess = function() {
@@ -936,73 +948,85 @@ rpnParser.prototype.action = function() {
     var localctx = new ActionContext(this, this._ctx, this.state);
     this.enterRule(localctx, 2, rpnParser.RULE_action);
     try {
-        this.state = 97;
+        this.state = 99;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,1,this._ctx);
         switch(la_) {
         case 1:
             this.enterOuterAlt(localctx, 1);
             this.state = 86;
-            this.literal();
+            this.booleanLiteral();
             break;
 
         case 2:
             this.enterOuterAlt(localctx, 2);
             this.state = 87;
-            this.variableAccess();
+            this.numberLiteral();
             break;
 
         case 3:
             this.enterOuterAlt(localctx, 3);
             this.state = 88;
-            this.assignment();
+            this.stringLiteral();
             break;
 
         case 4:
             this.enterOuterAlt(localctx, 4);
             this.state = 89;
-            this.operator();
+            this.variableAccess();
             break;
 
         case 5:
             this.enterOuterAlt(localctx, 5);
             this.state = 90;
-            this.ifAction();
+            this.assignment();
             break;
 
         case 6:
             this.enterOuterAlt(localctx, 6);
             this.state = 91;
-            this.elseAction();
+            this.operator();
             break;
 
         case 7:
             this.enterOuterAlt(localctx, 7);
             this.state = 92;
-            this.label();
+            this.ifAction();
             break;
 
         case 8:
             this.enterOuterAlt(localctx, 8);
             this.state = 93;
-            this.gotoAction();
+            this.elseAction();
             break;
 
         case 9:
             this.enterOuterAlt(localctx, 9);
             this.state = 94;
-            this.store();
+            this.label();
             break;
 
         case 10:
             this.enterOuterAlt(localctx, 10);
             this.state = 95;
-            this.load();
+            this.gotoAction();
             break;
 
         case 11:
             this.enterOuterAlt(localctx, 11);
             this.state = 96;
+            this.store();
+            break;
+
+        case 12:
+            this.enterOuterAlt(localctx, 12);
+            this.state = 97;
+            this.load();
+            break;
+
+        case 13:
+            this.enterOuterAlt(localctx, 13);
+            this.state = 98;
             this.storePop();
             break;
 
@@ -1022,7 +1046,7 @@ rpnParser.prototype.action = function() {
 };
 
 
-function LiteralContext(parser, parent, invokingState) {
+function BooleanLiteralContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -1031,36 +1055,29 @@ function LiteralContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = rpnParser.RULE_literal;
+    this.ruleIndex = rpnParser.RULE_booleanLiteral;
     return this;
 }
 
-LiteralContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-LiteralContext.prototype.constructor = LiteralContext;
+BooleanLiteralContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+BooleanLiteralContext.prototype.constructor = BooleanLiteralContext;
 
-LiteralContext.prototype.numberLiteral = function() {
-    return this.getTypedRuleContext(NumberLiteralContext,0);
-};
 
-LiteralContext.prototype.stringLiteral = function() {
-    return this.getTypedRuleContext(StringLiteralContext,0);
-};
-
-LiteralContext.prototype.enterRule = function(listener) {
+BooleanLiteralContext.prototype.enterRule = function(listener) {
     if(listener instanceof rpnListener ) {
-        listener.enterLiteral(this);
+        listener.enterBooleanLiteral(this);
 	}
 };
 
-LiteralContext.prototype.exitRule = function(listener) {
+BooleanLiteralContext.prototype.exitRule = function(listener) {
     if(listener instanceof rpnListener ) {
-        listener.exitLiteral(this);
+        listener.exitBooleanLiteral(this);
 	}
 };
 
-LiteralContext.prototype.accept = function(visitor) {
+BooleanLiteralContext.prototype.accept = function(visitor) {
     if ( visitor instanceof rpnVisitor ) {
-        return visitor.visitLiteral(this);
+        return visitor.visitBooleanLiteral(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -1069,28 +1086,23 @@ LiteralContext.prototype.accept = function(visitor) {
 
 
 
-rpnParser.LiteralContext = LiteralContext;
+rpnParser.BooleanLiteralContext = BooleanLiteralContext;
 
-rpnParser.prototype.literal = function() {
+rpnParser.prototype.booleanLiteral = function() {
 
-    var localctx = new LiteralContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 4, rpnParser.RULE_literal);
+    var localctx = new BooleanLiteralContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 4, rpnParser.RULE_booleanLiteral);
+    var _la = 0; // Token type
     try {
+        this.enterOuterAlt(localctx, 1);
         this.state = 101;
-        this._errHandler.sync(this);
-        switch(this._input.LA(1)) {
-        case rpnParser.NUMBER:
-            this.enterOuterAlt(localctx, 1);
-            this.state = 99;
-            this.numberLiteral();
-            break;
-        case rpnParser.STRING:
-            this.enterOuterAlt(localctx, 2);
-            this.state = 100;
-            this.stringLiteral();
-            break;
-        default:
-            throw new antlr4.error.NoViableAltException(this);
+        _la = this._input.LA(1);
+        if(!(_la===rpnParser.T__0 || _la===rpnParser.T__1)) {
+        this._errHandler.recoverInline(this);
+        }
+        else {
+        	this._errHandler.reportMatch(this);
+            this.consume();
         }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1299,15 +1311,15 @@ rpnParser.prototype.variableAccess = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 107;
-        this.match(rpnParser.T__0);
+        this.match(rpnParser.T__2);
         this.state = 108;
         this.match(rpnParser.ID);
         this.state = 109;
-        this.match(rpnParser.T__1);
+        this.match(rpnParser.T__3);
         this.state = 110;
         this.type();
         this.state = 111;
-        this.match(rpnParser.T__2);
+        this.match(rpnParser.T__4);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1380,10 +1392,10 @@ rpnParser.prototype.assignment = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 113;
-        this.match(rpnParser.T__0);
+        this.match(rpnParser.T__2);
         this.state = 114;
         _la = this._input.LA(1);
-        if(!(_la===rpnParser.T__3 || _la===rpnParser.T__4)) {
+        if(!(_la===rpnParser.T__5 || _la===rpnParser.T__6)) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -1395,15 +1407,15 @@ rpnParser.prototype.assignment = function() {
         this.state = 118;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===rpnParser.T__1) {
+        if(_la===rpnParser.T__3) {
             this.state = 116;
-            this.match(rpnParser.T__1);
+            this.match(rpnParser.T__3);
             this.state = 117;
             this.type();
         }
 
         this.state = 120;
-        this.match(rpnParser.T__2);
+        this.match(rpnParser.T__4);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1470,7 +1482,7 @@ rpnParser.prototype.operator = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 122;
         _la = this._input.LA(1);
-        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__3) | (1 << rpnParser.T__5) | (1 << rpnParser.T__6) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)))) !== 0))) {
+        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__5) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__84 - 64)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -1552,11 +1564,11 @@ rpnParser.prototype.ifAction = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 124;
-        this.match(rpnParser.T__83);
+        this.match(rpnParser.T__85);
         this.state = 128;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__0) | (1 << rpnParser.T__3) | (1 << rpnParser.T__5) | (1 << rpnParser.T__6) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__85 - 64)))) !== 0) || ((((_la - 384)) & ~0x1f) == 0 && ((1 << (_la - 384)) & ((1 << (rpnParser.LABEL - 384)) | (1 << (rpnParser.GOTO - 384)) | (1 << (rpnParser.STORE - 384)) | (1 << (rpnParser.LOAD - 384)) | (1 << (rpnParser.STORE_POP - 384)) | (1 << (rpnParser.NUMBER - 384)) | (1 << (rpnParser.STRING - 384)))) !== 0)) {
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__0) | (1 << rpnParser.T__1) | (1 << rpnParser.T__2) | (1 << rpnParser.T__5) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__84 - 64)) | (1 << (rpnParser.T__85 - 64)) | (1 << (rpnParser.T__87 - 64)))) !== 0) || ((((_la - 386)) & ~0x1f) == 0 && ((1 << (_la - 386)) & ((1 << (rpnParser.LABEL - 386)) | (1 << (rpnParser.GOTO - 386)) | (1 << (rpnParser.STORE - 386)) | (1 << (rpnParser.LOAD - 386)) | (1 << (rpnParser.STORE_POP - 386)) | (1 << (rpnParser.NUMBER - 386)) | (1 << (rpnParser.STRING - 386)))) !== 0)) {
             this.state = 125;
             this.action();
             this.state = 130;
@@ -1564,7 +1576,7 @@ rpnParser.prototype.ifAction = function() {
             _la = this._input.LA(1);
         }
         this.state = 131;
-        this.match(rpnParser.T__84);
+        this.match(rpnParser.T__86);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1640,11 +1652,11 @@ rpnParser.prototype.elseAction = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 133;
-        this.match(rpnParser.T__85);
+        this.match(rpnParser.T__87);
         this.state = 137;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__0) | (1 << rpnParser.T__3) | (1 << rpnParser.T__5) | (1 << rpnParser.T__6) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__85 - 64)))) !== 0) || ((((_la - 384)) & ~0x1f) == 0 && ((1 << (_la - 384)) & ((1 << (rpnParser.LABEL - 384)) | (1 << (rpnParser.GOTO - 384)) | (1 << (rpnParser.STORE - 384)) | (1 << (rpnParser.LOAD - 384)) | (1 << (rpnParser.STORE_POP - 384)) | (1 << (rpnParser.NUMBER - 384)) | (1 << (rpnParser.STRING - 384)))) !== 0)) {
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << rpnParser.T__0) | (1 << rpnParser.T__1) | (1 << rpnParser.T__2) | (1 << rpnParser.T__5) | (1 << rpnParser.T__7) | (1 << rpnParser.T__8) | (1 << rpnParser.T__9) | (1 << rpnParser.T__10) | (1 << rpnParser.T__11) | (1 << rpnParser.T__12) | (1 << rpnParser.T__13) | (1 << rpnParser.T__14) | (1 << rpnParser.T__15) | (1 << rpnParser.T__16) | (1 << rpnParser.T__17) | (1 << rpnParser.T__18) | (1 << rpnParser.T__19) | (1 << rpnParser.T__20) | (1 << rpnParser.T__21) | (1 << rpnParser.T__22) | (1 << rpnParser.T__23) | (1 << rpnParser.T__24) | (1 << rpnParser.T__25) | (1 << rpnParser.T__26) | (1 << rpnParser.T__27) | (1 << rpnParser.T__28) | (1 << rpnParser.T__29) | (1 << rpnParser.T__30))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (rpnParser.T__31 - 32)) | (1 << (rpnParser.T__32 - 32)) | (1 << (rpnParser.T__33 - 32)) | (1 << (rpnParser.T__34 - 32)) | (1 << (rpnParser.T__35 - 32)) | (1 << (rpnParser.T__36 - 32)) | (1 << (rpnParser.T__37 - 32)) | (1 << (rpnParser.T__38 - 32)) | (1 << (rpnParser.T__39 - 32)) | (1 << (rpnParser.T__40 - 32)) | (1 << (rpnParser.T__41 - 32)) | (1 << (rpnParser.T__42 - 32)) | (1 << (rpnParser.T__43 - 32)) | (1 << (rpnParser.T__44 - 32)) | (1 << (rpnParser.T__45 - 32)) | (1 << (rpnParser.T__46 - 32)) | (1 << (rpnParser.T__47 - 32)) | (1 << (rpnParser.T__48 - 32)) | (1 << (rpnParser.T__49 - 32)) | (1 << (rpnParser.T__50 - 32)) | (1 << (rpnParser.T__51 - 32)) | (1 << (rpnParser.T__52 - 32)) | (1 << (rpnParser.T__53 - 32)) | (1 << (rpnParser.T__54 - 32)) | (1 << (rpnParser.T__55 - 32)) | (1 << (rpnParser.T__56 - 32)) | (1 << (rpnParser.T__57 - 32)) | (1 << (rpnParser.T__58 - 32)) | (1 << (rpnParser.T__59 - 32)) | (1 << (rpnParser.T__60 - 32)) | (1 << (rpnParser.T__61 - 32)) | (1 << (rpnParser.T__62 - 32)))) !== 0) || ((((_la - 64)) & ~0x1f) == 0 && ((1 << (_la - 64)) & ((1 << (rpnParser.T__63 - 64)) | (1 << (rpnParser.T__64 - 64)) | (1 << (rpnParser.T__65 - 64)) | (1 << (rpnParser.T__66 - 64)) | (1 << (rpnParser.T__67 - 64)) | (1 << (rpnParser.T__68 - 64)) | (1 << (rpnParser.T__69 - 64)) | (1 << (rpnParser.T__70 - 64)) | (1 << (rpnParser.T__71 - 64)) | (1 << (rpnParser.T__72 - 64)) | (1 << (rpnParser.T__73 - 64)) | (1 << (rpnParser.T__74 - 64)) | (1 << (rpnParser.T__75 - 64)) | (1 << (rpnParser.T__76 - 64)) | (1 << (rpnParser.T__77 - 64)) | (1 << (rpnParser.T__78 - 64)) | (1 << (rpnParser.T__79 - 64)) | (1 << (rpnParser.T__80 - 64)) | (1 << (rpnParser.T__81 - 64)) | (1 << (rpnParser.T__82 - 64)) | (1 << (rpnParser.T__83 - 64)) | (1 << (rpnParser.T__84 - 64)) | (1 << (rpnParser.T__85 - 64)) | (1 << (rpnParser.T__87 - 64)))) !== 0) || ((((_la - 386)) & ~0x1f) == 0 && ((1 << (_la - 386)) & ((1 << (rpnParser.LABEL - 386)) | (1 << (rpnParser.GOTO - 386)) | (1 << (rpnParser.STORE - 386)) | (1 << (rpnParser.LOAD - 386)) | (1 << (rpnParser.STORE_POP - 386)) | (1 << (rpnParser.NUMBER - 386)) | (1 << (rpnParser.STRING - 386)))) !== 0)) {
             this.state = 134;
             this.action();
             this.state = 139;
@@ -1652,7 +1664,7 @@ rpnParser.prototype.elseAction = function() {
             _la = this._input.LA(1);
         }
         this.state = 140;
-        this.match(rpnParser.T__84);
+        this.match(rpnParser.T__86);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -2069,14 +2081,12 @@ rpnParser.prototype.type = function() {
         this.state = 155;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
-        case rpnParser.T__86:
-        case rpnParser.T__87:
+        case rpnParser.T__88:
+        case rpnParser.T__89:
             this.enterOuterAlt(localctx, 1);
             this.state = 152;
             this.booleanType();
             break;
-        case rpnParser.T__88:
-        case rpnParser.T__89:
         case rpnParser.T__90:
         case rpnParser.T__91:
         case rpnParser.T__92:
@@ -2369,11 +2379,13 @@ rpnParser.prototype.type = function() {
         case rpnParser.T__379:
         case rpnParser.T__380:
         case rpnParser.T__381:
+        case rpnParser.T__382:
+        case rpnParser.T__383:
             this.enterOuterAlt(localctx, 2);
             this.state = 153;
             this.numberType();
             break;
-        case rpnParser.T__382:
+        case rpnParser.T__384:
             this.enterOuterAlt(localctx, 3);
             this.state = 154;
             this.stringType();
@@ -2447,7 +2459,7 @@ rpnParser.prototype.booleanType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 157;
         _la = this._input.LA(1);
-        if(!(_la===rpnParser.T__86 || _la===rpnParser.T__87)) {
+        if(!(_la===rpnParser.T__88 || _la===rpnParser.T__89)) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2601,7 +2613,7 @@ rpnParser.prototype.numberType = function() {
     try {
         this.state = 180;
         this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,7,this._ctx);
+        var la_ = this._interp.adaptivePredict(this._input,6,this._ctx);
         switch(la_) {
         case 1:
             this.enterOuterAlt(localctx, 1);
@@ -2796,7 +2808,7 @@ rpnParser.prototype.distanceType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 182;
         _la = this._input.LA(1);
-        if(!(((((_la - 89)) & ~0x1f) == 0 && ((1 << (_la - 89)) & ((1 << (rpnParser.T__88 - 89)) | (1 << (rpnParser.T__89 - 89)) | (1 << (rpnParser.T__90 - 89)) | (1 << (rpnParser.T__91 - 89)) | (1 << (rpnParser.T__92 - 89)) | (1 << (rpnParser.T__93 - 89)) | (1 << (rpnParser.T__94 - 89)) | (1 << (rpnParser.T__95 - 89)) | (1 << (rpnParser.T__96 - 89)) | (1 << (rpnParser.T__97 - 89)) | (1 << (rpnParser.T__98 - 89)) | (1 << (rpnParser.T__99 - 89)) | (1 << (rpnParser.T__100 - 89)) | (1 << (rpnParser.T__101 - 89)) | (1 << (rpnParser.T__102 - 89)) | (1 << (rpnParser.T__103 - 89)) | (1 << (rpnParser.T__104 - 89)) | (1 << (rpnParser.T__105 - 89)) | (1 << (rpnParser.T__106 - 89)) | (1 << (rpnParser.T__107 - 89)) | (1 << (rpnParser.T__108 - 89)) | (1 << (rpnParser.T__109 - 89)) | (1 << (rpnParser.T__110 - 89)) | (1 << (rpnParser.T__111 - 89)) | (1 << (rpnParser.T__112 - 89)) | (1 << (rpnParser.T__113 - 89)) | (1 << (rpnParser.T__114 - 89)) | (1 << (rpnParser.T__115 - 89)) | (1 << (rpnParser.T__116 - 89)))) !== 0))) {
+        if(!(((((_la - 91)) & ~0x1f) == 0 && ((1 << (_la - 91)) & ((1 << (rpnParser.T__90 - 91)) | (1 << (rpnParser.T__91 - 91)) | (1 << (rpnParser.T__92 - 91)) | (1 << (rpnParser.T__93 - 91)) | (1 << (rpnParser.T__94 - 91)) | (1 << (rpnParser.T__95 - 91)) | (1 << (rpnParser.T__96 - 91)) | (1 << (rpnParser.T__97 - 91)) | (1 << (rpnParser.T__98 - 91)) | (1 << (rpnParser.T__99 - 91)) | (1 << (rpnParser.T__100 - 91)) | (1 << (rpnParser.T__101 - 91)) | (1 << (rpnParser.T__102 - 91)) | (1 << (rpnParser.T__103 - 91)) | (1 << (rpnParser.T__104 - 91)) | (1 << (rpnParser.T__105 - 91)) | (1 << (rpnParser.T__106 - 91)) | (1 << (rpnParser.T__107 - 91)) | (1 << (rpnParser.T__108 - 91)) | (1 << (rpnParser.T__109 - 91)) | (1 << (rpnParser.T__110 - 91)) | (1 << (rpnParser.T__111 - 91)) | (1 << (rpnParser.T__112 - 91)) | (1 << (rpnParser.T__113 - 91)) | (1 << (rpnParser.T__114 - 91)) | (1 << (rpnParser.T__115 - 91)) | (1 << (rpnParser.T__116 - 91)) | (1 << (rpnParser.T__117 - 91)) | (1 << (rpnParser.T__118 - 91)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2869,7 +2881,7 @@ rpnParser.prototype.areaType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 184;
         _la = this._input.LA(1);
-        if(!(((((_la - 118)) & ~0x1f) == 0 && ((1 << (_la - 118)) & ((1 << (rpnParser.T__117 - 118)) | (1 << (rpnParser.T__118 - 118)) | (1 << (rpnParser.T__119 - 118)) | (1 << (rpnParser.T__120 - 118)) | (1 << (rpnParser.T__121 - 118)) | (1 << (rpnParser.T__122 - 118)) | (1 << (rpnParser.T__123 - 118)) | (1 << (rpnParser.T__124 - 118)) | (1 << (rpnParser.T__125 - 118)) | (1 << (rpnParser.T__126 - 118)) | (1 << (rpnParser.T__127 - 118)) | (1 << (rpnParser.T__128 - 118)) | (1 << (rpnParser.T__129 - 118)) | (1 << (rpnParser.T__130 - 118)) | (1 << (rpnParser.T__131 - 118)) | (1 << (rpnParser.T__132 - 118)) | (1 << (rpnParser.T__133 - 118)) | (1 << (rpnParser.T__134 - 118)) | (1 << (rpnParser.T__135 - 118)) | (1 << (rpnParser.T__136 - 118)) | (1 << (rpnParser.T__137 - 118)) | (1 << (rpnParser.T__138 - 118)) | (1 << (rpnParser.T__139 - 118)) | (1 << (rpnParser.T__140 - 118)) | (1 << (rpnParser.T__141 - 118)) | (1 << (rpnParser.T__142 - 118)) | (1 << (rpnParser.T__143 - 118)) | (1 << (rpnParser.T__144 - 118)) | (1 << (rpnParser.T__145 - 118)) | (1 << (rpnParser.T__146 - 118)))) !== 0))) {
+        if(!(((((_la - 120)) & ~0x1f) == 0 && ((1 << (_la - 120)) & ((1 << (rpnParser.T__119 - 120)) | (1 << (rpnParser.T__120 - 120)) | (1 << (rpnParser.T__121 - 120)) | (1 << (rpnParser.T__122 - 120)) | (1 << (rpnParser.T__123 - 120)) | (1 << (rpnParser.T__124 - 120)) | (1 << (rpnParser.T__125 - 120)) | (1 << (rpnParser.T__126 - 120)) | (1 << (rpnParser.T__127 - 120)) | (1 << (rpnParser.T__128 - 120)) | (1 << (rpnParser.T__129 - 120)) | (1 << (rpnParser.T__130 - 120)) | (1 << (rpnParser.T__131 - 120)) | (1 << (rpnParser.T__132 - 120)) | (1 << (rpnParser.T__133 - 120)) | (1 << (rpnParser.T__134 - 120)) | (1 << (rpnParser.T__135 - 120)) | (1 << (rpnParser.T__136 - 120)) | (1 << (rpnParser.T__137 - 120)) | (1 << (rpnParser.T__138 - 120)) | (1 << (rpnParser.T__139 - 120)) | (1 << (rpnParser.T__140 - 120)) | (1 << (rpnParser.T__141 - 120)) | (1 << (rpnParser.T__142 - 120)) | (1 << (rpnParser.T__143 - 120)) | (1 << (rpnParser.T__144 - 120)) | (1 << (rpnParser.T__145 - 120)) | (1 << (rpnParser.T__146 - 120)) | (1 << (rpnParser.T__147 - 120)) | (1 << (rpnParser.T__148 - 120)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -2942,7 +2954,7 @@ rpnParser.prototype.volumeType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 186;
         _la = this._input.LA(1);
-        if(!(((((_la - 148)) & ~0x1f) == 0 && ((1 << (_la - 148)) & ((1 << (rpnParser.T__147 - 148)) | (1 << (rpnParser.T__148 - 148)) | (1 << (rpnParser.T__149 - 148)) | (1 << (rpnParser.T__150 - 148)) | (1 << (rpnParser.T__151 - 148)) | (1 << (rpnParser.T__152 - 148)) | (1 << (rpnParser.T__153 - 148)) | (1 << (rpnParser.T__154 - 148)) | (1 << (rpnParser.T__155 - 148)) | (1 << (rpnParser.T__156 - 148)) | (1 << (rpnParser.T__157 - 148)) | (1 << (rpnParser.T__158 - 148)) | (1 << (rpnParser.T__159 - 148)) | (1 << (rpnParser.T__160 - 148)) | (1 << (rpnParser.T__161 - 148)) | (1 << (rpnParser.T__162 - 148)) | (1 << (rpnParser.T__163 - 148)) | (1 << (rpnParser.T__164 - 148)) | (1 << (rpnParser.T__165 - 148)) | (1 << (rpnParser.T__166 - 148)) | (1 << (rpnParser.T__167 - 148)) | (1 << (rpnParser.T__168 - 148)) | (1 << (rpnParser.T__169 - 148)) | (1 << (rpnParser.T__170 - 148)) | (1 << (rpnParser.T__171 - 148)) | (1 << (rpnParser.T__172 - 148)) | (1 << (rpnParser.T__173 - 148)) | (1 << (rpnParser.T__174 - 148)) | (1 << (rpnParser.T__175 - 148)) | (1 << (rpnParser.T__176 - 148)) | (1 << (rpnParser.T__177 - 148)) | (1 << (rpnParser.T__178 - 148)))) !== 0) || ((((_la - 180)) & ~0x1f) == 0 && ((1 << (_la - 180)) & ((1 << (rpnParser.T__179 - 180)) | (1 << (rpnParser.T__180 - 180)) | (1 << (rpnParser.T__181 - 180)) | (1 << (rpnParser.T__182 - 180)) | (1 << (rpnParser.T__183 - 180)) | (1 << (rpnParser.T__184 - 180)))) !== 0))) {
+        if(!(((((_la - 150)) & ~0x1f) == 0 && ((1 << (_la - 150)) & ((1 << (rpnParser.T__149 - 150)) | (1 << (rpnParser.T__150 - 150)) | (1 << (rpnParser.T__151 - 150)) | (1 << (rpnParser.T__152 - 150)) | (1 << (rpnParser.T__153 - 150)) | (1 << (rpnParser.T__154 - 150)) | (1 << (rpnParser.T__155 - 150)) | (1 << (rpnParser.T__156 - 150)) | (1 << (rpnParser.T__157 - 150)) | (1 << (rpnParser.T__158 - 150)) | (1 << (rpnParser.T__159 - 150)) | (1 << (rpnParser.T__160 - 150)) | (1 << (rpnParser.T__161 - 150)) | (1 << (rpnParser.T__162 - 150)) | (1 << (rpnParser.T__163 - 150)) | (1 << (rpnParser.T__164 - 150)) | (1 << (rpnParser.T__165 - 150)) | (1 << (rpnParser.T__166 - 150)) | (1 << (rpnParser.T__167 - 150)) | (1 << (rpnParser.T__168 - 150)) | (1 << (rpnParser.T__169 - 150)) | (1 << (rpnParser.T__170 - 150)) | (1 << (rpnParser.T__171 - 150)) | (1 << (rpnParser.T__172 - 150)) | (1 << (rpnParser.T__173 - 150)) | (1 << (rpnParser.T__174 - 150)) | (1 << (rpnParser.T__175 - 150)) | (1 << (rpnParser.T__176 - 150)) | (1 << (rpnParser.T__177 - 150)) | (1 << (rpnParser.T__178 - 150)) | (1 << (rpnParser.T__179 - 150)) | (1 << (rpnParser.T__180 - 150)))) !== 0) || ((((_la - 182)) & ~0x1f) == 0 && ((1 << (_la - 182)) & ((1 << (rpnParser.T__181 - 182)) | (1 << (rpnParser.T__182 - 182)) | (1 << (rpnParser.T__183 - 182)) | (1 << (rpnParser.T__184 - 182)) | (1 << (rpnParser.T__185 - 182)) | (1 << (rpnParser.T__186 - 182)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3015,7 +3027,7 @@ rpnParser.prototype.volumeRateType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 188;
         _la = this._input.LA(1);
-        if(!(((((_la - 186)) & ~0x1f) == 0 && ((1 << (_la - 186)) & ((1 << (rpnParser.T__185 - 186)) | (1 << (rpnParser.T__186 - 186)) | (1 << (rpnParser.T__187 - 186)) | (1 << (rpnParser.T__188 - 186)) | (1 << (rpnParser.T__189 - 186)) | (1 << (rpnParser.T__190 - 186)) | (1 << (rpnParser.T__191 - 186)))) !== 0))) {
+        if(!(((((_la - 188)) & ~0x1f) == 0 && ((1 << (_la - 188)) & ((1 << (rpnParser.T__187 - 188)) | (1 << (rpnParser.T__188 - 188)) | (1 << (rpnParser.T__189 - 188)) | (1 << (rpnParser.T__190 - 188)) | (1 << (rpnParser.T__191 - 188)) | (1 << (rpnParser.T__192 - 188)) | (1 << (rpnParser.T__193 - 188)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3088,7 +3100,7 @@ rpnParser.prototype.temperatureType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 190;
         _la = this._input.LA(1);
-        if(!(((((_la - 193)) & ~0x1f) == 0 && ((1 << (_la - 193)) & ((1 << (rpnParser.T__192 - 193)) | (1 << (rpnParser.T__193 - 193)) | (1 << (rpnParser.T__194 - 193)) | (1 << (rpnParser.T__195 - 193)) | (1 << (rpnParser.T__196 - 193)))) !== 0))) {
+        if(!(((((_la - 195)) & ~0x1f) == 0 && ((1 << (_la - 195)) & ((1 << (rpnParser.T__194 - 195)) | (1 << (rpnParser.T__195 - 195)) | (1 << (rpnParser.T__196 - 195)) | (1 << (rpnParser.T__197 - 195)) | (1 << (rpnParser.T__198 - 195)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3161,7 +3173,7 @@ rpnParser.prototype.angleType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 192;
         _la = this._input.LA(1);
-        if(!(((((_la - 198)) & ~0x1f) == 0 && ((1 << (_la - 198)) & ((1 << (rpnParser.T__197 - 198)) | (1 << (rpnParser.T__198 - 198)) | (1 << (rpnParser.T__199 - 198)) | (1 << (rpnParser.T__200 - 198)) | (1 << (rpnParser.T__201 - 198)) | (1 << (rpnParser.T__202 - 198)) | (1 << (rpnParser.T__203 - 198)) | (1 << (rpnParser.T__204 - 198)))) !== 0))) {
+        if(!(((((_la - 200)) & ~0x1f) == 0 && ((1 << (_la - 200)) & ((1 << (rpnParser.T__199 - 200)) | (1 << (rpnParser.T__200 - 200)) | (1 << (rpnParser.T__201 - 200)) | (1 << (rpnParser.T__202 - 200)) | (1 << (rpnParser.T__203 - 200)) | (1 << (rpnParser.T__204 - 200)) | (1 << (rpnParser.T__205 - 200)) | (1 << (rpnParser.T__206 - 200)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3234,7 +3246,7 @@ rpnParser.prototype.globalPositionType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 194;
         _la = this._input.LA(1);
-        if(!(((((_la - 206)) & ~0x1f) == 0 && ((1 << (_la - 206)) & ((1 << (rpnParser.T__205 - 206)) | (1 << (rpnParser.T__206 - 206)) | (1 << (rpnParser.T__207 - 206)) | (1 << (rpnParser.T__208 - 206)) | (1 << (rpnParser.T__209 - 206)) | (1 << (rpnParser.T__210 - 206)))) !== 0))) {
+        if(!(((((_la - 208)) & ~0x1f) == 0 && ((1 << (_la - 208)) & ((1 << (rpnParser.T__207 - 208)) | (1 << (rpnParser.T__208 - 208)) | (1 << (rpnParser.T__209 - 208)) | (1 << (rpnParser.T__210 - 208)) | (1 << (rpnParser.T__211 - 208)) | (1 << (rpnParser.T__212 - 208)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3307,7 +3319,7 @@ rpnParser.prototype.angularVelocityType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 196;
         _la = this._input.LA(1);
-        if(!(((((_la - 212)) & ~0x1f) == 0 && ((1 << (_la - 212)) & ((1 << (rpnParser.T__211 - 212)) | (1 << (rpnParser.T__212 - 212)) | (1 << (rpnParser.T__213 - 212)) | (1 << (rpnParser.T__214 - 212)) | (1 << (rpnParser.T__215 - 212)) | (1 << (rpnParser.T__216 - 212)) | (1 << (rpnParser.T__217 - 212)) | (1 << (rpnParser.T__218 - 212)) | (1 << (rpnParser.T__219 - 212)) | (1 << (rpnParser.T__220 - 212)) | (1 << (rpnParser.T__221 - 212)) | (1 << (rpnParser.T__222 - 212)))) !== 0))) {
+        if(!(((((_la - 214)) & ~0x1f) == 0 && ((1 << (_la - 214)) & ((1 << (rpnParser.T__213 - 214)) | (1 << (rpnParser.T__214 - 214)) | (1 << (rpnParser.T__215 - 214)) | (1 << (rpnParser.T__216 - 214)) | (1 << (rpnParser.T__217 - 214)) | (1 << (rpnParser.T__218 - 214)) | (1 << (rpnParser.T__219 - 214)) | (1 << (rpnParser.T__220 - 214)) | (1 << (rpnParser.T__221 - 214)) | (1 << (rpnParser.T__222 - 214)) | (1 << (rpnParser.T__223 - 214)) | (1 << (rpnParser.T__224 - 214)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3380,7 +3392,7 @@ rpnParser.prototype.speedType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 198;
         _la = this._input.LA(1);
-        if(!(((((_la - 224)) & ~0x1f) == 0 && ((1 << (_la - 224)) & ((1 << (rpnParser.T__223 - 224)) | (1 << (rpnParser.T__224 - 224)) | (1 << (rpnParser.T__225 - 224)) | (1 << (rpnParser.T__226 - 224)) | (1 << (rpnParser.T__227 - 224)) | (1 << (rpnParser.T__228 - 224)) | (1 << (rpnParser.T__229 - 224)) | (1 << (rpnParser.T__230 - 224)) | (1 << (rpnParser.T__231 - 224)) | (1 << (rpnParser.T__232 - 224)) | (1 << (rpnParser.T__233 - 224)) | (1 << (rpnParser.T__234 - 224)) | (1 << (rpnParser.T__235 - 224)) | (1 << (rpnParser.T__236 - 224)) | (1 << (rpnParser.T__237 - 224)) | (1 << (rpnParser.T__238 - 224)) | (1 << (rpnParser.T__239 - 224)) | (1 << (rpnParser.T__240 - 224)) | (1 << (rpnParser.T__241 - 224)))) !== 0))) {
+        if(!(((((_la - 226)) & ~0x1f) == 0 && ((1 << (_la - 226)) & ((1 << (rpnParser.T__225 - 226)) | (1 << (rpnParser.T__226 - 226)) | (1 << (rpnParser.T__227 - 226)) | (1 << (rpnParser.T__228 - 226)) | (1 << (rpnParser.T__229 - 226)) | (1 << (rpnParser.T__230 - 226)) | (1 << (rpnParser.T__231 - 226)) | (1 << (rpnParser.T__232 - 226)) | (1 << (rpnParser.T__233 - 226)) | (1 << (rpnParser.T__234 - 226)) | (1 << (rpnParser.T__235 - 226)) | (1 << (rpnParser.T__236 - 226)) | (1 << (rpnParser.T__237 - 226)) | (1 << (rpnParser.T__238 - 226)) | (1 << (rpnParser.T__239 - 226)) | (1 << (rpnParser.T__240 - 226)) | (1 << (rpnParser.T__241 - 226)) | (1 << (rpnParser.T__242 - 226)) | (1 << (rpnParser.T__243 - 226)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3453,7 +3465,7 @@ rpnParser.prototype.accelerationType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 200;
         _la = this._input.LA(1);
-        if(!(((((_la - 243)) & ~0x1f) == 0 && ((1 << (_la - 243)) & ((1 << (rpnParser.T__242 - 243)) | (1 << (rpnParser.T__243 - 243)) | (1 << (rpnParser.T__244 - 243)) | (1 << (rpnParser.T__245 - 243)) | (1 << (rpnParser.T__246 - 243)) | (1 << (rpnParser.T__247 - 243)))) !== 0))) {
+        if(!(((((_la - 245)) & ~0x1f) == 0 && ((1 << (_la - 245)) & ((1 << (rpnParser.T__244 - 245)) | (1 << (rpnParser.T__245 - 245)) | (1 << (rpnParser.T__246 - 245)) | (1 << (rpnParser.T__247 - 245)) | (1 << (rpnParser.T__248 - 245)) | (1 << (rpnParser.T__249 - 245)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3526,7 +3538,7 @@ rpnParser.prototype.timeType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 202;
         _la = this._input.LA(1);
-        if(!(((((_la - 249)) & ~0x1f) == 0 && ((1 << (_la - 249)) & ((1 << (rpnParser.T__248 - 249)) | (1 << (rpnParser.T__249 - 249)) | (1 << (rpnParser.T__250 - 249)) | (1 << (rpnParser.T__251 - 249)) | (1 << (rpnParser.T__252 - 249)) | (1 << (rpnParser.T__253 - 249)) | (1 << (rpnParser.T__254 - 249)) | (1 << (rpnParser.T__255 - 249)) | (1 << (rpnParser.T__256 - 249)) | (1 << (rpnParser.T__257 - 249)) | (1 << (rpnParser.T__258 - 249)) | (1 << (rpnParser.T__259 - 249)))) !== 0))) {
+        if(!(((((_la - 251)) & ~0x1f) == 0 && ((1 << (_la - 251)) & ((1 << (rpnParser.T__250 - 251)) | (1 << (rpnParser.T__251 - 251)) | (1 << (rpnParser.T__252 - 251)) | (1 << (rpnParser.T__253 - 251)) | (1 << (rpnParser.T__254 - 251)) | (1 << (rpnParser.T__255 - 251)) | (1 << (rpnParser.T__256 - 251)) | (1 << (rpnParser.T__257 - 251)) | (1 << (rpnParser.T__258 - 251)) | (1 << (rpnParser.T__259 - 251)) | (1 << (rpnParser.T__260 - 251)) | (1 << (rpnParser.T__261 - 251)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3599,7 +3611,7 @@ rpnParser.prototype.powerType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 204;
         _la = this._input.LA(1);
-        if(!(((((_la - 261)) & ~0x1f) == 0 && ((1 << (_la - 261)) & ((1 << (rpnParser.T__260 - 261)) | (1 << (rpnParser.T__261 - 261)) | (1 << (rpnParser.T__262 - 261)))) !== 0))) {
+        if(!(((((_la - 263)) & ~0x1f) == 0 && ((1 << (_la - 263)) & ((1 << (rpnParser.T__262 - 263)) | (1 << (rpnParser.T__263 - 263)) | (1 << (rpnParser.T__264 - 263)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3672,7 +3684,7 @@ rpnParser.prototype.weightType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 206;
         _la = this._input.LA(1);
-        if(!(((((_la - 264)) & ~0x1f) == 0 && ((1 << (_la - 264)) & ((1 << (rpnParser.T__263 - 264)) | (1 << (rpnParser.T__264 - 264)) | (1 << (rpnParser.T__265 - 264)) | (1 << (rpnParser.T__266 - 264)) | (1 << (rpnParser.T__267 - 264)) | (1 << (rpnParser.T__268 - 264)) | (1 << (rpnParser.T__269 - 264)) | (1 << (rpnParser.T__270 - 264)) | (1 << (rpnParser.T__271 - 264)) | (1 << (rpnParser.T__272 - 264)))) !== 0))) {
+        if(!(((((_la - 266)) & ~0x1f) == 0 && ((1 << (_la - 266)) & ((1 << (rpnParser.T__265 - 266)) | (1 << (rpnParser.T__266 - 266)) | (1 << (rpnParser.T__267 - 266)) | (1 << (rpnParser.T__268 - 266)) | (1 << (rpnParser.T__269 - 266)) | (1 << (rpnParser.T__270 - 266)) | (1 << (rpnParser.T__271 - 266)) | (1 << (rpnParser.T__272 - 266)) | (1 << (rpnParser.T__273 - 266)) | (1 << (rpnParser.T__274 - 266)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3745,7 +3757,7 @@ rpnParser.prototype.weightRateType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 208;
         _la = this._input.LA(1);
-        if(!(((((_la - 274)) & ~0x1f) == 0 && ((1 << (_la - 274)) & ((1 << (rpnParser.T__273 - 274)) | (1 << (rpnParser.T__274 - 274)) | (1 << (rpnParser.T__275 - 274)) | (1 << (rpnParser.T__276 - 274)))) !== 0))) {
+        if(!(((((_la - 276)) & ~0x1f) == 0 && ((1 << (_la - 276)) & ((1 << (rpnParser.T__275 - 276)) | (1 << (rpnParser.T__276 - 276)) | (1 << (rpnParser.T__277 - 276)) | (1 << (rpnParser.T__278 - 276)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3818,7 +3830,7 @@ rpnParser.prototype.electricalCurrentType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 210;
         _la = this._input.LA(1);
-        if(!(((((_la - 278)) & ~0x1f) == 0 && ((1 << (_la - 278)) & ((1 << (rpnParser.T__277 - 278)) | (1 << (rpnParser.T__278 - 278)) | (1 << (rpnParser.T__279 - 278)) | (1 << (rpnParser.T__280 - 278)))) !== 0))) {
+        if(!(((((_la - 280)) & ~0x1f) == 0 && ((1 << (_la - 280)) & ((1 << (rpnParser.T__279 - 280)) | (1 << (rpnParser.T__280 - 280)) | (1 << (rpnParser.T__281 - 280)) | (1 << (rpnParser.T__282 - 280)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3891,7 +3903,7 @@ rpnParser.prototype.electricalPotentialType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 212;
         _la = this._input.LA(1);
-        if(!(_la===rpnParser.T__281 || _la===rpnParser.T__282)) {
+        if(!(_la===rpnParser.T__283 || _la===rpnParser.T__284)) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -3964,7 +3976,7 @@ rpnParser.prototype.frequencyType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 214;
         _la = this._input.LA(1);
-        if(!(((((_la - 284)) & ~0x1f) == 0 && ((1 << (_la - 284)) & ((1 << (rpnParser.T__283 - 284)) | (1 << (rpnParser.T__284 - 284)) | (1 << (rpnParser.T__285 - 284)) | (1 << (rpnParser.T__286 - 284)) | (1 << (rpnParser.T__287 - 284)) | (1 << (rpnParser.T__288 - 284)) | (1 << (rpnParser.T__289 - 284)) | (1 << (rpnParser.T__290 - 284)) | (1 << (rpnParser.T__291 - 284)))) !== 0))) {
+        if(!(((((_la - 286)) & ~0x1f) == 0 && ((1 << (_la - 286)) & ((1 << (rpnParser.T__285 - 286)) | (1 << (rpnParser.T__286 - 286)) | (1 << (rpnParser.T__287 - 286)) | (1 << (rpnParser.T__288 - 286)) | (1 << (rpnParser.T__289 - 286)) | (1 << (rpnParser.T__290 - 286)) | (1 << (rpnParser.T__291 - 286)) | (1 << (rpnParser.T__292 - 286)) | (1 << (rpnParser.T__293 - 286)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -4037,7 +4049,7 @@ rpnParser.prototype.densityType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 216;
         _la = this._input.LA(1);
-        if(!(((((_la - 293)) & ~0x1f) == 0 && ((1 << (_la - 293)) & ((1 << (rpnParser.T__292 - 293)) | (1 << (rpnParser.T__293 - 293)) | (1 << (rpnParser.T__294 - 293)) | (1 << (rpnParser.T__295 - 293)) | (1 << (rpnParser.T__296 - 293)) | (1 << (rpnParser.T__297 - 293)) | (1 << (rpnParser.T__298 - 293)) | (1 << (rpnParser.T__299 - 293)) | (1 << (rpnParser.T__300 - 293)) | (1 << (rpnParser.T__301 - 293)))) !== 0))) {
+        if(!(((((_la - 295)) & ~0x1f) == 0 && ((1 << (_la - 295)) & ((1 << (rpnParser.T__294 - 295)) | (1 << (rpnParser.T__295 - 295)) | (1 << (rpnParser.T__296 - 295)) | (1 << (rpnParser.T__297 - 295)) | (1 << (rpnParser.T__298 - 295)) | (1 << (rpnParser.T__299 - 295)) | (1 << (rpnParser.T__300 - 295)) | (1 << (rpnParser.T__301 - 295)) | (1 << (rpnParser.T__302 - 295)) | (1 << (rpnParser.T__303 - 295)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -4110,7 +4122,7 @@ rpnParser.prototype.pressureType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 218;
         _la = this._input.LA(1);
-        if(!(((((_la - 303)) & ~0x1f) == 0 && ((1 << (_la - 303)) & ((1 << (rpnParser.T__302 - 303)) | (1 << (rpnParser.T__303 - 303)) | (1 << (rpnParser.T__304 - 303)) | (1 << (rpnParser.T__305 - 303)) | (1 << (rpnParser.T__306 - 303)) | (1 << (rpnParser.T__307 - 303)) | (1 << (rpnParser.T__308 - 303)) | (1 << (rpnParser.T__309 - 303)) | (1 << (rpnParser.T__310 - 303)) | (1 << (rpnParser.T__311 - 303)) | (1 << (rpnParser.T__312 - 303)) | (1 << (rpnParser.T__313 - 303)) | (1 << (rpnParser.T__314 - 303)) | (1 << (rpnParser.T__315 - 303)) | (1 << (rpnParser.T__316 - 303)) | (1 << (rpnParser.T__317 - 303)) | (1 << (rpnParser.T__318 - 303)) | (1 << (rpnParser.T__319 - 303)) | (1 << (rpnParser.T__320 - 303)) | (1 << (rpnParser.T__321 - 303)) | (1 << (rpnParser.T__322 - 303)) | (1 << (rpnParser.T__323 - 303)) | (1 << (rpnParser.T__324 - 303)) | (1 << (rpnParser.T__325 - 303)) | (1 << (rpnParser.T__326 - 303)) | (1 << (rpnParser.T__327 - 303)) | (1 << (rpnParser.T__328 - 303)) | (1 << (rpnParser.T__329 - 303)) | (1 << (rpnParser.T__330 - 303)) | (1 << (rpnParser.T__331 - 303)) | (1 << (rpnParser.T__332 - 303)) | (1 << (rpnParser.T__333 - 303)))) !== 0) || ((((_la - 335)) & ~0x1f) == 0 && ((1 << (_la - 335)) & ((1 << (rpnParser.T__334 - 335)) | (1 << (rpnParser.T__335 - 335)) | (1 << (rpnParser.T__336 - 335)) | (1 << (rpnParser.T__337 - 335)) | (1 << (rpnParser.T__338 - 335)) | (1 << (rpnParser.T__339 - 335)) | (1 << (rpnParser.T__340 - 335)) | (1 << (rpnParser.T__341 - 335)) | (1 << (rpnParser.T__342 - 335)) | (1 << (rpnParser.T__343 - 335)))) !== 0))) {
+        if(!(((((_la - 305)) & ~0x1f) == 0 && ((1 << (_la - 305)) & ((1 << (rpnParser.T__304 - 305)) | (1 << (rpnParser.T__305 - 305)) | (1 << (rpnParser.T__306 - 305)) | (1 << (rpnParser.T__307 - 305)) | (1 << (rpnParser.T__308 - 305)) | (1 << (rpnParser.T__309 - 305)) | (1 << (rpnParser.T__310 - 305)) | (1 << (rpnParser.T__311 - 305)) | (1 << (rpnParser.T__312 - 305)) | (1 << (rpnParser.T__313 - 305)) | (1 << (rpnParser.T__314 - 305)) | (1 << (rpnParser.T__315 - 305)) | (1 << (rpnParser.T__316 - 305)) | (1 << (rpnParser.T__317 - 305)) | (1 << (rpnParser.T__318 - 305)) | (1 << (rpnParser.T__319 - 305)) | (1 << (rpnParser.T__320 - 305)) | (1 << (rpnParser.T__321 - 305)) | (1 << (rpnParser.T__322 - 305)) | (1 << (rpnParser.T__323 - 305)) | (1 << (rpnParser.T__324 - 305)) | (1 << (rpnParser.T__325 - 305)) | (1 << (rpnParser.T__326 - 305)) | (1 << (rpnParser.T__327 - 305)) | (1 << (rpnParser.T__328 - 305)) | (1 << (rpnParser.T__329 - 305)) | (1 << (rpnParser.T__330 - 305)) | (1 << (rpnParser.T__331 - 305)) | (1 << (rpnParser.T__332 - 305)) | (1 << (rpnParser.T__333 - 305)) | (1 << (rpnParser.T__334 - 305)) | (1 << (rpnParser.T__335 - 305)))) !== 0) || ((((_la - 337)) & ~0x1f) == 0 && ((1 << (_la - 337)) & ((1 << (rpnParser.T__336 - 337)) | (1 << (rpnParser.T__337 - 337)) | (1 << (rpnParser.T__338 - 337)) | (1 << (rpnParser.T__339 - 337)) | (1 << (rpnParser.T__340 - 337)) | (1 << (rpnParser.T__341 - 337)) | (1 << (rpnParser.T__342 - 337)) | (1 << (rpnParser.T__343 - 337)) | (1 << (rpnParser.T__344 - 337)) | (1 << (rpnParser.T__345 - 337)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -4183,7 +4195,7 @@ rpnParser.prototype.torqueType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 220;
         _la = this._input.LA(1);
-        if(!(_la===rpnParser.T__89 || ((((_la - 345)) & ~0x1f) == 0 && ((1 << (_la - 345)) & ((1 << (rpnParser.T__344 - 345)) | (1 << (rpnParser.T__345 - 345)) | (1 << (rpnParser.T__346 - 345)) | (1 << (rpnParser.T__347 - 345)) | (1 << (rpnParser.T__348 - 345)) | (1 << (rpnParser.T__349 - 345)) | (1 << (rpnParser.T__350 - 345)) | (1 << (rpnParser.T__351 - 345)) | (1 << (rpnParser.T__352 - 345)) | (1 << (rpnParser.T__353 - 345)) | (1 << (rpnParser.T__354 - 345)) | (1 << (rpnParser.T__355 - 345)) | (1 << (rpnParser.T__356 - 345)))) !== 0))) {
+        if(!(_la===rpnParser.T__91 || ((((_la - 347)) & ~0x1f) == 0 && ((1 << (_la - 347)) & ((1 << (rpnParser.T__346 - 347)) | (1 << (rpnParser.T__347 - 347)) | (1 << (rpnParser.T__348 - 347)) | (1 << (rpnParser.T__349 - 347)) | (1 << (rpnParser.T__350 - 347)) | (1 << (rpnParser.T__351 - 347)) | (1 << (rpnParser.T__352 - 347)) | (1 << (rpnParser.T__353 - 347)) | (1 << (rpnParser.T__354 - 347)) | (1 << (rpnParser.T__355 - 347)) | (1 << (rpnParser.T__356 - 347)) | (1 << (rpnParser.T__357 - 347)) | (1 << (rpnParser.T__358 - 347)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -4256,7 +4268,7 @@ rpnParser.prototype.miscellaneousType = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 222;
         _la = this._input.LA(1);
-        if(!(((((_la - 358)) & ~0x1f) == 0 && ((1 << (_la - 358)) & ((1 << (rpnParser.T__357 - 358)) | (1 << (rpnParser.T__358 - 358)) | (1 << (rpnParser.T__359 - 358)) | (1 << (rpnParser.T__360 - 358)) | (1 << (rpnParser.T__361 - 358)) | (1 << (rpnParser.T__362 - 358)) | (1 << (rpnParser.T__363 - 358)) | (1 << (rpnParser.T__364 - 358)) | (1 << (rpnParser.T__365 - 358)) | (1 << (rpnParser.T__366 - 358)) | (1 << (rpnParser.T__367 - 358)) | (1 << (rpnParser.T__368 - 358)) | (1 << (rpnParser.T__369 - 358)) | (1 << (rpnParser.T__370 - 358)) | (1 << (rpnParser.T__371 - 358)) | (1 << (rpnParser.T__372 - 358)) | (1 << (rpnParser.T__373 - 358)) | (1 << (rpnParser.T__374 - 358)) | (1 << (rpnParser.T__375 - 358)) | (1 << (rpnParser.T__376 - 358)) | (1 << (rpnParser.T__377 - 358)) | (1 << (rpnParser.T__378 - 358)) | (1 << (rpnParser.T__379 - 358)) | (1 << (rpnParser.T__380 - 358)) | (1 << (rpnParser.T__381 - 358)))) !== 0))) {
+        if(!(((((_la - 360)) & ~0x1f) == 0 && ((1 << (_la - 360)) & ((1 << (rpnParser.T__359 - 360)) | (1 << (rpnParser.T__360 - 360)) | (1 << (rpnParser.T__361 - 360)) | (1 << (rpnParser.T__362 - 360)) | (1 << (rpnParser.T__363 - 360)) | (1 << (rpnParser.T__364 - 360)) | (1 << (rpnParser.T__365 - 360)) | (1 << (rpnParser.T__366 - 360)) | (1 << (rpnParser.T__367 - 360)) | (1 << (rpnParser.T__368 - 360)) | (1 << (rpnParser.T__369 - 360)) | (1 << (rpnParser.T__370 - 360)) | (1 << (rpnParser.T__371 - 360)) | (1 << (rpnParser.T__372 - 360)) | (1 << (rpnParser.T__373 - 360)) | (1 << (rpnParser.T__374 - 360)) | (1 << (rpnParser.T__375 - 360)) | (1 << (rpnParser.T__376 - 360)) | (1 << (rpnParser.T__377 - 360)) | (1 << (rpnParser.T__378 - 360)) | (1 << (rpnParser.T__379 - 360)) | (1 << (rpnParser.T__380 - 360)) | (1 << (rpnParser.T__381 - 360)) | (1 << (rpnParser.T__382 - 360)) | (1 << (rpnParser.T__383 - 360)))) !== 0))) {
         this._errHandler.recoverInline(this);
         }
         else {
@@ -4327,7 +4339,7 @@ rpnParser.prototype.stringType = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 224;
-        this.match(rpnParser.T__382);
+        this.match(rpnParser.T__384);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;

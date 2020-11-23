@@ -24,8 +24,8 @@ rpnVisitor.prototype.visitAction = function(ctx) {
 };
 
 
-// Visit a parse tree produced by rpnParser#literal.
-rpnVisitor.prototype.visitLiteral = function(ctx) {
+// Visit a parse tree produced by rpnParser#booleanLiteral.
+rpnVisitor.prototype.visitBooleanLiteral = function(ctx) {
   return this.visitChildren(ctx);
 };
 

@@ -29,12 +29,12 @@ rpnListener.prototype.exitAction = function(ctx) {
 };
 
 
-// Enter a parse tree produced by rpnParser#literal.
-rpnListener.prototype.enterLiteral = function(ctx) {
+// Enter a parse tree produced by rpnParser#booleanLiteral.
+rpnListener.prototype.enterBooleanLiteral = function(ctx) {
 };
 
-// Exit a parse tree produced by rpnParser#literal.
-rpnListener.prototype.exitLiteral = function(ctx) {
+// Exit a parse tree produced by rpnParser#booleanLiteral.
+rpnListener.prototype.exitBooleanLiteral = function(ctx) {
 };
 
 
