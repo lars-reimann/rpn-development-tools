@@ -80,6 +80,25 @@ export class Operator extends Action {
         return nextState3.push(min <= value && value <= max)
     }
 
+    private static caseOperator(initialState: ProgramState): ProgramState {
+        const [condition, nextState1] = initialState.popNumber()
+        const [count, nextState2] = nextState1.popNumber()
+        let currentState = nextState2
+        const values = []
+        for (let i = 0; i < count; i++) {
+            const [value, nextState] = currentState.pop()
+            values.push(value)
+            currentState = nextState
+        }
+
+        const index = Math.floor(condition)
+        if (values[index] === undefined) {
+            throw new Error("Case index out of bounds.")
+        }
+
+        return currentState.push(values[index])
+    }
+
     private static charAt(initialState: ProgramState): ProgramState {
         const [b, nextState1] = initialState.popNumber()
         const [a, nextState2] = nextState1.pop()
@@ -237,7 +256,7 @@ export class Operator extends Action {
             case 'rnor':
                 return Operator.unaryNumericOperator(initialState, a => (a % (2 * Math.PI) + (2 * Math.PI)) % (2 * Math.PI))
             case 'case':
-                throw new Error("Not implemented.") // TODO
+                return Operator.caseOperator(initialState)
 
             // String operators
             case 'lc':
