@@ -1,4 +1,4 @@
-import {RpnValue} from "./programState";
+import {RpnValue} from "./executionState";
 
 export interface ExternalValue {
     name: string

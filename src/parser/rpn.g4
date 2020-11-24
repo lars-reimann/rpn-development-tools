@@ -49,7 +49,7 @@ stringLiteral
     ;
 
 variableAccess
-    : '(' ' '* id ' '* ',' ' '* type ' '* ')'
+    : '(' ' '* id ' '* (',' ' '* type ' '*)? ')'
     ;
 
 assignment

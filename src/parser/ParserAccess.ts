@@ -3,7 +3,7 @@ import antlr4 from "antlr4"
 import {rpnLexer as RpnLexer} from "./rpnLexer"
 import {rpnParser as RpnParser} from "./rpnParser"
 import {rpnVisitor as RpnVisitor} from "./rpnVisitor"
-import {AstNode, Literal, Operator, Program} from "../model/astNodes";
+import {AstNode, Literal, Operator, Program, VariableAccess} from "../model/astNodes";
 
 export default function parse(program: string): Program {
     const chars = new antlr4.InputStream(program);
@@ -58,12 +58,28 @@ class AstCreator extends RpnVisitor {
         this.nodes.push(new Literal(value))
     }
 
-//     // Visit a parse tree produced by rpnParser#variableAccess.
-//     rpnVisitor.prototype.visitVariableAccess = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
+    visitVariableAccess(ctx: any) {
+        const name = ctx.id().getText()
+        const specifiedType = ctx.type()
+
+        let type: "boolean" | "number" | "string"
+        if (!specifiedType) {
+            type = "number"
+        } else {
+            const specifiedTypeText = specifiedType.getText().toLowerCase()
+            if (specifiedTypeText === "string") {
+                type = "string"
+            } else if (specifiedTypeText === "bool" || specifiedTypeText === "boolean") {
+                type = "boolean"
+            } else {
+                type = "number"
+            }
+        }
+
+        this.nodes.push(new VariableAccess(name, type))
+    };
+
+
 // // Visit a parse tree produced by rpnParser#assignment.
 //     rpnVisitor.prototype.visitAssignment = function(ctx) {
 //         return this.visitChildren(ctx);
@@ -115,156 +131,6 @@ class AstCreator extends RpnVisitor {
 //
 // // Visit a parse tree produced by rpnParser#storePop.
 //     rpnVisitor.prototype.visitStorePop = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#type.
-//     rpnVisitor.prototype.visitType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#booleanType.
-//     rpnVisitor.prototype.visitBooleanType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#numberType.
-//     rpnVisitor.prototype.visitNumberType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#distanceType.
-//     rpnVisitor.prototype.visitDistanceType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#areaType.
-//     rpnVisitor.prototype.visitAreaType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#volumeType.
-//     rpnVisitor.prototype.visitVolumeType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#volumeRateType.
-//     rpnVisitor.prototype.visitVolumeRateType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#temperatureType.
-//     rpnVisitor.prototype.visitTemperatureType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#angleType.
-//     rpnVisitor.prototype.visitAngleType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#globalPositionType.
-//     rpnVisitor.prototype.visitGlobalPositionType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#angularVelocityType.
-//     rpnVisitor.prototype.visitAngularVelocityType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#speedType.
-//     rpnVisitor.prototype.visitSpeedType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#accelerationType.
-//     rpnVisitor.prototype.visitAccelerationType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#timeType.
-//     rpnVisitor.prototype.visitTimeType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#powerType.
-//     rpnVisitor.prototype.visitPowerType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#weightType.
-//     rpnVisitor.prototype.visitWeightType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#weightRateType.
-//     rpnVisitor.prototype.visitWeightRateType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#electricalCurrentType.
-//     rpnVisitor.prototype.visitElectricalCurrentType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#electricalPotentialType.
-//     rpnVisitor.prototype.visitElectricalPotentialType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#frequencyType.
-//     rpnVisitor.prototype.visitFrequencyType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#densityType.
-//     rpnVisitor.prototype.visitDensityType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#pressureType.
-//     rpnVisitor.prototype.visitPressureType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#torqueType.
-//     rpnVisitor.prototype.visitTorqueType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#miscellaneousType.
-//     rpnVisitor.prototype.visitMiscellaneousType = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#stringType.
-//     rpnVisitor.prototype.visitStringType = function(ctx) {
 //         return this.visitChildren(ctx);
 //     };
 }

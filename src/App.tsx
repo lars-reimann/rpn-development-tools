@@ -13,17 +13,17 @@ import {
     ExternalWriteOnlyValue
 } from "./model/externalValue";
 import parse from "./parser/ParserAccess";
-import {ProgramState, RpnValue, Stack as StackState} from "./model/programState";
+import {ExecutionState, ExternalState, RpnValue, Stack as StackState} from "./model/executionState";
 
 export default function App() {
     const [isExecuting, setExecuting] = useState(false)
     const [program, setProgram] = useState("")
     const [stack, setStack] = useState([] as RpnValue[])
     const [variables, setVariables] = useState([
-        new ExternalBoolean("mySimVar1", true),
-        new ExternalNumber("mySimVar2", 1),
+        new ExternalBoolean("MYSIMVAR1", true),
+        new ExternalNumber("MYSIMVAR2", 1),
         new ExternalString("mySimVarWithASuperLongStringToTestTheLabelInThisCase", "hello"),
-        new ExternalWriteOnlyValue("mySimVar4", "cannot be changed")
+        new ExternalWriteOnlyValue("MYSIMVAR4", "cannot be changed")
     ] as ExternalValue[])
     const [registers, setRegisters] = useState([
         new ExternalBoolean("r1", true)
@@ -38,7 +38,11 @@ export default function App() {
 
             const astNodes = parse(program)
             console.log(astNodes);
-            const initialState = new ProgramState(new StackState(stack))
+            const initialState = new ExecutionState(
+                new StackState(stack),
+                new ExternalState(variables.map(it => [it.name, it.value])),
+                new ExternalState(registers.map(it => [it.name, it.value]))
+            )
 
             try {
                 const newState = astNodes.execute(initialState)

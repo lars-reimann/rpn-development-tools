@@ -1,6 +1,6 @@
 import React from "react";
 import './Stack.css';
-import {RpnValue} from "../model/programState";
+import {RpnValue} from "../model/executionState";
 
 export default function Stack(props: { values: RpnValue[] }) {
     return (

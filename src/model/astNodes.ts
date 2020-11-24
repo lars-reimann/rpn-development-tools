@@ -1,7 +1,7 @@
-import {ProgramState, RpnValue} from "./programState";
+import {ExecutionState, RpnValue} from "./executionState";
 
 export abstract class AstNode {
-    abstract execute(initialState: ProgramState): ProgramState
+    abstract execute(initialState: ExecutionState): ExecutionState
 }
 
 export class Program extends AstNode {
@@ -12,9 +12,9 @@ export class Program extends AstNode {
         this.actions = actions
     }
 
-    execute(initialState: ProgramState): ProgramState {
+    execute(initialState: ExecutionState): ExecutionState {
         return this.actions.reduce(
-            (previousState: ProgramState, action: Action) => action.execute(previousState),
+            (previousState: ExecutionState, action: Action) => action.execute(previousState),
             initialState
         )
     }
@@ -31,8 +31,27 @@ export class Literal extends Action {
         this.value = value
     }
 
-    execute(initialState: ProgramState): ProgramState {
+    execute(initialState: ExecutionState): ExecutionState {
         return initialState.push(this.value);
+    }
+}
+
+export class VariableAccess extends Action {
+    private readonly name: string
+    private readonly type: "boolean" | "number" | "string"
+
+    constructor(name: string, type: "boolean" | "number" | "string") {
+        super();
+        this.name = name.toUpperCase()
+        this.type = type
+    }
+
+    execute(initialState: ExecutionState): ExecutionState {
+        const value = initialState.variables.read(this.name)
+        if (value === undefined) {
+            throw new Error(`Unresolved reference to variable ${this.name}.`)
+        }
+        return initialState.push(value)
     }
 }
 
@@ -44,43 +63,43 @@ export class Operator extends Action {
         this.operator = operator
     }
 
-    private static unaryOperator(initialState: ProgramState, operator: (a: RpnValue) => RpnValue): ProgramState {
+    private static unaryOperator(initialState: ExecutionState, operator: (a: RpnValue) => RpnValue): ExecutionState {
         const [a, nextState1] = initialState.pop()
         return nextState1.push(operator(a))
     }
 
-    private static unaryNumericOperator(initialState: ProgramState, operator: (a: number) => RpnValue): ProgramState {
+    private static unaryNumericOperator(initialState: ExecutionState, operator: (a: number) => RpnValue): ExecutionState {
         const [a, nextState1] = initialState.popNumber()
         return nextState1.push(operator(a))
     }
 
-    private static binaryOperator(initialState: ProgramState, operator: (a: RpnValue, b: RpnValue) => RpnValue): ProgramState {
+    private static binaryOperator(initialState: ExecutionState, operator: (a: RpnValue, b: RpnValue) => RpnValue): ExecutionState {
         const [b, nextState1] = initialState.pop()
         const [a, nextState2] = nextState1.pop()
         return nextState2.push(operator(a, b))
     }
 
-    private static binaryNumericOperator(initialState: ProgramState, operator: (a: number, b: number) => number): ProgramState {
+    private static binaryNumericOperator(initialState: ExecutionState, operator: (a: number, b: number) => number): ExecutionState {
         const [b, nextState1] = initialState.popNumber()
         const [a, nextState2] = nextState1.popNumber()
         return nextState2.push(operator(a, b))
     }
 
-    private static ternaryOperator(initialState: ProgramState): ProgramState {
+    private static ternaryOperator(initialState: ExecutionState): ExecutionState {
         const [condition, nextState1] = initialState.pop()
         const [falseValue, nextState2] = nextState1.pop()
         const [trueValue, nextState3] = nextState2.pop()
         return nextState3.push(condition ? trueValue : falseValue)
     }
 
-    private static inRange(initialState: ProgramState): ProgramState {
+    private static inRange(initialState: ExecutionState): ExecutionState {
         const [value, nextState1] = initialState.pop()
         const [max, nextState2] = nextState1.pop()
         const [min, nextState3] = nextState2.pop()
         return nextState3.push(min <= value && value <= max)
     }
 
-    private static caseOperator(initialState: ProgramState): ProgramState {
+    private static caseOperator(initialState: ExecutionState): ExecutionState {
         const [condition, nextState1] = initialState.popNumber()
         const [count, nextState2] = nextState1.popNumber()
         let currentState = nextState2
@@ -99,36 +118,36 @@ export class Operator extends Action {
         return currentState.push(values[index])
     }
 
-    private static charAt(initialState: ProgramState): ProgramState {
+    private static charAt(initialState: ExecutionState): ExecutionState {
         const [b, nextState1] = initialState.popNumber()
         const [a, nextState2] = nextState1.pop()
         return nextState2.push(`${a}`.charAt(b))
     }
 
-    private static clearStack(initialState: ProgramState): ProgramState {
+    private static clearStack(initialState: ExecutionState): ExecutionState {
         return initialState.clearStack()
     }
 
-    private static duplicate(initialState: ProgramState): ProgramState {
-        const topValue = initialState.stack.last()
+    private static duplicate(initialState: ExecutionState): ExecutionState {
+        const topValue = initialState.stack.peek()
         if (topValue === null || topValue === undefined) {
             throw new Error("Stack is depleted.")
         }
         return initialState.push(topValue)
     }
 
-    private static discard(initialState: ProgramState): ProgramState {
+    private static discard(initialState: ExecutionState): ExecutionState {
         return initialState.pop()[1]
     }
 
-    private static reverse(initialState: ProgramState): ProgramState {
+    private static reverse(initialState: ExecutionState): ExecutionState {
         const [b, nextState1] = initialState.popNumber()
         const [a, nextState2] = nextState1.popNumber()
         const nextState3 = nextState2.push(a)
         return nextState3.push(b)
     }
 
-    execute(initialState: ProgramState): ProgramState {
+    execute(initialState: ExecutionState): ExecutionState {
         switch (this.operator) {
 
             // Common operators
