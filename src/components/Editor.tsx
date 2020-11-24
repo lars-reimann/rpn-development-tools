@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import AceEditor from "react-ace";
 import './Editor.css';
 
@@ -8,10 +8,15 @@ import "ace-builds/src-noconflict/theme-github";
 export default function Editor(props: {
     content: string,
     onChange: (newContent: string) => void
-    readOnly: boolean
+    isExecuting: boolean
 }) {
+    useEffect(() => {
+        const textarea = document.querySelector("#rpn-editor textarea") as HTMLTextAreaElement
+        textarea.disabled = props.isExecuting
+    })
+
     return (
-        <div className="Editor">
+        <div className={`Editor ${props.isExecuting ? "disabled" : ""}`}>
             <AceEditor
                 mode="text"
                 name="rpn-editor"
@@ -22,7 +27,7 @@ export default function Editor(props: {
                 width="100%"
 
                 editorProps={{$blockScrolling: true}}
-                readOnly={props.readOnly}
+                readOnly={props.isExecuting}
                 showPrintMargin={false}
 
                 onChange={props.onChange}

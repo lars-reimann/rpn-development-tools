@@ -13,7 +13,7 @@ import {
     ExternalWriteOnlyValue
 } from "./model/externalValue";
 import parse from "./parser/ParserAccess";
-import {ExecutionState, ExternalState, RpnValue, Stack as StackState} from "./model/executionState";
+import {ExecutionState, Variables as ModelVariables, Registers as ModelRegisters, RpnValue, Stack as StackState} from "./model/executionState";
 
 export default function App() {
     const [isExecuting, setExecuting] = useState(false)
@@ -40,8 +40,8 @@ export default function App() {
             console.log(astNodes);
             const initialState = new ExecutionState(
                 new StackState(stack),
-                new ExternalState(variables.map(it => [it.name, it.value])),
-                new ExternalState(registers.map(it => [it.name, it.value]))
+                new ModelVariables(variables.map(it => [it.name, it.value])),
+                new ModelRegisters()
             )
 
             try {
@@ -69,7 +69,7 @@ export default function App() {
 
     return (
         <div className="App">
-            <Editor readOnly={isExecuting} content={program} onChange={setProgram}/>
+            <Editor isExecuting={isExecuting} content={program} onChange={setProgram}/>
             <Stack values={stack}/>
             <Variables
                 variables={variables}

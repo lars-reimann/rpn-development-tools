@@ -1,1 +1,16 @@
-.Editor {}
+.Editor.disabled .ace_editor {
+    color: gray;
+}
+
+.Editor.disabled .ace_active-line {
+    background: transparent;
+}
+
+.Editor.disabled .ace_gutter-active-line {
+    background: transparent;
+}
+
+.Editor.disabled .ace_cursor {
+    visibility: hidden;
+}
+

@@ -290,7 +290,7 @@ export class Operator extends Action {
             case 'scat':
                 return Operator.binaryOperator(initialState, (a, b) => `${a}${b}`)
             case 'schr':
-                throw new Error("Not implemented.") // TODO
+                return Operator.binaryOperator(initialState, (a, b) => `${b}`.indexOf(`${a}`))
             case 'scmp':
                 return Operator.binaryOperator(initialState, (a, b) => `${a}` === `${b}`)
             case 'scmi':

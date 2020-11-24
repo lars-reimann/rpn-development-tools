@@ -4,13 +4,13 @@ export type RpnValue = boolean | number | string
 
 export class ExecutionState {
     readonly stack: Stack
-    readonly variables: ExternalState
-    readonly registers: ExternalState
+    readonly variables: Variables
+    readonly registers: Registers
 
     constructor(
         stack: Stack = new Stack(),
-        variables: ExternalState = new ExternalState(),
-        registers: ExternalState = new ExternalState()
+        variables: Variables = new Variables(),
+        registers: Registers = new Registers()
     ) {
         this.stack = stack
         this.variables = variables
@@ -59,8 +59,8 @@ export class ExecutionState {
         return this.copy({variables: this.variables.write(name, newValue)})
     }
 
-    writeRegister(name: string, newValue: string): ExecutionState {
-        return this.copy({registers: this.registers.write(name, newValue)})
+    writeRegister(index: number, newValue: string): ExecutionState {
+        return this.copy({registers: this.registers.write(index, newValue)})
     }
 }
 
@@ -92,22 +92,50 @@ export class Stack {
     }
 }
 
-export class ExternalState {
-    readonly entries: OrderedMap<string, RpnValue>
+export class Variables {
+    readonly variables: OrderedMap<string, RpnValue>
 
-    constructor(entries: OrderedMap<string, RpnValue> | Iterable<[string, RpnValue]> = []) {
-        if (entries instanceof OrderedMap) {
-            this.entries = entries as OrderedMap<string, RpnValue>
+    constructor(variables: OrderedMap<string, RpnValue> | Iterable<[string, RpnValue]> = []) {
+        if (variables instanceof OrderedMap) {
+            this.variables = variables as OrderedMap<string, RpnValue>
         } else {
-            this.entries = OrderedMap(entries)
+            this.variables = OrderedMap(variables)
         }
     }
 
     read(name: string): RpnValue | undefined {
-        return this.entries.get(name)
+        return this.variables.get(name)
     }
 
-    write(name: string, newValue: string): ExternalState {
-        return new ExternalState(this.entries.set(name, newValue))
+    write(name: string, newValue: string): Variables {
+        return new Variables(this.variables.set(name, newValue))
+    }
+}
+
+export class Registers {
+    readonly registers: List<RpnValue>
+
+    constructor(registers: List<RpnValue> | Iterable<RpnValue> = []) {
+        if (registers instanceof List) {
+            this.registers = (registers as List<RpnValue>).setSize(50)
+        } else {
+            this.registers = List(registers).setSize(50)
+        }
+    }
+
+    read(index: number): RpnValue | undefined {
+        if (index < 0 || 49 < index) {
+            throw new Error("Register index out of bounds.")
+        }
+
+        return this.registers.get(index)
+    }
+
+    write(index: number, newValue: string): Registers {
+        if (index < 0 || 49 < index) {
+            throw new Error("Register index out of bounds.")
+        }
+
+        return new Registers(this.registers.set(index, newValue))
     }
 }
