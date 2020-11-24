@@ -37,8 +37,18 @@ class AstCreator extends RpnVisitor {
         this.nodes.push(new Literal(value))
     }
 
-    visitNumberLiteral(ctx: any) {
-        const value = parseFloat(ctx.NUMBER().getText())
+    visitHexadecimalLiteral(ctx: any) {
+        const value = Number.parseInt(ctx.HEXADECIMAL().getText(), 16)
+        this.nodes.push(new Literal(value))
+    }
+
+    visitDecimalLiteral(ctx: any) {
+        const value = Number.parseFloat(ctx.DECIMAL().getText())
+        this.nodes.push(new Literal(value))
+    }
+
+    visitOctalLiteral(ctx: any) {
+        const value = Number.parseInt(ctx.OCTAL().getText(), 8)
         this.nodes.push(new Literal(value))
     }
 

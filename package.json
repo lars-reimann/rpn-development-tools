@@ -12,6 +12,7 @@
     "@types/react-dom": "^16.9.10",
     "ace-builds": "^1.4.12",
     "antlr4": "^4.8.0",
+    "immutable": "^4.0.0-rc.12",
     "react": "^17.0.1",
     "react-ace": "^9.2.0",
     "react-dom": "^17.0.1",

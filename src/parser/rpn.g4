@@ -10,7 +10,9 @@ program
 
 action
     : booleanLiteral
-    | numberLiteral
+    | hexadecimalLiteral
+    | decimalLiteral
+    | octalLiteral
     | stringLiteral
     | variableAccess
     | assignment
@@ -30,8 +32,16 @@ booleanLiteral
     | 'True'
     ;
 
-numberLiteral
-    : NUMBER
+hexadecimalLiteral
+    : HEXADECIMAL
+    ;
+
+decimalLiteral
+    : DECIMAL
+    ;
+
+octalLiteral
+    : OCTAL
     ;
 
 stringLiteral
@@ -427,8 +437,16 @@ STORE_POP
     : 'sp' IntegerDigits
     ;
 
-NUMBER
-    : IntegerDigits ('.' [0-9] [0-9_]*)?
+HEXADECIMAL
+    : '0x' ('0' | [1-9a-fA-F] [0-9a-fA-F]*)
+    ;
+
+DECIMAL
+    : IntegerDigits ('.' [0-9] [0-9]*)?
+    ;
+
+OCTAL
+    : '0' ([1-8] [0-8]*)
     ;
 
 ID_PART

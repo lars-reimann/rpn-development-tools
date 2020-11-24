@@ -38,12 +38,30 @@ rpnListener.prototype.exitBooleanLiteral = function(ctx) {
 };
 
 
-// Enter a parse tree produced by rpnParser#numberLiteral.
-rpnListener.prototype.enterNumberLiteral = function(ctx) {
+// Enter a parse tree produced by rpnParser#hexadecimalLiteral.
+rpnListener.prototype.enterHexadecimalLiteral = function(ctx) {
 };
 
-// Exit a parse tree produced by rpnParser#numberLiteral.
-rpnListener.prototype.exitNumberLiteral = function(ctx) {
+// Exit a parse tree produced by rpnParser#hexadecimalLiteral.
+rpnListener.prototype.exitHexadecimalLiteral = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#decimalLiteral.
+rpnListener.prototype.enterDecimalLiteral = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#decimalLiteral.
+rpnListener.prototype.exitDecimalLiteral = function(ctx) {
+};
+
+
+// Enter a parse tree produced by rpnParser#octalLiteral.
+rpnListener.prototype.enterOctalLiteral = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#octalLiteral.
+rpnListener.prototype.exitOctalLiteral = function(ctx) {
 };
 
 

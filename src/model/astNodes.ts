@@ -86,6 +86,29 @@ export class Operator extends Action {
         return nextState2.push(`${a}`.charAt(b))
     }
 
+    private static clearStack(initialState: ProgramState): ProgramState {
+        return initialState.clearStack()
+    }
+
+    private static duplicate(initialState: ProgramState): ProgramState {
+        const topValue = initialState.stack.last()
+        if (topValue === null || topValue === undefined) {
+            throw new Error("Stack is depleted.")
+        }
+        return initialState.push(topValue)
+    }
+
+    private static discard(initialState: ProgramState): ProgramState {
+        return initialState.pop()[1]
+    }
+
+    private static reverse(initialState: ProgramState): ProgramState {
+        const [b, nextState1] = initialState.popNumber()
+        const [a, nextState2] = nextState1.popNumber()
+        const nextState3 = nextState2.push(a)
+        return nextState3.push(b)
+    }
+
     execute(initialState: ProgramState): ProgramState {
         switch (this.operator) {
 
@@ -245,13 +268,13 @@ export class Operator extends Action {
             case 'b':
                 throw new Error("Not implemented.") // TODO
             case 'c':
-                throw new Error("Not implemented.") // TODO
+                return Operator.clearStack(initialState)
             case 'd':
-                throw new Error("Not implemented.") // TODO
+                return Operator.duplicate(initialState)
             case 'p':
-                throw new Error("Not implemented.") // TODO
+                return Operator.discard(initialState)
             case 'r':
-                throw new Error("Not implemented.") // TODO
+                return Operator.reverse(initialState)
 
             default:
                 return initialState

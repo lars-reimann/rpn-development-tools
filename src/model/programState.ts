@@ -1,3 +1,5 @@
+import {List} from "immutable";
+
 export type RpnValue = boolean | number | string
 
 export class ProgramState {
@@ -16,7 +18,8 @@ export class ProgramState {
     }
 
     pop(): [value: RpnValue, newProgramState: ProgramState]{
-        const [value, newStack] = this.stack.pop()
+        const value = this.stack.last()
+        const newStack = this.stack.pop()
         if (value === null || value === undefined) {
             throw new Error("Stack is depleted.")
         }
@@ -39,26 +42,36 @@ export class ProgramState {
             newProgramState
         ]
     }
+
+    clearStack(): ProgramState {
+        return this.copy({stack: this.stack.clear()})
+    }
 }
 
 export class Stack {
-    readonly stack: RpnValue[]
+    readonly stack: List<RpnValue>
 
-    constructor(stack: RpnValue[]) {
-        this.stack = [...stack]
+    constructor(stack: RpnValue[] | List<RpnValue>) {
+        if (Array.isArray(stack)) {
+            this.stack = List(stack)
+        } else {
+            this.stack = stack
+        }
+    }
+
+    last(): RpnValue | undefined {
+        return this.stack.last()
     }
 
     push(value: RpnValue): Stack {
-        return new Stack([...this.stack, value])
+        return new Stack(this.stack.push(value))
     }
 
-    pop(): [ value: RpnValue | void, newStack: Stack ] {
-        const newStack = [...this.stack]
-        const value = newStack.pop()
+    pop(): Stack {
+        return new Stack(this.stack.pop())
+    }
 
-        return [
-            value,
-            new Stack(newStack)
-        ]
+    clear(): Stack {
+        return new Stack(this.stack.clear())
     }
 }

@@ -30,8 +30,20 @@ rpnVisitor.prototype.visitBooleanLiteral = function(ctx) {
 };
 
 
-// Visit a parse tree produced by rpnParser#numberLiteral.
-rpnVisitor.prototype.visitNumberLiteral = function(ctx) {
+// Visit a parse tree produced by rpnParser#hexadecimalLiteral.
+rpnVisitor.prototype.visitHexadecimalLiteral = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by rpnParser#decimalLiteral.
+rpnVisitor.prototype.visitDecimalLiteral = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by rpnParser#octalLiteral.
+rpnVisitor.prototype.visitOctalLiteral = function(ctx) {
   return this.visitChildren(ctx);
 };
 

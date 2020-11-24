@@ -42,7 +42,7 @@ export default function App() {
 
             try {
                 const newState = astNodes.execute(initialState)
-                setStack(newState.stack.stack)
+                setStack(newState.stack.stack.toArray())
                 console.log(newState)
             } catch (error) {
                 console.error(error)
