@@ -25,16 +25,14 @@ export default function App() {
         new ExternalString("mySimVarWithASuperLongStringToTestTheLabelInThisCase", "hello"),
         new ExternalWriteOnlyValue("MYSIMVAR4", "cannot be changed")
     ] as ExternalValue[])
-    const [registers, setRegisters] = useState([
-        new ExternalBoolean("r1", true)
-    ] as ExternalValue[])
+    const [registers, setRegisters] = useState(new ModelRegisters())
     const [initialVariables, setInitialVariables] = useState([...variables])
-    const [initialRegisters, setInitialRegisters] = useState([...registers])
+    const [initialRegisters, setInitialRegisters] = useState(registers)
 
     function toggleExecution() {
         if (!isExecuting) {
             setInitialVariables([...variables])
-            setInitialRegisters([...registers])
+            setInitialRegisters(registers)
 
             const astNodes = parse(program)
             console.log(astNodes);
@@ -59,12 +57,12 @@ export default function App() {
     function nextStep() {
         console.log("Clicked next step")
         setVariables([...variables, new ExternalNumber("added", 1)])
-        setRegisters([...registers, new ExternalNumber("added", 1)])
+        setRegisters(registers.write(1, "added"))
     }
 
     function restoreInitialExternalValues() {
         setVariables([...initialVariables])
-        setRegisters([...initialRegisters])
+        setRegisters(initialRegisters)
     }
 
     return (
@@ -76,11 +74,7 @@ export default function App() {
                 disabled={isExecuting}
                 onChange={(newValue) => updateExternalValue(variables, setVariables, newValue)}
             />
-            <Registers
-                registers={registers}
-                disabled={isExecuting}
-                onChange={(newValue) => updateExternalValue(registers, setRegisters, newValue)}
-            />
+            <Registers registers={registers}/>
             <Controls
                 isExecuting={isExecuting}
                 onClearStack={() => setStack([])}
