@@ -1,0 +1,20 @@
+.Errors {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    z-index: 1000;
+}
+
+.ErrorItems {
+    display: flex;
+    flex-direction: column;
+}
+
+.Errors .Error {
+    background: tomato;
+    border: 1px solid firebrick;
+    border-radius: 5px;
+    padding: 1em;
+    margin-bottom: 1em;
+    width: 350px;
+}

@@ -9,12 +9,14 @@ import parse from "./parser/ParserAccess";
 import {ExecutionState, RpnValue, VariablesState} from "./model/executionState";
 import {Action, VariableAccess, VariableAssignment} from "./model/astNodes";
 import {List} from "immutable";
+import Errors from "./components/Errors";
 
 export default function App() {
     const [code, setCode] = useState("")
     const [isExecuting, setExecuting] = useState(false)
     const [executionState, setExecutionState] = useState(new ExecutionState())
     const [executionStateHistory, setExecutionStateHistory] = useState(List<ExecutionState>())
+    const [errors, setErrors] = useState(List<string>())
 
     function updateVariables() {
         const program = parse(code)
@@ -40,10 +42,15 @@ export default function App() {
             try {
                 const program = parse(code)
                 const nextState1 = executionState.copy({program, programCounter: 0})
-                setExecutionState(nextState1)
+
+                if (nextState1.isDone) {
+                    setExecuting(false)
+                    showError(new Error("Program is empty."))
+                } else {
+                    setExecutionState(nextState1)
+                }
             } catch (error) {
-                // TODO Show an error message in a toast.
-                console.error(error)
+                showError(error)
                 setExecuting(false)
             }
         }
@@ -62,8 +69,7 @@ export default function App() {
                 const nextState2 = program.execute(nextState1)
                 setExecutionState(nextState2)
             } catch (error) {
-                // TODO Show an error message in a toast.
-                console.error(error)
+                showError(error)
             }
         }
 
@@ -81,8 +87,7 @@ export default function App() {
                     setExecuting(false)
                 }
             } catch (error) {
-                // TODO Show an error message in a toast.
-                console.error(error)
+                showError(error)
                 setExecuting(false)
             }
         }
@@ -116,6 +121,15 @@ export default function App() {
         }
     }
 
+    function showError(error: any) {
+        console.error(error)
+        setErrors(errors.push("" + error))
+    }
+
+    function removeError(message: string) {
+        setErrors(errors.remove(errors.indexOf(message)))
+    }
+
     return (
         <div className="App">
             <Editor
@@ -141,6 +155,10 @@ export default function App() {
                 onRunProgram={runProgram}
                 onToggleStepwiseExecution={toggleStepwiseExecution}
                 onUpdateVariables={updateVariables}
+            />
+            <Errors
+                errors={errors}
+                onRemoveError={removeError}
             />
         </div>
     );

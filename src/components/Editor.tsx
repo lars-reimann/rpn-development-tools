@@ -17,7 +17,7 @@ export default function Editor(props: {
     useEffect(() => {
         const textarea = document.querySelector("#rpn-editor textarea") as HTMLTextAreaElement
         textarea.disabled = props.isExecuting
-    })
+    }, [props.isExecuting])
 
     useEffect(() => {
         if (props.isExecuting && props.currentAction !== undefined) {
@@ -32,7 +32,7 @@ export default function Editor(props: {
                 editor.getSession().removeMarker(marker)
             }
         }
-    })
+    }, [props.isExecuting, props.currentAction])
 
     return (
         <div className={`Editor ${props.isExecuting ? "disabled" : ""}`}>
