@@ -353,9 +353,9 @@ export class Operator extends Action {
             case 'schr':
                 return Operator.binaryOperator(initialState, (a, b) => `${b}`.indexOf(`${a}`))
             case 'scmp':
-                return Operator.binaryOperator(initialState, (a, b) => `${a}` === `${b}`)
+                return Operator.binaryOperator(initialState, (a, b) => `${a}`.localeCompare(`${b}`))
             case 'scmi':
-                return Operator.binaryOperator(initialState, (a, b) => `${a}`.toLowerCase() === `${b}`.toLowerCase())
+                return Operator.binaryOperator(initialState, (a, b) => `${a}`.toLowerCase().localeCompare(`${b}`.toLowerCase()))
             case 'sstr':
                 return Operator.binaryOperator(initialState, (a, b) => `${b}`.indexOf(`${a}`))
             case 'ssub':
