@@ -4,7 +4,6 @@ import './Controls.css';
 export default function Controls(props: {
     canUndo: boolean,
     isExecuting: boolean,
-    onClearStack: () => void,
     onNextStep: () => void,
     onPreviousStep: () => void,
     onRestoreInitialExternalValues: () => void,
@@ -32,7 +31,6 @@ export default function Controls(props: {
                 </div>
                 <div className="align-right">
                     <button type="button" onClick={props.onUpdateVariables}>Update variables</button>
-                    <button type="button" onClick={props.onClearStack}>Clear stack</button>
                     <button type="button" onClick={props.onRestoreInitialExternalValues} disabled={!props.canUndo}>Restore state before last run</button>
                 </div>
             </div>

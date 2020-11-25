@@ -6,7 +6,7 @@ import Variables from "./components/Variables";
 import Registers from "./components/Registers";
 import Controls from "./components/Controls";
 import parse from "./parser/ParserAccess";
-import {ExecutionState, RpnValue, VariablesState} from "./model/executionState";
+import {ExecutionState, RpnValue, StackState, VariablesState} from "./model/executionState";
 import {Action, VariableAccess, VariableAssignment} from "./model/astNodes";
 import {List} from "immutable";
 import Errors from "./components/Errors";
@@ -28,10 +28,6 @@ export default function App() {
         setExecutionState(executionState.copy({variables: new VariablesState(variables)}))
     }
 
-    function clearStack() {
-        setExecutionState(executionState.clearStack())
-    }
-
     function toggleStepwiseExecution() {
         setExecuting(!isExecuting)
 
@@ -41,7 +37,11 @@ export default function App() {
 
             try {
                 const program = parse(code)
-                const nextState1 = executionState.copy({program, programCounter: 0})
+                const nextState1 = executionState.copy({
+                    stack: new StackState(),
+                    program,
+                    programCounter: 0
+                })
 
                 if (nextState1.isDone) {
                     setExecuting(false)
@@ -65,7 +65,11 @@ export default function App() {
 
             try {
                 const program = parse(code)
-                const nextState1 = executionState.copy({program, programCounter: 0})
+                const nextState1 = executionState.copy({
+                    stack: new StackState(),
+                    program,
+                    programCounter: 0
+                })
                 const nextState2 = program.execute(nextState1)
                 setExecutionState(nextState2)
             } catch (error) {
@@ -148,7 +152,6 @@ export default function App() {
             <Controls
                 canUndo={!executionStateHistory.isEmpty()}
                 isExecuting={isExecuting}
-                onClearStack={clearStack}
                 onNextStep={nextStep}
                 onPreviousStep={previousStep}
                 onRestoreInitialExternalValues={restoreInitialExternalValues}
