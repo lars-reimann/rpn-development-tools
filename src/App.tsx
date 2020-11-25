@@ -42,10 +42,11 @@ export default function App() {
             setInitialExecutionState(executionState)
 
             const program = parse(code)
+            const nextState1 = executionState.copy({program, programCounter: 0})
 
             try {
-                const newState = program.execute(executionState)
-                setExecutionState(newState)
+                const nextState2 = program.execute(nextState1)
+                setExecutionState(nextState2)
             } catch (error) {
                 console.error(error)
             }

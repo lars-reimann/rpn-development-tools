@@ -1,4 +1,5 @@
 import {List, OrderedMap} from "immutable";
+import {Action, Program} from "./astNodes";
 
 export type RpnValue = boolean | number | string
 
@@ -6,19 +7,40 @@ export class ExecutionState {
     readonly stack: StackState
     readonly variables: VariablesState
     readonly registers: RegistersState
+    readonly program: Program
+    readonly programCounter: number
 
     constructor(
         stack: StackState = new StackState(),
         variables: VariablesState = new VariablesState(),
-        registers: RegistersState = new RegistersState()
+        registers: RegistersState = new RegistersState(),
+        program: Program = new Program([]),
+        programCounter: number = 0
     ) {
         this.stack = stack
         this.variables = variables
         this.registers = registers
+        this.program = program
+        this.programCounter = programCounter
     }
 
-    copy({stack = this.stack, variables = this.variables, registers = this.registers} = {}): ExecutionState {
-        return new ExecutionState(stack, variables, registers)
+    get nextAction(): Action {
+        return this.program.actions[this.programCounter]
+    }
+
+    get isDone(): boolean {
+        return this.nextAction === undefined
+    }
+
+    copy({
+             stack = this.stack,
+             variables = this.variables,
+             registers = this.registers,
+             program = this.program,
+             programCounter = this.programCounter
+         } = {}
+    ): ExecutionState {
+        return new ExecutionState(stack, variables, registers, program, programCounter)
     }
 
     push(value: RpnValue): ExecutionState {
@@ -61,6 +83,14 @@ export class ExecutionState {
 
     writeRegister(index: number, newValue: RpnValue): ExecutionState {
         return this.copy({registers: this.registers.write(index, newValue)})
+    }
+
+    jump(newProgramCounter: number): ExecutionState {
+        return this.copy({programCounter: newProgramCounter})
+    }
+
+    incrementProgramCounter(): ExecutionState {
+        return this.copy({programCounter: this.programCounter + 1})
     }
 }
 

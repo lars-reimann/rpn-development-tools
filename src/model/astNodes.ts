@@ -13,10 +13,18 @@ export class Program extends AstNode {
     }
 
     execute(initialState: ExecutionState): ExecutionState {
-        return this.actions.reduce(
-            (previousState: ExecutionState, action: Action) => action.execute(previousState),
-            initialState
-        )
+        let counter = 0
+        let currentState = initialState
+        while (!currentState.isDone) {
+            if (counter >= 100_000) {
+                throw new Error("Execution needed more than 100,000 steps.")
+            }
+
+            currentState = currentState.nextAction.execute(currentState)
+            counter++
+        }
+
+        return currentState
     }
 }
 
@@ -32,7 +40,9 @@ export class Literal extends Action {
     }
 
     execute(initialState: ExecutionState): ExecutionState {
-        return initialState.push(this.value);
+        return initialState
+            .push(this.value)
+            .incrementProgramCounter();
     }
 }
 
@@ -51,7 +61,9 @@ export class VariableAccess extends Action {
         if (value === undefined) {
             throw new Error(`Unresolved reference to variable ${this.name}.`)
         }
-        return initialState.push(value)
+        return initialState
+            .push(value)
+            .incrementProgramCounter()
     }
 }
 
@@ -67,7 +79,9 @@ export class VariableAssignment extends Action {
 
     execute(initialState: ExecutionState): ExecutionState {
         const [value, nextState1] = initialState.pop()
-        return  nextState1.writeVariable(this.name, value)
+        return  nextState1
+            .writeVariable(this.name, value)
+            .incrementProgramCounter()
     }
 }
 
@@ -81,38 +95,50 @@ export class Operator extends Action {
 
     private static unaryOperator(initialState: ExecutionState, operator: (a: RpnValue) => RpnValue): ExecutionState {
         const [a, nextState1] = initialState.pop()
-        return nextState1.push(operator(a))
+        return nextState1
+            .push(operator(a))
+            .incrementProgramCounter()
     }
 
     private static unaryNumericOperator(initialState: ExecutionState, operator: (a: number) => RpnValue): ExecutionState {
         const [a, nextState1] = initialState.popNumber()
-        return nextState1.push(operator(a))
+        return nextState1
+            .push(operator(a))
+            .incrementProgramCounter()
     }
 
     private static binaryOperator(initialState: ExecutionState, operator: (a: RpnValue, b: RpnValue) => RpnValue): ExecutionState {
         const [b, nextState1] = initialState.pop()
         const [a, nextState2] = nextState1.pop()
-        return nextState2.push(operator(a, b))
+        return nextState2
+            .push(operator(a, b))
+            .incrementProgramCounter()
     }
 
     private static binaryNumericOperator(initialState: ExecutionState, operator: (a: number, b: number) => number): ExecutionState {
         const [b, nextState1] = initialState.popNumber()
         const [a, nextState2] = nextState1.popNumber()
-        return nextState2.push(operator(a, b))
+        return nextState2
+            .push(operator(a, b))
+            .incrementProgramCounter()
     }
 
     private static ternaryOperator(initialState: ExecutionState): ExecutionState {
         const [condition, nextState1] = initialState.pop()
         const [falseValue, nextState2] = nextState1.pop()
         const [trueValue, nextState3] = nextState2.pop()
-        return nextState3.push(condition ? trueValue : falseValue)
+        return nextState3
+            .push(condition ? trueValue : falseValue)
+            .incrementProgramCounter()
     }
 
     private static inRange(initialState: ExecutionState): ExecutionState {
         const [value, nextState1] = initialState.pop()
         const [max, nextState2] = nextState1.pop()
         const [min, nextState3] = nextState2.pop()
-        return nextState3.push(min <= value && value <= max)
+        return nextState3
+            .push(min <= value && value <= max)
+            .incrementProgramCounter()
     }
 
     private static caseOperator(initialState: ExecutionState): ExecutionState {
@@ -131,17 +157,23 @@ export class Operator extends Action {
             throw new Error("Case index out of bounds.")
         }
 
-        return currentState.push(values[index])
+        return currentState
+            .push(values[index])
+            .incrementProgramCounter()
     }
 
     private static charAt(initialState: ExecutionState): ExecutionState {
         const [b, nextState1] = initialState.popNumber()
         const [a, nextState2] = nextState1.pop()
-        return nextState2.push(`${a}`.charAt(b))
+        return nextState2
+            .push(`${a}`.charAt(b))
+            .incrementProgramCounter()
     }
 
     private static clearStack(initialState: ExecutionState): ExecutionState {
-        return initialState.clearStack()
+        return initialState
+            .clearStack()
+            .incrementProgramCounter()
     }
 
     private static duplicate(initialState: ExecutionState): ExecutionState {
@@ -149,18 +181,24 @@ export class Operator extends Action {
         if (topValue === null || topValue === undefined) {
             throw new Error("Stack is depleted.")
         }
-        return initialState.push(topValue)
+        return initialState
+            .push(topValue)
+            .incrementProgramCounter()
     }
 
     private static discard(initialState: ExecutionState): ExecutionState {
-        return initialState.pop()[1]
+        return initialState
+            .pop()[1]
+            .incrementProgramCounter()
     }
 
     private static reverse(initialState: ExecutionState): ExecutionState {
         const [b, nextState1] = initialState.popNumber()
         const [a, nextState2] = nextState1.popNumber()
         const nextState3 = nextState2.push(a)
-        return nextState3.push(b)
+        return nextState3
+            .push(b)
+            .incrementProgramCounter()
     }
 
     execute(initialState: ExecutionState): ExecutionState {
@@ -331,7 +369,7 @@ export class Operator extends Action {
                 return Operator.reverse(initialState)
 
             default:
-                return initialState
+                throw new Error(`Unknown operator ${this.operator}`)
         }
     }
 }
