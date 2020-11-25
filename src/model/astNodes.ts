@@ -1,4 +1,5 @@
 import {ExecutionState, RpnValue} from "./executionState";
+import {Ace, Range as AceRange} from "ace-builds";
 
 export abstract class AstNode {
     abstract execute(initialState: ExecutionState): ExecutionState
@@ -29,13 +30,19 @@ export class Program extends AstNode {
 }
 
 export abstract class Action extends AstNode {
+    readonly location: Ace.Range
+
+    constructor(location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super();
+        this.location = location
+    }
 }
 
 export class Literal extends Action {
     private readonly value: RpnValue
 
-    constructor(value: RpnValue) {
-        super();
+    constructor(value: RpnValue, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.value = value
     }
 
@@ -50,8 +57,8 @@ export class VariableAccess extends Action {
     readonly name: string
     private readonly type: "boolean" | "number" | "string"
 
-    constructor(name: string, type: "boolean" | "number" | "string") {
-        super();
+    constructor(name: string, type: "boolean" | "number" | "string", location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.name = name.toUpperCase()
         this.type = type
     }
@@ -71,8 +78,8 @@ export class VariableAssignment extends Action {
     readonly name: string
     private readonly type: "boolean" | "number" | "string" | void
 
-    constructor(name: string, type: "boolean" | "number" | "string" | void) {
-        super();
+    constructor(name: string, type: "boolean" | "number" | "string" | void, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.name = name.toUpperCase()
         this.type = type
     }
@@ -88,8 +95,8 @@ export class VariableAssignment extends Action {
 export class Operator extends Action {
     private readonly operator: string
 
-    constructor(operator: string) {
-        super();
+    constructor(operator: string, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.operator = operator
     }
 
@@ -377,8 +384,8 @@ export class Operator extends Action {
 export class JumpIfFalse extends Action {
     readonly newProgramCounter: number;
 
-    constructor(newProgramCounter: number) {
-        super();
+    constructor(newProgramCounter: number, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.newProgramCounter = newProgramCounter
     }
 
@@ -396,8 +403,8 @@ export class JumpIfFalse extends Action {
 export class Jump extends Action {
     readonly newProgramCounter: number;
 
-    constructor(newProgramCounter: number) {
-        super();
+    constructor(newProgramCounter: number, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.newProgramCounter = newProgramCounter
     }
 
@@ -406,22 +413,11 @@ export class Jump extends Action {
     }
 }
 
-// // Visit a parse tree produced by rpnParser#ifAction.
-//     rpnVisitor.prototype.visitIfAction = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#elseAction.
-//     rpnVisitor.prototype.visitElseAction = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-
 export class Label extends Action {
     readonly index: number;
 
-    constructor(index: number) {
-        super();
+    constructor(index: number, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.index = index
     }
 
@@ -433,8 +429,8 @@ export class Label extends Action {
 export class Goto extends Action {
     readonly index: number;
 
-    constructor(index: number) {
-        super();
+    constructor(index: number, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.index = index
     }
 
@@ -445,6 +441,10 @@ export class Goto extends Action {
 }
 
 export class Quit extends Action {
+    constructor(location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
+    }
+
     execute(initialState: ExecutionState): ExecutionState {
         return initialState.jump(-1);
     }
@@ -453,8 +453,8 @@ export class Quit extends Action {
 export class Store extends Action {
     readonly index: number;
 
-    constructor(index: number) {
-        super();
+    constructor(index: number, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.index = index
     }
 
@@ -472,8 +472,8 @@ export class Store extends Action {
 export class Load extends Action {
     readonly index: number;
 
-    constructor(index: number) {
-        super();
+    constructor(index: number, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.index = index
     }
 
@@ -489,8 +489,8 @@ export class Load extends Action {
 export class StorePop extends Action {
     readonly index: number;
 
-    constructor(index: number) {
-        super();
+    constructor(index: number, location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+        super(location);
         this.index = index
     }
 

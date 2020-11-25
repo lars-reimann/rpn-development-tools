@@ -2,6 +2,10 @@
     color: gray;
 }
 
+.Editor.disabled .ace_bracket {
+    display: none;
+}
+
 .Editor.disabled .ace_active-line {
     background: transparent;
 }

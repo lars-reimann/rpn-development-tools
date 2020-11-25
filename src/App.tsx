@@ -33,9 +33,8 @@ export default function App() {
 
     function toggleStepwiseExecution() {
         console.log("Toggled stepwise execution")
+        setExecuting(!isExecuting)
     }
-
-    // 0 if{ 1 2 + sp0 } els{ 3 4 * sp0 }
 
     function runProgram() {
         setExecuting(true)

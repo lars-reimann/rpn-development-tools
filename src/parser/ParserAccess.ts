@@ -4,6 +4,7 @@ import {rpnLexer as RpnLexer} from "./rpnLexer"
 import {rpnParser as RpnParser} from "./rpnParser"
 import {rpnVisitor as RpnVisitor} from "./rpnVisitor"
 import {
+    Action,
     AstNode,
     Goto,
     Jump,
@@ -32,7 +33,7 @@ export default function parse(program: string): Program {
 }
 
 class AstCreator extends RpnVisitor {
-    readonly nodes: AstNode[]
+    readonly nodes: Action[]
 
     constructor() {
         super();
