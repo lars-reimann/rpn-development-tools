@@ -4,7 +4,7 @@ import {rpnLexer as RpnLexer} from "./rpnLexer"
 import {rpnParser as RpnParser} from "./rpnParser"
 import {rpnVisitor as RpnVisitor} from "./rpnVisitor"
 import {
-    AstNode,
+    AstNode, Goto, Label,
     Literal, Load,
     Operator,
     Program,
@@ -109,19 +109,16 @@ class AstCreator extends RpnVisitor {
 //     rpnVisitor.prototype.visitElseAction = function(ctx) {
 //         return this.visitChildren(ctx);
 //     };
-//
-//
-// // Visit a parse tree produced by rpnParser#label.
-//     rpnVisitor.prototype.visitLabel = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#gotoAction.
-//     rpnVisitor.prototype.visitGotoAction = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
+
+    visitLabel(ctx: any) {
+        const index = Number.parseInt(ctx.getText().replace(":", ""), 10)
+        this.nodes.push(new Label(index))
+    };
+
+    visitGotoAction(ctx: any) {
+        const index = Number.parseInt(ctx.getText().replace("g", ""), 10)
+        this.nodes.push(new Goto(index))
+    };
 
     visitQuit(ctx: any) {
         this.nodes.push(new Quit())

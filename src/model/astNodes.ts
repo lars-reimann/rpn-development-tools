@@ -384,18 +384,33 @@ export class Operator extends Action {
 //     rpnVisitor.prototype.visitElseAction = function(ctx) {
 //         return this.visitChildren(ctx);
 //     };
-//
-//
-// // Visit a parse tree produced by rpnParser#label.
-//     rpnVisitor.prototype.visitLabel = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#gotoAction.
-//     rpnVisitor.prototype.visitGotoAction = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
+
+export class Label extends Action {
+    readonly index: number;
+
+    constructor(index: number) {
+        super();
+        this.index = index
+    }
+
+    execute(initialState: ExecutionState): ExecutionState {
+        return initialState.incrementProgramCounter()
+    }
+}
+
+export class Goto extends Action {
+    readonly index: number;
+
+    constructor(index: number) {
+        super();
+        this.index = index
+    }
+
+    execute(initialState: ExecutionState): ExecutionState {
+        const newProgramCounter = initialState.program.actions.findIndex(it => it instanceof Label && it.index === this.index)
+        return initialState.jump(newProgramCounter)
+    }
+}
 
 export class Quit extends Action {
     execute(initialState: ExecutionState): ExecutionState {
