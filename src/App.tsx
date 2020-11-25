@@ -6,15 +6,26 @@ import Variables from "./components/Variables";
 import Registers from "./components/Registers";
 import Controls from "./components/Controls";
 import parse from "./parser/ParserAccess";
-import {ExecutionState, RpnValue} from "./model/executionState";
+import {ExecutionState, RpnValue, VariablesState} from "./model/executionState";
+import {VariableAccess, VariableAssignment} from "./model/astNodes";
 
 export default function App() {
-    const [program, setProgram] = useState("")
+    const [code, setCode] = useState("")
     const [isExecuting, setExecuting] = useState(false)
     const [executionState, setExecutionState] = useState(new ExecutionState())
     const [initialExecutionState, setInitialExecutionState] = useState(executionState)
     // TODO history of execution states, not just the first one (so we can step backwards)
     // TODO program counter
+
+    function updateVariables() {
+        const program = parse(code)
+        const variables = program.actions
+            .filter(it => it instanceof VariableAccess || it instanceof VariableAssignment)
+            .map(it => (it as (VariableAccess | VariableAssignment)).name)
+            .map(it => [it, (executionState.variables.read(it) ?? "")] as [string, RpnValue])
+
+        setExecutionState(executionState.copy({variables: new VariablesState(variables)}))
+    }
 
     function clearStack() {
         setExecutionState(executionState.clearStack())
@@ -30,13 +41,11 @@ export default function App() {
         if (!isExecuting) {
             setInitialExecutionState(executionState)
 
-            const astNodes = parse(program)
-            console.log(astNodes);
+            const program = parse(code)
 
             try {
-                const newState = astNodes.execute(executionState)
+                const newState = program.execute(executionState)
                 setExecutionState(newState)
-                console.log(newState)
             } catch (error) {
                 console.error(error)
             }
@@ -51,6 +60,12 @@ export default function App() {
         // setRegisters(registers.write(1, "added"))
     }
 
+    function previousStep() {
+        console.log("Clicked next step")
+        // setVariables([...variables, new ExternalNumber("added", 1)])
+        // setRegisters(registers.write(1, "added"))
+    }
+
     function updateVariable(name: string, newValueAsString: string) {
         let newValue
         if (newValueAsString.toLowerCase() === "false") {
@@ -58,7 +73,6 @@ export default function App() {
         } else if (newValueAsString.toLowerCase() === "true") {
             newValue = true
         } else if (!Number.isNaN(Number.parseFloat(newValueAsString))) {
-            console.log(Number.parseFloat(newValueAsString))
             newValue = Number.parseFloat(newValueAsString)
         } else {
             newValue = newValueAsString
@@ -73,7 +87,7 @@ export default function App() {
 
     return (
         <div className="App">
-            <Editor isExecuting={isExecuting} content={program} onChange={setProgram}/>
+            <Editor isExecuting={isExecuting} content={code} onChange={setCode}/>
             <Stack stack={executionState.stack}/>
             <Variables
                 variables={executionState.variables}
@@ -85,19 +99,12 @@ export default function App() {
                 isExecuting={isExecuting}
                 onClearStack={clearStack}
                 onNextStep={nextStep}
+                onPreviousStep={previousStep}
                 onRestoreInitialExternalValues={restoreInitialExternalValues}
                 onRunProgram={runProgram}
                 onToggleStepwiseExecution={toggleStepwiseExecution}
+                onUpdateVariables={updateVariables}
             />
         </div>
     );
-}
-
-function isNumber(s: string): boolean {
-    try {
-        Number.parseFloat(s)
-        return true
-    } catch (e) {
-        return false
-    }
 }

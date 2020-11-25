@@ -1,5 +1,17 @@
 .Controls {
     display: flex;
+    justify-content: space-between;
+}
+
+.Controls .align-left {
+    display: flex;
+    justify-self: start;
+}
+
+.Controls .align-right {
+    display: flex;
+    justify-self: end;
+    margin-right: 1em;
 }
 
 .Controls button {

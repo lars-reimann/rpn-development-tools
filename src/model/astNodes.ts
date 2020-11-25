@@ -5,7 +5,7 @@ export abstract class AstNode {
 }
 
 export class Program extends AstNode {
-    private readonly actions: Action[]
+    readonly actions: Action[]
 
     constructor(actions: Action[]) {
         super();
@@ -37,7 +37,7 @@ export class Literal extends Action {
 }
 
 export class VariableAccess extends Action {
-    private readonly name: string
+    readonly name: string
     private readonly type: "boolean" | "number" | "string"
 
     constructor(name: string, type: "boolean" | "number" | "string") {
@@ -56,7 +56,7 @@ export class VariableAccess extends Action {
 }
 
 export class VariableAssignment extends Action {
-    private readonly name: string
+    readonly name: string
     private readonly type: "boolean" | "number" | "string" | void
 
     constructor(name: string, type: "boolean" | "number" | "string" | void) {
