@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/rpn-development-tools/static/css/main.cd33cd6e.chunk.css",
+    "main.js": "/rpn-development-tools/static/js/main.04004957.chunk.js",
+    "main.js.map": "/rpn-development-tools/static/js/main.04004957.chunk.js.map",
+    "runtime-main.js": "/rpn-development-tools/static/js/runtime-main.500a5136.js",
+    "runtime-main.js.map": "/rpn-development-tools/static/js/runtime-main.500a5136.js.map",
+    "static/js/2.5ad3e43b.chunk.js": "/rpn-development-tools/static/js/2.5ad3e43b.chunk.js",
+    "static/js/2.5ad3e43b.chunk.js.map": "/rpn-development-tools/static/js/2.5ad3e43b.chunk.js.map",
+    "index.html": "/rpn-development-tools/index.html",
+    "static/css/main.cd33cd6e.chunk.css.map": "/rpn-development-tools/static/css/main.cd33cd6e.chunk.css.map",
+    "static/js/2.5ad3e43b.chunk.js.LICENSE.txt": "/rpn-development-tools/static/js/2.5ad3e43b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.500a5136.js",
+    "static/js/2.5ad3e43b.chunk.js",
+    "static/css/main.cd33cd6e.chunk.css",
+    "static/js/main.04004957.chunk.js"
+  ]
+}
