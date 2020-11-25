@@ -2033,6 +2033,7 @@ function IfActionContext(parser, parent, invokingState) {
     this.parser = parser;
     this.ruleIndex = rpnParser.RULE_ifAction;
     this.trueActions = null; // SequenceContext
+    this.closingBrace = null; // Token
     this.falseActions = null; // SequenceContext
     return this;
 }
@@ -2088,7 +2089,7 @@ rpnParser.prototype.ifAction = function() {
         this.state = 222;
         localctx.trueActions = this.sequence();
         this.state = 223;
-        this.match(rpnParser.T__86);
+        localctx.closingBrace = this.match(rpnParser.T__86);
         this.state = 227;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,17,this._ctx)

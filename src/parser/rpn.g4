@@ -153,7 +153,7 @@ operator
     ;
 
 ifAction
-    : 'if{' trueActions=sequence '}' ' '* ('els{' falseActions=sequence '}')?
+    : 'if{' trueActions=sequence closingBrace='}' ' '* ('els{' falseActions=sequence '}')?
     ;
 
 label

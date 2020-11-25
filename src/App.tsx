@@ -44,6 +44,7 @@ export default function App() {
             } catch (error) {
                 // TODO Show an error message in a toast.
                 console.error(error)
+                setExecuting(false)
             }
         }
     }
@@ -73,9 +74,15 @@ export default function App() {
         if (!executionState.isDone) {
             setExecutionStateHistory(executionStateHistory.push(executionState))
 
-            const nextState1 = (executionState.nextAction as Action).execute(executionState)
-            setExecutionState(nextState1)
-            if (nextState1.isDone) {
+            try {
+                const nextState1 = (executionState.nextAction as Action).execute(executionState)
+                setExecutionState(nextState1)
+                if (nextState1.isDone) {
+                    setExecuting(false)
+                }
+            } catch (error) {
+                // TODO Show an error message in a toast.
+                console.error(error)
                 setExecuting(false)
             }
         }

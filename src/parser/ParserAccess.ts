@@ -40,8 +40,15 @@ class AstCreator extends RpnVisitor {
         this.nodes = []
     }
 
-    private static getLocation(ctx: any): Ace.Range {
-        return new AceRange(ctx.start.line, ctx.start.column, ctx.end.line, ctx.end.column)
+    private static getLocation(ctx: any, length: number = ctx.getText().length): Ace.Range | undefined {
+        if (ctx.start) {
+            return new AceRange(
+                ctx.start.line - 1,
+                ctx.start.column,
+                ctx.start.line - 1,
+                ctx.start.column + length
+            )
+        }
     }
 
     visitProgram(ctx: any) {
@@ -57,23 +64,23 @@ class AstCreator extends RpnVisitor {
 
     visitHexadecimalLiteral(ctx: any) {
         const value = Number.parseInt(ctx.HEXADECIMAL().getText(), 16)
-        this.nodes.push(new Literal(value))
+        this.nodes.push(new Literal(value, AstCreator.getLocation(ctx)))
     }
 
     visitDecimalLiteral(ctx: any) {
         const value = Number.parseFloat(ctx.DECIMAL().getText())
-        this.nodes.push(new Literal(value))
+        this.nodes.push(new Literal(value, AstCreator.getLocation(ctx)))
     }
 
     visitOctalLiteral(ctx: any) {
         const value = Number.parseInt(ctx.OCTAL().getText(), 8)
-        this.nodes.push(new Literal(value))
+        this.nodes.push(new Literal(value, AstCreator.getLocation(ctx)))
     }
 
     visitStringLiteral(ctx: any) {
         const text = ctx.STRING().getText()
         const value = text.slice(1, text.length - 1)
-        this.nodes.push(new Literal(value))
+        this.nodes.push(new Literal(value, AstCreator.getLocation(ctx)))
     }
 
     visitVariableAccess(ctx: any) {
@@ -94,66 +101,73 @@ class AstCreator extends RpnVisitor {
             }
         }
 
-        this.nodes.push(new VariableAccess(name, type))
+        this.nodes.push(new VariableAccess(name, type, AstCreator.getLocation(ctx)))
     }
 
     visitAssignment(ctx: any) {
         const name = ctx.id().getText()
         const specifiedType = ctx.type()?.getText()
 
-        this.nodes.push(new VariableAssignment(name, specifiedType))
+        this.nodes.push(new VariableAssignment(name, specifiedType, AstCreator.getLocation(ctx)))
     }
 
     visitOperator(ctx: any) {
-        this.nodes.push(new Operator(ctx.getText()))
+        this.nodes.push(new Operator(ctx.getText(), AstCreator.getLocation(ctx)))
     }
 
     visitIfAction(ctx: any) {
         const startIf = this.nodes.length
-
-        console.log(ctx);
 
         for (const action of ctx.trueActions.children) {
             this.visitAction(action)
         }
 
         const startFalseBranch = this.nodes.length + 2
-        this.nodes.splice(startIf, 0, new JumpIfFalse(startFalseBranch))
+        this.nodes.splice(startIf, 0, new JumpIfFalse(startFalseBranch, AstCreator.getLocation(ctx, 3)))
 
         for (const action of ctx.falseActions?.children ?? []) {
             this.visitAction(action)
         }
 
-        const endIf = this.nodes.length + 2
-        this.nodes.splice(startFalseBranch - 1, 0, new Jump(endIf))
+        const endIf = this.nodes.length + 1
+
+        this.nodes.splice(startFalseBranch - 1, 0, new Jump(
+            endIf,
+            new AceRange(
+                ctx.closingBrace.line - 1,
+                ctx.closingBrace.column,
+                ctx.closingBrace.line - 1,
+                ctx.closingBrace.column + 1
+            ))
+        )
     }
 
     visitLabel(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace(":", ""), 10)
-        this.nodes.push(new Label(index))
+        this.nodes.push(new Label(index, AstCreator.getLocation(ctx)))
     }
 
     visitGotoAction(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace("g", ""), 10)
-        this.nodes.push(new Goto(index))
+        this.nodes.push(new Goto(index, AstCreator.getLocation(ctx)))
     }
 
     visitQuit(ctx: any) {
-        this.nodes.push(new Quit())
+        this.nodes.push(new Quit(AstCreator.getLocation(ctx)))
     }
 
     visitStore(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace("s", ""), 10)
-        this.nodes.push(new Store(index))
+        this.nodes.push(new Store(index, AstCreator.getLocation(ctx)))
     }
 
     visitLoad(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace("l", ""), 10)
-        this.nodes.push(new Load(index))
+        this.nodes.push(new Load(index, AstCreator.getLocation(ctx)))
     }
 
     visitStorePop(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace("sp", ""), 10)
-        this.nodes.push(new StorePop(index))
+        this.nodes.push(new StorePop(index, AstCreator.getLocation(ctx)))
     }
 }
