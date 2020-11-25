@@ -3,7 +3,7 @@ import antlr4 from "antlr4"
 import {rpnLexer as RpnLexer} from "./rpnLexer"
 import {rpnParser as RpnParser} from "./rpnParser"
 import {rpnVisitor as RpnVisitor} from "./rpnVisitor"
-import {AstNode, Literal, Operator, Program, VariableAccess} from "../model/astNodes";
+import {AstNode, Literal, Operator, Program, VariableAccess, VariableAssignment} from "../model/astNodes";
 
 export default function parse(program: string): Program {
     const chars = new antlr4.InputStream(program);
@@ -25,8 +25,6 @@ class AstCreator extends RpnVisitor {
     }
 
     visitProgram(ctx: any) {
-        console.log(ctx.errorCode);
-        console.log(ctx.action());
         for (const action of ctx.action()) {
             this.visitAction(action)
         }
@@ -80,10 +78,12 @@ class AstCreator extends RpnVisitor {
     };
 
 
-// // Visit a parse tree produced by rpnParser#assignment.
-//     rpnVisitor.prototype.visitAssignment = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
+    visitAssignment(ctx: any) {
+        const name = ctx.id().getText()
+        const specifiedType = ctx.type()?.getText()
+
+        this.nodes.push(new VariableAssignment(name, specifiedType))
+    };
 
     visitOperator(ctx: any) {
         this.nodes.push(new Operator(ctx.getText()))

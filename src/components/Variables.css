@@ -1,3 +1,33 @@
 .Variables {
+    display: flex;
+    flex-direction: column;
     padding: 0 1em 1em 1em;
+    overflow: hidden;
+}
+
+.Variables .VariableItems {
+    flex-grow: 1;
+    padding-right: 0.5em;
+    overflow-y: auto;
+}
+
+.Variables .Variable {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em 0;
+    width: 100%;
+}
+
+.Variables label {
+    align-self: center;
+    margin-right: 1em;
+    width: 200px;
+    word-wrap: anywhere;
+}
+
+.Variables input {
+    border: 1px solid lightgray;
+    border-radius: 2px;
+    flex-grow: 1;
+    padding: 0.5em;
 }

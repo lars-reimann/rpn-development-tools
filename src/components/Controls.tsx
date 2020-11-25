@@ -6,23 +6,28 @@ export default function Controls(props: {
     onClearStack: () => void,
     onNextStep: () => void,
     onRestoreInitialExternalValues: () => void,
-    onToggleExecuting: () => void,
+    onRunProgram: () => void,
+    onToggleStepwiseExecution: () => void,
 }) {
 
     if (props.isExecuting) {
         return (
             <div className="Controls">
-                <button type="button" onClick={props.onToggleExecuting}>Stop stepwise execution</button>
                 <button type="button" onClick={props.onNextStep}>Next step</button>
+                <button type="button" onClick={props.onToggleStepwiseExecution}>Stop stepwise execution</button>
             </div>
         )
     } else {
         return (
             <div className="Controls">
-                <button type="button" onClick={props.onToggleExecuting}>Start stepwise execution</button>
-                <button type="button">Run complete program</button>
-                <button type="button" onClick={props.onClearStack}>Clear stack</button>
-                <button type="button" onClick={props.onRestoreInitialExternalValues}>Restore initial SimVars/registers</button>
+                <div className="alignLeft">
+                    <button type="button" onClick={props.onRunProgram}>Run program</button>
+                    <button type="button" onClick={props.onToggleStepwiseExecution}>Start stepwise execution</button>
+                </div>
+                <div className="alignRight">
+                    <button type="button" onClick={props.onClearStack}>Clear stack</button>
+                    <button type="button" onClick={props.onRestoreInitialExternalValues}>Restore initial variables/registers</button>
+                </div>
             </div>
         )
     }

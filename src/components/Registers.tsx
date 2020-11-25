@@ -1,8 +1,9 @@
 import React from "react";
 import './Registers.css';
-import {Registers as ModelRegisters, RpnValue} from "../model/executionState";
+import {RegistersState, RpnValue} from "../model/executionState";
+import {rpnValueToString} from "../utils/utils";
 
-export default function Registers(props: { registers: ModelRegisters, }) {
+export default function Registers(props: { registers: RegistersState, }) {
     return (
         <div className="Registers">
             <h2>Registers</h2>
@@ -32,7 +33,7 @@ function Register(props: {
     return (
         <tr className="Register">
             <td className="label">{props.index}</td>
-            <td className="value">{`${props.value}`}</td>
+            <td className="value">{rpnValueToString(props.value)}</td>
         </tr>
     )
 }

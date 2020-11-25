@@ -7,15 +7,17 @@
 
 .Registers .RegisterItems {
     flex-grow: 1;
+    padding-right: 0.5em;
     overflow-y: auto;
 }
 
 .Registers table {
+    border-collapse: collapse;
     text-align: left;
     width: 100%;
 }
 
 .Registers th, .Registers td {
-    margin: 0.5em;
+    border: 1px solid lightgray;
     padding: 0.5em;
 }

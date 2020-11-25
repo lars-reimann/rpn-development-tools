@@ -3,14 +3,14 @@ import {List, OrderedMap} from "immutable";
 export type RpnValue = boolean | number | string
 
 export class ExecutionState {
-    readonly stack: Stack
-    readonly variables: Variables
-    readonly registers: Registers
+    readonly stack: StackState
+    readonly variables: VariablesState
+    readonly registers: RegistersState
 
     constructor(
-        stack: Stack = new Stack(),
-        variables: Variables = new Variables(),
-        registers: Registers = new Registers()
+        stack: StackState = new StackState(),
+        variables: VariablesState = new VariablesState(),
+        registers: RegistersState = new RegistersState()
     ) {
         this.stack = stack
         this.variables = variables
@@ -55,16 +55,16 @@ export class ExecutionState {
         return this.copy({stack: this.stack.clear()})
     }
 
-    writeVariable(name: string, newValue: string): ExecutionState {
+    writeVariable(name: string, newValue: RpnValue): ExecutionState {
         return this.copy({variables: this.variables.write(name, newValue)})
     }
 
-    writeRegister(index: number, newValue: string): ExecutionState {
+    writeRegister(index: number, newValue: RpnValue): ExecutionState {
         return this.copy({registers: this.registers.write(index, newValue)})
     }
 }
 
-export class Stack {
+export class StackState {
     readonly stack: List<RpnValue>
 
     constructor(stack: List<RpnValue> | Iterable<RpnValue> = []) {
@@ -79,20 +79,20 @@ export class Stack {
         return this.stack.last()
     }
 
-    push(value: RpnValue): Stack {
-        return new Stack(this.stack.push(value))
+    push(value: RpnValue): StackState {
+        return new StackState(this.stack.push(value))
     }
 
-    pop(): Stack {
-        return new Stack(this.stack.pop())
+    pop(): StackState {
+        return new StackState(this.stack.pop())
     }
 
-    clear(): Stack {
-        return new Stack(this.stack.clear())
+    clear(): StackState {
+        return new StackState(this.stack.clear())
     }
 }
 
-export class Variables {
+export class VariablesState {
     readonly variables: OrderedMap<string, RpnValue>
 
     constructor(variables: OrderedMap<string, RpnValue> | Iterable<[string, RpnValue]> = []) {
@@ -107,12 +107,12 @@ export class Variables {
         return this.variables.get(name)
     }
 
-    write(name: string, newValue: string): Variables {
-        return new Variables(this.variables.set(name, newValue))
+    write(name: string, newValue: RpnValue): VariablesState {
+        return new VariablesState(this.variables.set(name, newValue))
     }
 }
 
-export class Registers {
+export class RegistersState {
     readonly registers: List<RpnValue>
 
     constructor(registers: List<RpnValue> | Iterable<RpnValue> = []) {
@@ -131,11 +131,11 @@ export class Registers {
         return this.registers.get(index)
     }
 
-    write(index: number, newValue: string): Registers {
+    write(index: number, newValue: RpnValue): RegistersState {
         if (index < 0 || 49 < index) {
             throw new Error("Register index out of bounds.")
         }
 
-        return new Registers(this.registers.set(index, newValue))
+        return new RegistersState(this.registers.set(index, newValue))
     }
 }

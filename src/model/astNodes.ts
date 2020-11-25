@@ -55,6 +55,22 @@ export class VariableAccess extends Action {
     }
 }
 
+export class VariableAssignment extends Action {
+    private readonly name: string
+    private readonly type: "boolean" | "number" | "string" | void
+
+    constructor(name: string, type: "boolean" | "number" | "string" | void) {
+        super();
+        this.name = name.toUpperCase()
+        this.type = type
+    }
+
+    execute(initialState: ExecutionState): ExecutionState {
+        const [value, nextState1] = initialState.pop()
+        return  nextState1.writeVariable(this.name, value)
+    }
+}
+
 export class Operator extends Action {
     private readonly operator: string
 
