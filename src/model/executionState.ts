@@ -24,7 +24,7 @@ export class ExecutionState {
         this.programCounter = programCounter
     }
 
-    get nextAction(): Action {
+    get nextAction(): Action | undefined {
         return this.program.actions[this.programCounter]
     }
 

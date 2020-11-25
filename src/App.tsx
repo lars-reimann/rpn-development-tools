@@ -7,15 +7,14 @@ import Registers from "./components/Registers";
 import Controls from "./components/Controls";
 import parse from "./parser/ParserAccess";
 import {ExecutionState, RpnValue, VariablesState} from "./model/executionState";
-import {VariableAccess, VariableAssignment} from "./model/astNodes";
+import {Action, VariableAccess, VariableAssignment} from "./model/astNodes";
+import {List} from "immutable";
 
 export default function App() {
     const [code, setCode] = useState("")
     const [isExecuting, setExecuting] = useState(false)
     const [executionState, setExecutionState] = useState(new ExecutionState())
-    const [initialExecutionState, setInitialExecutionState] = useState(executionState)
-    // TODO history of execution states, not just the first one (so we can step backwards)
-    // TODO program counter
+    const [executionStateHistory, setExecutionStateHistory] = useState(List<ExecutionState>())
 
     function updateVariables() {
         const program = parse(code)
@@ -32,15 +31,29 @@ export default function App() {
     }
 
     function toggleStepwiseExecution() {
-        console.log("Toggled stepwise execution")
         setExecuting(!isExecuting)
+
+        // isExecuting is still the old value, which is why we need to negate it
+        if (!isExecuting) {
+            setExecutionStateHistory(List())
+
+            try {
+                const program = parse(code)
+                const nextState1 = executionState.copy({program, programCounter: 0})
+                setExecutionState(nextState1)
+            } catch (error) {
+                // TODO Show an error message in a toast.
+                console.error(error)
+            }
+        }
     }
 
     function runProgram() {
         setExecuting(true)
 
+        // isExecuting is still the old value, which is why we need to negate it
         if (!isExecuting) {
-            setInitialExecutionState(executionState)
+            setExecutionStateHistory(List([executionState]))
 
             try {
                 const program = parse(code)
@@ -48,7 +61,7 @@ export default function App() {
                 const nextState2 = program.execute(nextState1)
                 setExecutionState(nextState2)
             } catch (error) {
-                // TODO Show an error message.
+                // TODO Show an error message in a toast.
                 console.error(error)
             }
         }
@@ -57,15 +70,22 @@ export default function App() {
     }
 
     function nextStep() {
-        console.log("Clicked next step")
-        // setVariables([...variables, new ExternalNumber("added", 1)])
-        // setRegisters(registers.write(1, "added"))
+        if (!executionState.isDone) {
+            setExecutionStateHistory(executionStateHistory.push(executionState))
+
+            const nextState1 = (executionState.nextAction as Action).execute(executionState)
+            setExecutionState(nextState1)
+            if (nextState1.isDone) {
+                setExecuting(false)
+            }
+        }
     }
 
     function previousStep() {
-        console.log("Clicked next step")
-        // setVariables([...variables, new ExternalNumber("added", 1)])
-        // setRegisters(registers.write(1, "added"))
+        if (!executionStateHistory.isEmpty()) {
+            setExecutionState(executionStateHistory.last())
+            setExecutionStateHistory(executionStateHistory.pop())
+        }
     }
 
     function updateVariable(name: string, newValueAsString: string) {
@@ -84,12 +104,19 @@ export default function App() {
     }
 
     function restoreInitialExternalValues() {
-        setExecutionState(initialExecutionState)
+        if (!executionStateHistory.isEmpty()) {
+            setExecutionState(executionStateHistory.get(0) as ExecutionState)
+        }
     }
 
     return (
         <div className="App">
-            <Editor isExecuting={isExecuting} content={code} onChange={setCode}/>
+            <Editor
+                content={code}
+                currentAction={executionState.nextAction}
+                isExecuting={isExecuting}
+                onChange={setCode}
+            />
             <Stack stack={executionState.stack}/>
             <Variables
                 variables={executionState.variables}
@@ -98,6 +125,7 @@ export default function App() {
             />
             <Registers registers={executionState.registers}/>
             <Controls
+                canUndo={!executionStateHistory.isEmpty()}
                 isExecuting={isExecuting}
                 onClearStack={clearStack}
                 onNextStep={nextStep}

@@ -24,3 +24,7 @@
     width: 150px;
     margin-left: 1em;
 }
+
+.Controls button[disabled] {
+    cursor: not-allowed;
+}

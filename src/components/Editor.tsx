@@ -4,12 +4,13 @@ import './Editor.css';
 
 import "ace-builds/src-noconflict/mode-text";
 import "ace-builds/src-noconflict/theme-github";
-import {Range} from "ace-builds";
+import {Action} from "../model/astNodes";
 
 export default function Editor(props: {
     content: string,
-    onChange: (newContent: string) => void
+    currentAction: Action | undefined,
     isExecuting: boolean
+    onChange: (newContent: string) => void
 }) {
     const ace = useRef(null)
 
@@ -19,14 +20,17 @@ export default function Editor(props: {
     })
 
     useEffect(() => {
+        if (props.isExecuting && props.currentAction !== undefined) {
 
-        // @ts-ignore
-        const editor = ace.current.editor
-        const range = new Range(0, 0, 0, 10);
-        const marker = editor.getSession().addMarker(range, "ace_selected-word", "text");
+            // @ts-ignore
+            const editor = ace.current.editor
+            const range = props.currentAction.location
 
-        return () => {
-            editor.getSession().removeMarker(marker)
+            const marker = editor.getSession().addMarker(range, "ace_selected-word", "text");
+
+            return () => {
+                editor.getSession().removeMarker(marker)
+            }
         }
     })
 

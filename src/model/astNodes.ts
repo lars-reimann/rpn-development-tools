@@ -21,7 +21,7 @@ export class Program extends AstNode {
                 throw new Error("Execution needed more than 100,000 steps.")
             }
 
-            currentState = currentState.nextAction.execute(currentState)
+            currentState = (currentState.nextAction as Action).execute(currentState)
             counter++
         }
 
@@ -32,7 +32,7 @@ export class Program extends AstNode {
 export abstract class Action extends AstNode {
     readonly location: Ace.Range
 
-    constructor(location: Ace.Range = new AceRange(0, 0, 0, 0)) {
+    protected constructor(location: Ace.Range = new AceRange(0, 0, 0, 0)) {
         super();
         this.location = location
     }

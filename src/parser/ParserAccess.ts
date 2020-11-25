@@ -5,7 +5,6 @@ import {rpnParser as RpnParser} from "./rpnParser"
 import {rpnVisitor as RpnVisitor} from "./rpnVisitor"
 import {
     Action,
-    AstNode,
     Goto,
     Jump,
     JumpIfFalse,
@@ -20,6 +19,7 @@ import {
     VariableAccess,
     VariableAssignment
 } from "../model/astNodes";
+import {Ace, Range as AceRange} from "ace-builds";
 
 export default function parse(program: string): Program {
     const chars = new antlr4.InputStream(program);
@@ -40,6 +40,10 @@ class AstCreator extends RpnVisitor {
         this.nodes = []
     }
 
+    private static getLocation(ctx: any): Ace.Range {
+        return new AceRange(ctx.start.line, ctx.start.column, ctx.end.line, ctx.end.column)
+    }
+
     visitProgram(ctx: any) {
         for (const action of ctx.sequence().action()) {
             this.visitAction(action)
@@ -48,7 +52,7 @@ class AstCreator extends RpnVisitor {
 
     visitBooleanLiteral(ctx: any) {
         const value = ctx.getText() === 'True'
-        this.nodes.push(new Literal(value))
+        this.nodes.push(new Literal(value, AstCreator.getLocation(ctx)))
     }
 
     visitHexadecimalLiteral(ctx: any) {
@@ -92,7 +96,6 @@ class AstCreator extends RpnVisitor {
 
         this.nodes.push(new VariableAccess(name, type))
     }
-
 
     visitAssignment(ctx: any) {
         const name = ctx.id().getText()
