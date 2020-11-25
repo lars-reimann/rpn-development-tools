@@ -79,7 +79,7 @@ export class VariableAssignment extends Action {
 
     execute(initialState: ExecutionState): ExecutionState {
         const [value, nextState1] = initialState.pop()
-        return  nextState1
+        return nextState1
             .writeVariable(this.name, value)
             .incrementProgramCounter()
     }
@@ -371,5 +371,87 @@ export class Operator extends Action {
             default:
                 throw new Error(`Unknown operator ${this.operator}`)
         }
+    }
+}
+
+// // Visit a parse tree produced by rpnParser#ifAction.
+//     rpnVisitor.prototype.visitIfAction = function(ctx) {
+//         return this.visitChildren(ctx);
+//     };
+//
+//
+// // Visit a parse tree produced by rpnParser#elseAction.
+//     rpnVisitor.prototype.visitElseAction = function(ctx) {
+//         return this.visitChildren(ctx);
+//     };
+//
+//
+// // Visit a parse tree produced by rpnParser#label.
+//     rpnVisitor.prototype.visitLabel = function(ctx) {
+//         return this.visitChildren(ctx);
+//     };
+//
+//
+// // Visit a parse tree produced by rpnParser#gotoAction.
+//     rpnVisitor.prototype.visitGotoAction = function(ctx) {
+//         return this.visitChildren(ctx);
+//     };
+
+export class Quit extends Action {
+    execute(initialState: ExecutionState): ExecutionState {
+        return initialState.jump(-1);
+    }
+}
+
+export class Store extends Action {
+    readonly index: number;
+
+    constructor(index: number) {
+        super();
+        this.index = index
+    }
+
+    execute(initialState: ExecutionState): ExecutionState {
+        const value = initialState.stack.peek()
+        if (value === null || value === undefined) {
+            throw new Error("Stack is depleted.")
+        }
+        return initialState
+            .writeRegister(this.index, value)
+            .incrementProgramCounter()
+    }
+}
+
+export class Load extends Action {
+    readonly index: number;
+
+    constructor(index: number) {
+        super();
+        this.index = index
+    }
+
+    execute(initialState: ExecutionState): ExecutionState {
+        const value = initialState.registers.read(this.index)
+
+        return initialState
+            .push(value)
+            .incrementProgramCounter()
+    }
+}
+
+export class StorePop extends Action {
+    readonly index: number;
+
+    constructor(index: number) {
+        super();
+        this.index = index
+    }
+
+    execute(initialState: ExecutionState): ExecutionState {
+        const [value, nextState1] = initialState.pop()
+
+        return nextState1
+            .writeRegister(this.index, value)
+            .incrementProgramCounter()
     }
 }

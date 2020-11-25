@@ -48,6 +48,7 @@ export default function App() {
                 const nextState2 = program.execute(nextState1)
                 setExecutionState(nextState2)
             } catch (error) {
+                // TODO Show an error message.
                 console.error(error)
             }
         }

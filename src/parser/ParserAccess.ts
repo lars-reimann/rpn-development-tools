@@ -3,7 +3,17 @@ import antlr4 from "antlr4"
 import {rpnLexer as RpnLexer} from "./rpnLexer"
 import {rpnParser as RpnParser} from "./rpnParser"
 import {rpnVisitor as RpnVisitor} from "./rpnVisitor"
-import {AstNode, Literal, Operator, Program, VariableAccess, VariableAssignment} from "../model/astNodes";
+import {
+    AstNode,
+    Literal, Load,
+    Operator,
+    Program,
+    Quit,
+    Store,
+    StorePop,
+    VariableAccess,
+    VariableAssignment
+} from "../model/astNodes";
 
 export default function parse(program: string): Program {
     const chars = new antlr4.InputStream(program);
@@ -112,25 +122,23 @@ class AstCreator extends RpnVisitor {
 //         return this.visitChildren(ctx);
 //     };
 //
-//     // Visit a parse tree produced by rpnParser#quit.
-//     rpnVisitor.prototype.visitQuit = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-// // Visit a parse tree produced by rpnParser#store.
-//     rpnVisitor.prototype.visitStore = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#load.
-//     rpnVisitor.prototype.visitLoad = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#storePop.
-//     rpnVisitor.prototype.visitStorePop = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
+
+    visitQuit(ctx: any) {
+        this.nodes.push(new Quit())
+    };
+
+    visitStore(ctx: any) {
+        const index = Number.parseInt(ctx.getText().replace("s", ""), 10)
+        this.nodes.push(new Store(index))
+    };
+
+    visitLoad(ctx: any) {
+        const index = Number.parseInt(ctx.getText().replace("l", ""), 10)
+        this.nodes.push(new Load(index))
+    };
+
+    visitStorePop(ctx: any) {
+        const index = Number.parseInt(ctx.getText().replace("sp", ""), 10)
+        this.nodes.push(new StorePop(index))
+    };
 }

@@ -153,12 +153,17 @@ export class RegistersState {
         }
     }
 
-    read(index: number): RpnValue | undefined {
+    read(index: number): RpnValue {
         if (index < 0 || 49 < index) {
             throw new Error("Register index out of bounds.")
         }
 
-        return this.registers.get(index)
+        const value = this.registers.get(index)
+        if (value === undefined) {
+            throw new Error(`Register ${index} is unset.`)
+        }
+
+        return value
     }
 
     write(index: number, newValue: RpnValue): RegistersState {
