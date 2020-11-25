@@ -18,6 +18,12 @@ rpnVisitor.prototype.visitProgram = function(ctx) {
 };
 
 
+// Visit a parse tree produced by rpnParser#sequence.
+rpnVisitor.prototype.visitSequence = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by rpnParser#action.
 rpnVisitor.prototype.visitAction = function(ctx) {
   return this.visitChildren(ctx);
@@ -80,12 +86,6 @@ rpnVisitor.prototype.visitOperator = function(ctx) {
 
 // Visit a parse tree produced by rpnParser#ifAction.
 rpnVisitor.prototype.visitIfAction = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by rpnParser#elseAction.
-rpnVisitor.prototype.visitElseAction = function(ctx) {
   return this.visitChildren(ctx);
 };
 

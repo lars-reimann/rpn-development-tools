@@ -4,8 +4,13 @@ import {rpnLexer as RpnLexer} from "./rpnLexer"
 import {rpnParser as RpnParser} from "./rpnParser"
 import {rpnVisitor as RpnVisitor} from "./rpnVisitor"
 import {
-    AstNode, Goto, Label,
-    Literal, Load,
+    AstNode,
+    Goto,
+    Jump,
+    JumpIfFalse,
+    Label,
+    Literal,
+    Load,
     Operator,
     Program,
     Quit,
@@ -18,7 +23,7 @@ import {
 export default function parse(program: string): Program {
     const chars = new antlr4.InputStream(program);
     const lexer = new RpnLexer(chars);
-    const tokens  = new antlr4.CommonTokenStream(lexer);
+    const tokens = new antlr4.CommonTokenStream(lexer);
     const parser = new RpnParser(tokens);
     const parseTree = parser.program()
     const astCreator = new AstCreator()
@@ -35,7 +40,7 @@ class AstCreator extends RpnVisitor {
     }
 
     visitProgram(ctx: any) {
-        for (const action of ctx.action()) {
+        for (const action of ctx.sequence().action()) {
             this.visitAction(action)
         }
     }
@@ -85,7 +90,7 @@ class AstCreator extends RpnVisitor {
         }
 
         this.nodes.push(new VariableAccess(name, type))
-    };
+    }
 
 
     visitAssignment(ctx: any) {
@@ -93,49 +98,58 @@ class AstCreator extends RpnVisitor {
         const specifiedType = ctx.type()?.getText()
 
         this.nodes.push(new VariableAssignment(name, specifiedType))
-    };
+    }
 
     visitOperator(ctx: any) {
         this.nodes.push(new Operator(ctx.getText()))
     }
 
-// // Visit a parse tree produced by rpnParser#ifAction.
-//     rpnVisitor.prototype.visitIfAction = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
-//
-//
-// // Visit a parse tree produced by rpnParser#elseAction.
-//     rpnVisitor.prototype.visitElseAction = function(ctx) {
-//         return this.visitChildren(ctx);
-//     };
+    visitIfAction(ctx: any) {
+        const startIf = this.nodes.length
+
+        console.log(ctx);
+
+        for (const action of ctx.trueActions.children) {
+            this.visitAction(action)
+        }
+
+        const startFalseBranch = this.nodes.length + 2
+        this.nodes.splice(startIf, 0, new JumpIfFalse(startFalseBranch))
+
+        for (const action of ctx.falseActions?.children ?? []) {
+            this.visitAction(action)
+        }
+
+        const endIf = this.nodes.length + 2
+        this.nodes.splice(startFalseBranch - 1, 0, new Jump(endIf))
+    }
 
     visitLabel(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace(":", ""), 10)
         this.nodes.push(new Label(index))
-    };
+    }
 
     visitGotoAction(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace("g", ""), 10)
         this.nodes.push(new Goto(index))
-    };
+    }
 
     visitQuit(ctx: any) {
         this.nodes.push(new Quit())
-    };
+    }
 
     visitStore(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace("s", ""), 10)
         this.nodes.push(new Store(index))
-    };
+    }
 
     visitLoad(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace("l", ""), 10)
         this.nodes.push(new Load(index))
-    };
+    }
 
     visitStorePop(ctx: any) {
         const index = Number.parseInt(ctx.getText().replace("sp", ""), 10)
         this.nodes.push(new StorePop(index))
-    };
+    }
 }

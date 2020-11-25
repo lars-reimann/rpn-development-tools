@@ -35,16 +35,17 @@ export default function App() {
         console.log("Toggled stepwise execution")
     }
 
+    // 0 if{ 1 2 + sp0 } els{ 3 4 * sp0 }
+
     function runProgram() {
         setExecuting(true)
 
         if (!isExecuting) {
             setInitialExecutionState(executionState)
 
-            const program = parse(code)
-            const nextState1 = executionState.copy({program, programCounter: 0})
-
             try {
+                const program = parse(code)
+                const nextState1 = executionState.copy({program, programCounter: 0})
                 const nextState2 = program.execute(nextState1)
                 setExecutionState(nextState2)
             } catch (error) {

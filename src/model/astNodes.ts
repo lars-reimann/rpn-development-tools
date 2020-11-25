@@ -374,6 +374,38 @@ export class Operator extends Action {
     }
 }
 
+export class JumpIfFalse extends Action {
+    readonly newProgramCounter: number;
+
+    constructor(newProgramCounter: number) {
+        super();
+        this.newProgramCounter = newProgramCounter
+    }
+
+    execute(initialState: ExecutionState): ExecutionState {
+        const [value, nextState1] = initialState.pop()
+
+        if (value) {
+            return nextState1.incrementProgramCounter()
+        } else {
+            return nextState1.jump(this.newProgramCounter)
+        }
+    }
+}
+
+export class Jump extends Action {
+    readonly newProgramCounter: number;
+
+    constructor(newProgramCounter: number) {
+        super();
+        this.newProgramCounter = newProgramCounter
+    }
+
+    execute(initialState: ExecutionState): ExecutionState {
+        return initialState.jump(this.newProgramCounter)
+    }
+}
+
 // // Visit a parse tree produced by rpnParser#ifAction.
 //     rpnVisitor.prototype.visitIfAction = function(ctx) {
 //         return this.visitChildren(ctx);

@@ -5,6 +5,10 @@ grammar rpn;
  **********************************************************************************************************************/
 
 program
+    : sequence
+    ;
+
+sequence
     : ' '* (action ' '*)*
     ;
 
@@ -18,7 +22,6 @@ action
     | assignment
     | operator
     | ifAction
-    | elseAction
     | label
     | gotoAction
     | quit
@@ -150,11 +153,7 @@ operator
     ;
 
 ifAction
-    : 'if{' action* '}'
-    ;
-
-elseAction
-    : 'els{' action* '}'
+    : 'if{' trueActions=sequence '}' ' '* ('els{' falseActions=sequence '}')?
     ;
 
 label

@@ -20,6 +20,15 @@ rpnListener.prototype.exitProgram = function(ctx) {
 };
 
 
+// Enter a parse tree produced by rpnParser#sequence.
+rpnListener.prototype.enterSequence = function(ctx) {
+};
+
+// Exit a parse tree produced by rpnParser#sequence.
+rpnListener.prototype.exitSequence = function(ctx) {
+};
+
+
 // Enter a parse tree produced by rpnParser#action.
 rpnListener.prototype.enterAction = function(ctx) {
 };
@@ -116,15 +125,6 @@ rpnListener.prototype.enterIfAction = function(ctx) {
 
 // Exit a parse tree produced by rpnParser#ifAction.
 rpnListener.prototype.exitIfAction = function(ctx) {
-};
-
-
-// Enter a parse tree produced by rpnParser#elseAction.
-rpnListener.prototype.enterElseAction = function(ctx) {
-};
-
-// Exit a parse tree produced by rpnParser#elseAction.
-rpnListener.prototype.exitElseAction = function(ctx) {
 };
 
 
